@@ -18,16 +18,19 @@ Future<void> fileExists() async {
     );
   } catch (e) {
     // failed to find parent folder
+    print("parent folder not found");
     // TODO show error in snackbar
   }
   try {
-      await driveApi.files.list(
+    await driveApi.files.list(
       q: "mimeType = 'application/vnd.google-apps.folder' and name contains $folderName'",
       spaces: 'drive',
       $fields: "files(id, name)",
     );
   } catch (e) {
     // failed to find app folder
+    print("app folder not found");
+
     // TODO show error in snackbar
   }
   try {
@@ -37,9 +40,10 @@ Future<void> fileExists() async {
       $fields: "files(id, name)",
     );
     userData = _userData.files?.first;
-    
   } catch (e) {
     // failed to find app data
+    print("app data not found");
+
     // TODO show error in snackbar
   }
   try {
@@ -50,8 +54,9 @@ Future<void> fileExists() async {
     );
     userSettings = _userSettings.files?.first;
   } catch (e) {
-    // failed to find app data
+    // failed to find app settings
+    print("app settings not found");
+
     // TODO show error in snackbar
   }
 }
-
