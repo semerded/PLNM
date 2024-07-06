@@ -1,7 +1,11 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keeper_of_projects/backend/validate_drive_data.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/google_api/google_api.dart';
+import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
 
 const List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
 const List<String> ddb_category = ["all"];
@@ -43,6 +47,18 @@ class _HomePageState extends State<HomePage> {
   bool searchBarActive = false;
 
   @override
+  void initState() {
+    super.initState();
+    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      setState(() {
+        currentUser = account;
+      });
+      fileExists();
+    });
+    googleSignIn.signInSilently();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -55,6 +71,18 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             child: const Icon(Icons.lightbulb),
           ),
+          actions: [
+            currentUser == null
+                ? FloatingActionButton(
+                    elevation: 0,
+                    backgroundColor: Pallete.primary,
+                    onPressed: () {
+                      handleSignIn();
+                    },
+                    child: const Icon(Icons.login),
+                  )
+                : const GooglePopUpMenu()
+          ],
         ),
         body: Column(
           children: [
