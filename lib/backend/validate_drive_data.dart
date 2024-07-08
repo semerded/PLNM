@@ -1,19 +1,27 @@
 //^ when app is opened: check if file exists in onedrive account
 
-import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/google_api/http_client.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:keeper_of_projects/backend/create_missing.dart';
 import 'package:keeper_of_projects/backend/file_data.dart';
 
-Future<void> fileExists() async {
-  final Map<String, String> authHeaders = await currentUser!.authHeaders;
-  final GoogleHttpClient authenticateClient = GoogleHttpClient(authHeaders);
-  final drive.DriveApi driveApi = drive.DriveApi(authenticateClient);
-
-  print(await checkIfFolderExists(parentFolderName, driveApi));
-  print(await checkIfFolderExists(folderName, driveApi));
-  print(await checkIfFileExists(fileName, driveApi));
-  print(await checkIfFileExists(settingsData, driveApi));
+Future<void> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
+  if (!await checkIfFolderExists(parentFolderName, driveApi)) {
+    // repair if non existing
+    createFolder(parentFolderName, driveApi);
+    print(true);
+  }
+  if (!await checkIfFolderExists(folderName, driveApi)) {
+    createFolder(folderName, driveApi);
+    print(true);
+  }
+  if (!await checkIfFileExists(fileName, driveApi)) {
+    createFile(fileName, fileNameDefaultContent, driveApi);
+    print(true);
+  }
+  if (!await checkIfFileExists(settingsData, driveApi)) {
+    createFile(settingsData, settingsDataDefaultContent, driveApi);
+    print(true);
+  }
 }
 
 Future<bool> checkIfFileExists(String fileName, drive.DriveApi driveApi) async {

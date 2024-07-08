@@ -1,32 +1,35 @@
-import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/google_api/http_client.dart';
+import 'dart:convert';
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:keeper_of_projects/google_api/local_file_handler.dart';
 
-void createFile(String fileName) async {
-  final authHeaders = await currentUser!.authHeaders;
-  final authenticateClient = GoogleHttpClient(authHeaders);
-  final driveApi = drive.DriveApi(authenticateClient);
+void createFile(String fileName, String defaultFileContent, drive.DriveApi driveApi) async {
+  var fileMetadata = drive.File();
+    fileMetadata.name = fileName;
 
-  var file = await localPath;
-  var stream = file.openRead();
-  var media = drive.Media(stream, file.lengthSync());
-
-  var driveFile = drive.File();
-  driveFile.name = fileName;
-
-  try {
-    var response = await driveApi.files.create(
-      driveFile,
-      uploadMedia: media,
+    var media = drive.Media(
+      Stream.value(utf8.encode(defaultFileContent)),
+      utf8.encode(defaultFileContent).length,
     );
-  } catch (e) {
-    // TODO add message to snackbar
-  }
+
+    try {
+      var response = await driveApi.files.create(
+        fileMetadata,
+        uploadMedia: media,
+      );
+      print('File created: ${response.name} with ID: ${response.id}');
+    } catch (e) {
+      print('Error creating file: $e');
+    }
 }
 
-void createFolder() async {
-  final authHeaders = await currentUser!.authHeaders;
-  final authenticateClient = GoogleHttpClient(authHeaders);
-  final driveApi = drive.DriveApi(authenticateClient);
+void createFolder(String folderName, drive.DriveApi driveApi) async {
+  drive.File folder = drive.File();
+  folder.name = folderName;
+  folder.mimeType = 'application/vnd.google-apps.folder';
+
+  try {
+    var response = await driveApi.files.create(folder);
+    print('Folder created: ${response.name} with ID: ${response.id}');
+  } catch (e) {
+    print('Error creating folder: $e');
+  }
 }

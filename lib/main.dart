@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:keeper_of_projects/backend/validate_drive_data.dart';
+import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/google_api/google_api.dart';
 import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         currentUser = account;
       });
-      fileExists();
+      backend.init(); // initialize backend
     });
     googleSignIn.signInSilently();
   }
