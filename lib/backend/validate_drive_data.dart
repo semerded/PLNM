@@ -33,7 +33,7 @@ Future<bool> checkIfFileExists(String fileName, drive.DriveApi driveApi) async {
     );
 
     if (result.files != null && result.files!.isNotEmpty) {
-      return result.files?.first.name == folderName;
+      return result.files?.first.name == fileName;
     }
     return false;
   } catch (e) {
