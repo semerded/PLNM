@@ -6,57 +6,48 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:keeper_of_projects/backend/file_data.dart';
 
 Future<void> fileExists() async {
-  final authHeaders = await currentUser!.authHeaders;
-  final authenticateClient = GoogleHttpClient(authHeaders);
-  final driveApi = drive.DriveApi(authenticateClient);
+  final Map<String, String> authHeaders = await currentUser!.authHeaders;
+  final GoogleHttpClient authenticateClient = GoogleHttpClient(authHeaders);
+  final drive.DriveApi driveApi = drive.DriveApi(authenticateClient);
 
-  try {
-    await driveApi.files.list(
-      q: "mimeType = 'application/vnd.google-apps.folder' and name contains $parentFolderName'",
-      spaces: 'drive',
-      $fields: "files(id, name)",
-    );
-  } catch (e) {
-    // failed to find parent folder
-    print("parent folder not found");
-    // TODO show error in snackbar
-  }
-  try {
-    await driveApi.files.list(
-      q: "mimeType = 'application/vnd.google-apps.folder' and name contains $folderName'",
-      spaces: 'drive',
-      $fields: "files(id, name)",
-    );
-  } catch (e) {
-    // failed to find app folder
-    print("app folder not found");
+  print(await checkIfFolderExists(parentFolderName, driveApi));
+  print(await checkIfFolderExists(folderName, driveApi));
+  print(await checkIfFileExists(fileName, driveApi));
+  print(await checkIfFileExists(settingsData, driveApi));
+}
 
-    // TODO show error in snackbar
-  }
+Future<bool> checkIfFileExists(String fileName, drive.DriveApi driveApi) async {
   try {
-    drive.FileList _userData = await driveApi.files.list(
+    drive.FileList result = await driveApi.files.list(
       q: "name = '$fileName'",
       spaces: 'drive',
       $fields: "files(id, name)",
     );
-    userData = _userData.files?.first;
-  } catch (e) {
-    // failed to find app data
-    print("app data not found");
 
-    // TODO show error in snackbar
+    if (result.files != null && result.files!.isNotEmpty) {
+      return result.files?.first.name == folderName;
+    }
+    return false;
+  } catch (e) {
+    print('Error checking if file exists: $e');
+    return false;
   }
+}
+
+Future<bool> checkIfFolderExists(String folderName, drive.DriveApi driveApi) async {
   try {
-    drive.FileList _userSettings = await driveApi.files.list(
-      q: "name = '$settingsData'",
+    drive.FileList result = await driveApi.files.list(
+      q: "mimeType = 'application/vnd.google-apps.folder' and name = '$folderName'",
       spaces: 'drive',
       $fields: "files(id, name)",
     );
-    userSettings = _userSettings.files?.first;
-  } catch (e) {
-    // failed to find app settings
-    print("app settings not found");
 
-    // TODO show error in snackbar
+    if (result.files != null && result.files!.isNotEmpty) {
+      return result.files?.first.name == folderName;
+    }
+    return false;
+  } catch (e) {
+    print('Error checking if file exists: $e');
+    return false;
   }
 }
