@@ -1,1 +1,2 @@
-match sh1 key with key from pc
+@low update readme
+@optional: make file and folder read only

@@ -5,26 +5,35 @@ import 'package:keeper_of_projects/backend/create_missing.dart';
 import 'package:keeper_of_projects/backend/file_data.dart';
 
 Future<void> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
-  if (!await checkIfFolderExists(parentFolderName, driveApi)) {
+  drive.File? parentAppFolder = await getFolder(parentFolderName, driveApi);
+  print(parentAppFolder);
+  if (parentAppFolder == null || parentAppFolder.name != parentFolderName) {
     // repair if non existing
-    createFolder(parentFolderName, driveApi);
+    parentAppFolder = await createFolder(parentFolderName, driveApi);
+    await createFile(readmeName, readmeContent, driveApi, parentAppFolder!.id);
     print(true);
   }
-  if (!await checkIfFolderExists(folderName, driveApi)) {
-    createFolder(folderName, driveApi);
+
+  appFolder = await getFolder(folderName, driveApi);
+  if (appFolder == null || appFolder!.name != folderName) {
+    appFolder = await createFolder(folderName, driveApi, parentAppFolder.id);
     print(true);
   }
-  if (!await checkIfFileExists(fileName, driveApi)) {
-    createFile(fileName, fileNameDefaultContent, driveApi);
+
+  userData = await getFile(fileName, driveApi);
+  if (userData == null || appFolder!.name != fileName) {
+    userData = await createFile(fileName, fileDefaultContent, driveApi, appFolder!.id);
     print(true);
   }
-  if (!await checkIfFileExists(settingsData, driveApi)) {
-    createFile(settingsData, settingsDataDefaultContent, driveApi);
+
+  settingsData = await getFile(settingsName, driveApi);
+  if (settingsData == null || settingsData!.name != settingsName) {
+    settingsData = await createFile(settingsName, settingsDefaultContent, driveApi, appFolder!.id);
     print(true);
   }
 }
 
-Future<bool> checkIfFileExists(String fileName, drive.DriveApi driveApi) async {
+Future<drive.File?> getFile(String fileName, drive.DriveApi driveApi, [String? parentFolderName]) async {
   try {
     drive.FileList result = await driveApi.files.list(
       q: "name = '$fileName'",
@@ -33,16 +42,16 @@ Future<bool> checkIfFileExists(String fileName, drive.DriveApi driveApi) async {
     );
 
     if (result.files != null && result.files!.isNotEmpty) {
-      return result.files?.first.name == fileName;
+      return result.files?.first;
     }
-    return false;
+    return null;
   } catch (e) {
     print('Error checking if file exists: $e');
-    return false;
+    return null;
   }
 }
 
-Future<bool> checkIfFolderExists(String folderName, drive.DriveApi driveApi) async {
+Future<drive.File?> getFolder(String folderName, drive.DriveApi driveApi, [String? parentFolderName]) async {
   try {
     drive.FileList result = await driveApi.files.list(
       q: "mimeType = 'application/vnd.google-apps.folder' and name = '$folderName'",
@@ -51,11 +60,11 @@ Future<bool> checkIfFolderExists(String folderName, drive.DriveApi driveApi) asy
     );
 
     if (result.files != null && result.files!.isNotEmpty) {
-      return result.files?.first.name == folderName;
+      return result.files?.first;
     }
-    return false;
+    return null;
   } catch (e) {
     print('Error checking if file exists: $e');
-    return false;
+    return null;
   }
 }
