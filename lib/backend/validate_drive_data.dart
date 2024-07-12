@@ -6,30 +6,25 @@ import 'package:keeper_of_projects/backend/file_data.dart';
 
 Future<void> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
   drive.File? parentAppFolder = await getFolder(parentFolderName, driveApi);
-  print(parentAppFolder);
   if (parentAppFolder == null || parentAppFolder.name != parentFolderName) {
     // repair if non existing
     parentAppFolder = await createFolder(parentFolderName, driveApi);
     await createFile(readmeName, readmeContent, driveApi, parentAppFolder!.id);
-    print(true);
   }
 
   appFolder = await getFolder(folderName, driveApi);
   if (appFolder == null || appFolder!.name != folderName) {
     appFolder = await createFolder(folderName, driveApi, parentAppFolder.id);
-    print(true);
   }
 
   userData = await getFile(fileName, driveApi);
-  if (userData == null || appFolder!.name != fileName) {
+  if (userData == null || userData!.name != fileName) {
     userData = await createFile(fileName, fileDefaultContent, driveApi, appFolder!.id);
-    print(true);
   }
 
   settingsData = await getFile(settingsName, driveApi);
   if (settingsData == null || settingsData!.name != settingsName) {
     settingsData = await createFile(settingsName, settingsDefaultContent, driveApi, appFolder!.id);
-    print(true);
   }
 }
 
