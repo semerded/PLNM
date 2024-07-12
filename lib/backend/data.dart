@@ -1,5 +1,5 @@
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:keeper_of_projects/google_api/http_client.dart';
+import 'package:keeper_of_projects/backend/google_api/http_client.dart';
 import 'package:keeper_of_projects/backend/readme_content.dart' as readme;
 
 
