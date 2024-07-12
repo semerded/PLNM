@@ -70,8 +70,7 @@ class _GoogleDriveSearchState extends State<GoogleDriveSearch> {
       ),
       body: Center(
         child: _currentUser != null
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            ? Column(                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ListTile(
                     leading: GoogleUserCircleAvatar(

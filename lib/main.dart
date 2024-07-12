@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/google_api/google_api.dart';
+import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
 
 const List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Pallete.primary,
-          title: Text("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1
+          title: Text("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
           leading: FloatingActionButton(
             onPressed: () {}, // TODO go to idea page
             backgroundColor: Pallete.primary,
