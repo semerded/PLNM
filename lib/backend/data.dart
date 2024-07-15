@@ -1,12 +1,12 @@
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:keeper_of_projects/backend/google_api/http_client.dart';
-import 'package:keeper_of_projects/backend/readme_content.dart' as readme;
+import 'package:keeper_of_projects/backend/content/default_file_content.dart' as content;
 
 
 const String fileName = "__user-data.json";
-const String fileDefaultContent = "{}";
+const String fileDefaultContent = content.data;
 const String settingsName = "__user-settings.json";
-const String settingsDefaultContent = "{darkmode = false}";
+const String settingsDefaultContent = content.settings;
 const String parentFolderName = "com.semerded";
 const String folderName = "keeper-of-projects";
 
@@ -20,4 +20,4 @@ drive.DriveApi? driveApi;
 
 //^ file data for readme file
 const String readmeName = "README.txt";
-const String readmeContent = readme.content;
+const String readmeContent = content.readme;
