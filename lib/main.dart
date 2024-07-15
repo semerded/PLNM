@@ -35,7 +35,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final SnackBar sb_connectionErr = const SnackBar(content: Text("A connection error has occurd"));
+  SnackBar sb_connectionErr = SnackBar(content: Text("A connection error has occurd"));
   final SnackBar sb_fileUploadErr = const SnackBar(content: Text("File coulnd't be uploaded, try again later"));
   final SnackBar sb_fileDownloadErr = const SnackBar(content: Text("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -49,11 +49,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
       setState(() {
         currentUser = account;
       });
-      backend.init(); // initialize backend
+      backend.init().then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(value),
+          ))); // initialize backend
+      // ignore: use_build_context_synchronously
     });
     googleSignIn.signInSilently();
   }
@@ -144,15 +147,19 @@ class _HomePageState extends State<HomePage> {
                   radius: 20,
                   backgroundColor: searchBarActive ? Pallete.primary : Pallete.box,
                   child: IconButton(
+                    color: searchBarActive ? Pallete.box : Pallete.primary,
                     onPressed: () {
                       setState(() {
                         searchBarActive = !searchBarActive;
                       });
                     },
-                    color: Pallete.primary,
                     icon: const Icon(Icons.search),
                   ),
-                )
+                ),
+                SearchBar(
+                  leading: const Icon(Icons.search),
+                  trailing: [IconButton(onPressed: () {}, icon: const Icon(Icons.close))],
+                ),
               ],
             ),
           ],
