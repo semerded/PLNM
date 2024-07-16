@@ -6,6 +6,7 @@ import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
+import 'package:keeper_of_projects/widgets/main/animated_searchbar.dart';
 
 const List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
 const List<String> ddb_category = ["all"];
@@ -39,6 +40,8 @@ class _HomePageState extends State<HomePage> {
   final SnackBar sb_fileUploadErr = const SnackBar(content: Text("File coulnd't be uploaded, try again later"));
   final SnackBar sb_fileDownloadErr = const SnackBar(content: Text("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+  late FocusNode searchBarFocusNode = FocusNode();
 
   int availableTasks = 0;
 
@@ -151,17 +154,18 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       setState(() {
                         searchBarActive = !searchBarActive;
+                        searchBarActive ? FocusScope.of(context).requestFocus(searchBarFocusNode) : FocusManager.instance.primaryFocus?.unfocus();
                       });
                     },
                     icon: const Icon(Icons.search),
                   ),
                 ),
-                SearchBar(
-                  leading: const Icon(Icons.search),
-                  trailing: [IconButton(onPressed: () {}, icon: const Icon(Icons.close))],
-                ),
               ],
             ),
+            AnimatedSearchBar(
+              searchBarActive: searchBarActive,
+              focusNode: searchBarFocusNode,
+            )
           ],
         ),
       ),
