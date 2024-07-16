@@ -12,7 +12,9 @@ const String folderName = "keeper-of-projects";
 
 drive.File? appFolder;
 drive.File? userData;
+Map<String, dynamic>? userDataContent;
 drive.File? settingsData;
+Map<String, dynamic>? settingsDataContent;
 
 Map<String, String>? authHeaders;
 GoogleHttpClient? authenticateClient;
