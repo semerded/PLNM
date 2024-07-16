@@ -4,7 +4,7 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:keeper_of_projects/backend/create_missing.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 
-Future<void> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
+Future<String> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
   drive.File? parentAppFolder = await getFolder(parentFolderName, driveApi);
   if (parentAppFolder == null || parentAppFolder.name != parentFolderName) {
     // repair if non existing
@@ -26,6 +26,7 @@ Future<void> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
   if (settingsData == null || settingsData!.name != settingsName) {
     settingsData = await createFile(settingsName, settingsDefaultContent, driveApi, appFolder!.id);
   }
+  return "Files synced with Google Drive";
 }
 
 Future<drive.File?> getFile(String fileName, drive.DriveApi driveApi, [String? parentFolderName]) async {

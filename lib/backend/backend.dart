@@ -5,10 +5,10 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 
 
-void init() async {
+Future<String> init() async {
   authHeaders = await currentUser!.authHeaders;
   authenticateClient = GoogleHttpClient(authHeaders!);
   driveApi = drive.DriveApi(authenticateClient!);
   
-  checkAndRepairDriveFiles(driveApi!);
+  return await checkAndRepairDriveFiles(driveApi!);
 }
