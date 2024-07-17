@@ -53,9 +53,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
     googleSignIn.isSignedIn().then(
           (value) => setState(() {
-            if (value) {
-              loggedIn = loginStatus.loggedIn;
-            } else {
+            if (!value) {
               loggedIn = loginStatus.notLoggedIn;
             }
           }),
