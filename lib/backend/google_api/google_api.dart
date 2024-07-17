@@ -10,4 +10,5 @@ Future<void> handleSignIn() async {
 
   Future<void> handleSignOut() async {
     await googleSignIn.disconnect();
+    currentUser = null;
   }
