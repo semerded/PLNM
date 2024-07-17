@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/data.dart';
 
-class AddTaskPage extends StatefulWidget {
-  const AddTaskPage({super.key});
+class AddProjectPage extends StatefulWidget {
+  const AddProjectPage({super.key});
 
   @override
-  State<AddTaskPage> createState() => _AddTaskPageState();
+  State<AddProjectPage> createState() => _AddProjectPageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
+class _AddProjectPageState extends State<AddProjectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
