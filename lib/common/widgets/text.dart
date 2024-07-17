@@ -8,9 +8,8 @@ class AdaptiveText extends StatelessWidget {
   double? fontSize;
   FontWeight? fontWeight;
   TextAlign? textAlign;
-  AdaptiveText(String s, {
+  AdaptiveText(this.data, {
     super.key,
-    this.data,
     this.fontSize,
     this.fontWeight,
     this.textAlign,
