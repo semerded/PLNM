@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/pages/add_project_page.dart';
 
 class AddProject extends StatefulWidget {
   const AddProject({super.key});
@@ -19,7 +20,7 @@ class _AddProjectState extends State<AddProject> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     animationController = AnimationController(
-      duration: Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     )..repeat();
     slideAnimation = TweenSequence<Offset>(
@@ -78,7 +79,12 @@ class _AddProjectState extends State<AddProject> with SingleTickerProviderStateM
         elevation: 5,
         backgroundColor: Pallete.primary,
         onPressed: () {
-          print(true);
+          Navigator.push(
+              context,
+              MaterialPageRoute<bool>(
+                builder: (context) => const AddProjectPage(),
+              ),
+            );
         },
         child: const Icon(Icons.add),
       ),
