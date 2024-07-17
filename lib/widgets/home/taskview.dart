@@ -13,13 +13,14 @@ class _TaskviewState extends State<Taskview> {
   @override
   Widget build(BuildContext context) {
     return userDataContent!["projects"].length == 0
-        ? const Center(
+        ? Center(
             child: Text(
               "No projects found\nCreate new ideas / projects\nor recover projects from the archive",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
+                color: Pallete.text,
               ),
             ),
           )

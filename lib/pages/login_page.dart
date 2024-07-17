@@ -3,7 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
-import 'package:keeper_of_projects/pages/home.dart';
+import 'package:keeper_of_projects/pages/home_page.dart';
 import 'package:keeper_of_projects/widgets/icons/drive_icon.dart';
 
 // ignore: camel_case_types

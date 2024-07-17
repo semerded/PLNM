@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Pallete.bg,
       appBar: AppBar(
         backgroundColor: Pallete.primary,
         title: Text("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
