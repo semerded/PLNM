@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/pages/about.dart';
+import 'package:keeper_of_projects/pages/login.dart';
 import 'package:keeper_of_projects/pages/settings.dart';
 
 // ignore: camel_case_types
@@ -26,6 +27,10 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
       onSelected: (_googleMenu item) {
         if (item == _googleMenu.logout) {
           handleSignOut();
+          Navigator.push(
+            context,
+            MaterialPageRoute<bool>(builder: (context) => const LoginPage()),
+          );
         } else if (item == _googleMenu.settings) {
           Navigator.push(
             context,
