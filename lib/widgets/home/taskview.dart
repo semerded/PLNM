@@ -14,7 +14,14 @@ class _TaskviewState extends State<Taskview> {
   Widget build(BuildContext context) {
     return userDataContent!["projects"].length == 0
         ? const Center(
-            child: Text("No projects found\nCreate new ideas or projects or recover projects from the archive"),
+            child: Text(
+              "No projects found\nCreate new ideas / projects\nor recover projects from the archive",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ),
+            ),
           )
         : ListView.builder(
             itemCount: userDataContent!["projects"].length,
