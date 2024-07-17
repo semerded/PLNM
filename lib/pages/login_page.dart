@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
+import 'package:keeper_of_projects/pages/about_page.dart';
 import 'package:keeper_of_projects/pages/home_page.dart';
 import 'package:keeper_of_projects/widgets/icons/drive_icon.dart';
 
@@ -86,6 +87,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Pallete.bg,
       body: () {
         if (loggedIn == loginStatus.loggedIn) {
           return Column(
@@ -138,6 +140,30 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 28,
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<bool>(
+                    builder: (context) => const AboutPage(),
+                  ),
+                ),
+                label: Text(
+                  "Why Do I Have To Sign In With Google",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Pallete.text,
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.info,
+                  size: 24,
+                  color: Pallete.primary,
+                ),
+                style: ButtonStyle(
+                  elevation: const WidgetStatePropertyAll(0),
+                  backgroundColor: WidgetStatePropertyAll(Pallete.bg),
                 ),
               ),
             ],
