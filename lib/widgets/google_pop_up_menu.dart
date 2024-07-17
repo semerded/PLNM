@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/pages/about_page.dart';
@@ -57,36 +58,36 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
             leading: GoogleUserCircleAvatar(
               identity: currentUser!,
             ),
-            title: Text(currentUser!.displayName ?? ''),
-            subtitle: Text(currentUser!.email),
+            title: AdaptiveText(currentUser!.displayName ?? ''),
+            subtitle: AdaptiveText(currentUser!.email),
           ),
         ),
-        const PopupMenuItem<_googleMenu>(
+        PopupMenuItem<_googleMenu>(
           value: _googleMenu.settings,
           child: ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: const Icon(Icons.settings),
+            title: AdaptiveText('Settings'),
           ),
         ),
-        const PopupMenuItem<_googleMenu>(
+        PopupMenuItem<_googleMenu>(
           value: _googleMenu.archive,
           child: ListTile(
-            leading: Icon(Icons.archive),
-            title: Text('Archive'),
+            leading: const Icon(Icons.archive),
+            title: AdaptiveText('Archive'),
           ),
         ),
-        const PopupMenuItem<_googleMenu>(
+        PopupMenuItem<_googleMenu>(
           value: _googleMenu.about,
           child: ListTile(
-            leading: Icon(Icons.info_outline),
-            title: Text('About'),
+            leading: const Icon(Icons.info_outline),
+            title: AdaptiveText('About'),
           ),
         ),
-        const PopupMenuItem<_googleMenu>(
+        PopupMenuItem<_googleMenu>(
           value: _googleMenu.logout,
           child: ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
+            leading: const Icon(Icons.logout),
+            title: AdaptiveText('Logout'),
           ),
         ),
       ],

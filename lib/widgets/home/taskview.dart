@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class Taskview extends StatefulWidget {
@@ -14,14 +15,11 @@ class _TaskviewState extends State<Taskview> {
   Widget build(BuildContext context) {
     return userDataContent!["projects"].length == 0
         ? Center(
-            child: Text(
+            child: AdaptiveText(
               "No projects found\nCreate new ideas / projects\nor recover projects from the archive",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-                color: Pallete.text,
-              ),
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
             ),
           )
         : ListView.builder(
@@ -32,7 +30,7 @@ class _TaskviewState extends State<Taskview> {
                 elevation: 2,
                 child: ListTile(
                   textColor: Pallete.text,
-                  title: Text("task"),
+                  title: AdaptiveText("task"),
                 ),
               );
             },

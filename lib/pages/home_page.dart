@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
@@ -32,9 +33,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SnackBar sb_connectionErr = SnackBar(content: Text("A connection error has occurd"));
-  final SnackBar sb_fileUploadErr = const SnackBar(content: Text("File coulnd't be uploaded, try again later"));
-  final SnackBar sb_fileDownloadErr = const SnackBar(content: Text("File couldn't be downloaded, try again later"));
+  SnackBar sb_connectionErr = SnackBar(content: AdaptiveText("A connection error has occurd"));
+  final SnackBar sb_fileUploadErr = SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
+  final SnackBar sb_fileDownloadErr = SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
   final FocusNode searchBarFocusNode = FocusNode();
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
     //       (value) {
     //         ScaffoldMessenger.of(context).showSnackBar(
     //           SnackBar(
-    //             content: Text(value),
+    //             content: AdaptiveText(value),
     //           ),
     //         );
     //       },
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Pallete.bg,
         appBar: AppBar(
           backgroundColor: Pallete.primary,
-          title: Text("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
+          title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
           leading: FloatingActionButton(
             onPressed: () {}, // TODO go to idea page
             backgroundColor: Pallete.primary,
@@ -113,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                         items: ddb_category.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
-                            child: Text(value),
+                            child: AdaptiveText(value),
                           );
                         }).toList(),
                         onChanged: (String? value) {
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                         items: ddb_sortBy.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
-                            child: Text(value),
+                            child: AdaptiveText(value),
                           );
                         }).toList(),
                         onChanged: (String? value) {

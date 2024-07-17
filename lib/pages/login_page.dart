@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
+import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/pages/about_page.dart';
@@ -105,12 +106,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   RotationTransition(turns: rotationAnimation, child: const DriveIcon()),
                 ],
               ),
-              const Text(
+              AdaptiveText(
                 "Syncing Google Drive",
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 28,
-                ),
+                fontWeight: FontWeight.w800,
+                fontSize: 28,
               ),
             ],
           );
@@ -135,12 +134,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   const DriveIcon(),
                 ],
               ),
-              const Text(
+              AdaptiveText(
                 "Sign In With Google",
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 28,
-                ),
+                fontWeight: FontWeight.w800,
+                fontSize: 28,
               ),
               ElevatedButton.icon(
                 onPressed: () => Navigator.push(
@@ -149,12 +146,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     builder: (context) => const AboutPage(),
                   ),
                 ),
-                label: Text(
+                label: AdaptiveText(
                   "Why Do I Have To Sign In With Google",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Pallete.text,
-                  ),
+                  fontSize: 12,
                 ),
                 icon: const Icon(
                   Icons.info,

@@ -35,9 +35,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final SnackBar sb_connectionErr = const SnackBar(content: Text("A connection error has occurd"));
-  final SnackBar sb_fileUploadErr = const SnackBar(content: Text("File coulnd't be uploaded, try again later"));
-  final SnackBar sb_fileDownloadErr = const SnackBar(content: Text("File couldn't be downloaded, try again later"));
+  final SnackBar sb_connectionErr = const SnackBar(content: AdaptiveText("A connection error has occurd"));
+  final SnackBar sb_fileUploadErr = const SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
+  final SnackBar sb_fileDownloadErr = const SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
   int availableTasks = 0;
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Pallete.primary,
-          title: Text("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1
+          title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1
           leading: FloatingActionButton(
             onPressed: () {}, // TODO go to idea page
             backgroundColor: Pallete.primary,
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                         items: ddb_category.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
-                            child: Text(value),
+                            child: AdaptiveText(value),
                           );
                         }).toList(),
                         onChanged: (String? value) {
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                         items: ddb_sortBy.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
-                            child: Text(value),
+                            child: AdaptiveText(value),
                           );
                         }).toList(),
                         onChanged: (String? value) {
