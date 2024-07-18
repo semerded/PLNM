@@ -1,9 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
-
-// ignore: constant_identifier_names
 
 class AddProjectPage extends StatefulWidget {
   const AddProjectPage({super.key});
@@ -19,11 +19,20 @@ class _AddProjectPageState extends State<AddProjectPage> {
   final FocusNode descriptionFocusNode = FocusNode();
   final FocusNode titleFocusNode = FocusNode();
   final TextEditingController descriptionController = TextEditingController();
+  late String ddb_priority_value;
+  late String ddb_category_value;
 
   Map<String, dynamic> newTask = {"title": null, "description": "", "category": null, "priority": "none"};
 
-  bool validate() {
-    return validTitle && validCategory ? true : false;
+  void validate() {
+    taskValidated = validTitle && validCategory ? true : false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ddb_priority_value = projectPriorities.keys.first;
+    ddb_category_value = projectCategories.first;
   }
 
   @override
@@ -60,6 +69,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                   setState(() {
                     validTitle = value.length >= 2;
                     newTask["title"] = value;
+                    validate();
                   });
                 },
               ),
@@ -89,6 +99,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 onChanged: (value) {
                   setState(() {
                     newTask["description"] = value;
+                    validate();
                   });
                 },
               ),
@@ -106,7 +117,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       isExpanded: true,
                       elevation: 15,
-                      value: projectCategories.first,
+                      value: ddb_category_value,
                       items: projectCategories.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
                           value: value,
@@ -115,7 +126,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
-                          newTask["category"] = value!;
+                          newTask["category"] = ddb_category_value = value!;
+                          validate();
                         });
                       },
                     ),
@@ -131,8 +143,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       elevation: 15,
                       isExpanded: true,
-                      
-                      value: projectPriorities.keys.first,
+                      value: ddb_priority_value,
                       items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
                           value: value,
@@ -146,7 +157,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
-                          newTask["priority"] = value!;
+                          newTask["priority"] = ddb_priority_value = value!;
+                          validate();
                         });
                       },
                     ),

@@ -2,5 +2,9 @@
 @high animation to hide searchbar under top bar
 @critical stop animation when page is switched
 
+@high add placeholders for ddb buttons
+
+@optional add project size slider 
+
 
 @optional add a sketch feature
