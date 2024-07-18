@@ -10,6 +10,10 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 
 GoogleSignInAccount? currentUser;
 
+List<String> projectCategories = ["app", "finish", "zolder"];
+Map<String, dynamic> projectPriorities = {"none": Colors.grey, "low": Colors.green, "medium": Colors.yellow, "high": Colors.red, "critical": Colors.purple};
+
+
 
 class Pallete {
   static const MaterialColor primary = Colors.orange;

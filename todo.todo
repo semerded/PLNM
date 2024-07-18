@@ -1,5 +1,6 @@
 @low update readme
 @high animation to hide searchbar under top bar
+@critical stop animation when page is switched
 
 
 @optional add a sketch feature

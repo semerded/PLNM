@@ -9,9 +9,6 @@ import 'package:keeper_of_projects/widgets/home/add_project.dart';
 import 'package:keeper_of_projects/widgets/home/animated_searchbar.dart';
 import 'package:keeper_of_projects/widgets/home/taskview.dart';
 
-const List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
-const List<String> ddb_category = ["all"];
-
 class AppWrapper extends StatelessWidget {
   const AppWrapper({super.key});
 
@@ -37,36 +34,26 @@ class _HomePageState extends State<HomePage> {
   final SnackBar sb_fileUploadErr = SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
   final SnackBar sb_fileDownloadErr = SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  final List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
+  List<String> ddb_category = ["all"];
+  
 
   final FocusNode searchBarFocusNode = FocusNode();
 
   int availableTasks = 0;
-
-  String ddb_sortBy_value = ddb_sortBy.first;
-  String ddb_category_value = ddb_category.first;
-  bool searchBarActive = false;
+  late String ddb_sortBy_value;
+  late String ddb_category_value;
 
   @override
   void initState() {
     super.initState();
-    // googleSignIn.signInSilently();
-    // googleSignIn.onCurrentUserChanged.listen(
-    //   (GoogleSignInAccount? account) async {
-    //     setState(() {
-    //       currentUser = account;
-    //     });
-    //     backend.init().then(
-    //       (value) {
-    //         ScaffoldMessenger.of(context).showSnackBar(
-    //           SnackBar(
-    //             content: AdaptiveText(value),
-    //           ),
-    //         );
-    //       },
-    //     ); // initialize backend
-    //   },
-    // );
+
+    ddb_sortBy_value = ddb_sortBy.first;
+    ddb_category_value = ddb_category.first;
+    ddb_category.insertAll(ddb_category.length - 1, projectCategories);
   }
+
+  bool searchBarActive = false;
 
   @override
   Widget build(BuildContext context) {
