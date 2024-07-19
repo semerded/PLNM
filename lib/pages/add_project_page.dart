@@ -1,9 +1,14 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
 
 class AddProjectPage extends StatefulWidget {
   const AddProjectPage({super.key});
@@ -22,7 +27,13 @@ class _AddProjectPageState extends State<AddProjectPage> {
   late String ddb_priority_value;
   late String ddb_category_value;
 
-  Map<String, dynamic> newTask = {"title": null, "description": "", "category": null, "priority": "none"}; // TODO switch "none" to null
+  Map<String, dynamic> newTask = {
+    "title": null,
+    "description": "",
+    "category": null,
+    "priority": "none",
+    "projectSize": null,
+  }; // TODO switch "none" to null
 
   final String ddb_catgegoryDefaultText = "Select A Category";
   List<String> ddb_category = [];
@@ -186,7 +197,20 @@ class _AddProjectPageState extends State<AddProjectPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if (taskValidated) {
+            newTask["timeCreated"] = DateTime.now().toString();
+
+            userDataContent!["projects"].add(newTask); //! add deepcopy if duplication happens
+            setState(() {
+              LoadingScreen.show(context, "Saving Task");
+              saveFile(userData!.id!, jsonEncode(userDataContent)).then((value) {
+                LoadingScreen.hide(context);
+                Navigator.of(context).pop(true);
+              });
+            });
+          }
+        },
         backgroundColor: taskValidated ? Colors.green : Colors.red,
         child: const Icon(Icons.check),
       ),
