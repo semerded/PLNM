@@ -30,7 +30,8 @@ class _TaskviewState extends State<Taskview> {
                 elevation: 2,
                 child: ListTile(
                   textColor: Pallete.text,
-                  title: AdaptiveText("task"),
+                  title: AdaptiveText(userDataContent!["projects"][index]["title"]),
+                  subtitle: AdaptiveText(userDataContent!["projects"][index]["description"]),
                 ),
               );
             },
