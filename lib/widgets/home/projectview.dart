@@ -3,14 +3,14 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
-class Taskview extends StatefulWidget {
-  const Taskview({super.key});
+class ProjectView extends StatefulWidget {
+  const ProjectView({super.key});
 
   @override
-  State<Taskview> createState() => _TaskviewState();
+  State<ProjectView> createState() => _ProjectViewState();
 }
 
-class _TaskviewState extends State<Taskview> {
+class _ProjectViewState extends State<ProjectView> {
   @override
   Widget build(BuildContext context) {
     return userDataContent!["projects"].length == 0
