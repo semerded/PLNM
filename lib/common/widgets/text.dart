@@ -8,11 +8,15 @@ class AdaptiveText extends StatelessWidget {
   double? fontSize;
   FontWeight? fontWeight;
   TextAlign? textAlign;
-  AdaptiveText(this.data, {
+  FontStyle? fontStyle;
+
+  AdaptiveText(
+    this.data, {
     super.key,
     this.fontSize,
     this.fontWeight,
     this.textAlign,
+    this.fontStyle,
   });
 
   @override
@@ -24,6 +28,7 @@ class AdaptiveText extends StatelessWidget {
         color: Pallete.text,
         fontSize: fontSize,
         fontWeight: fontWeight,
+        fontStyle: fontStyle,
       ),
     );
   }
