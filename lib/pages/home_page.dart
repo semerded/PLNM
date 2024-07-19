@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 
     ddb_sortBy_value = ddb_sortBy.first;
     ddb_category_value = ddb_category.first;
-    ddb_category.insertAll(ddb_category.length - 1, projectCategories);
+    ddb_category.addAll(projectCategories);
   }
 
   bool searchBarActive = false;
