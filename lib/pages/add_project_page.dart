@@ -22,7 +22,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
   late String ddb_priority_value;
   late String ddb_category_value;
 
-  Map<String, dynamic> newTask = {"title": null, "description": "", "category": null, "priority": "none"};
+  Map<String, dynamic> newTask = {"title": null, "description": "", "category": null, "priority": "none"}; // TODO switch "none" to null
+
+  final String ddb_catgegoryDefaultText = "Select A Category";
+  List<String> ddb_category = [];
 
   void validate() {
     taskValidated = validTitle && validCategory ? true : false;
@@ -32,7 +35,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
   void initState() {
     super.initState();
     ddb_priority_value = projectPriorities.keys.first;
-    ddb_category_value = projectCategories.first;
+    ddb_category_value = ddb_catgegoryDefaultText;
+
+    ddb_category.add(ddb_catgegoryDefaultText);
+    ddb_category.addAll(projectCategories);
   }
 
   @override
@@ -118,15 +124,22 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       isExpanded: true,
                       elevation: 15,
                       value: ddb_category_value,
-                      items: projectCategories.map<DropdownMenuItem<String>>((String value) {
+                      items: ddb_category.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
                           value: value,
-                          child: AdaptiveText(value),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: AdaptiveText(
+                              value,
+                              fontStyle: value == ddb_catgegoryDefaultText ? FontStyle.italic : FontStyle.normal,
+                            ),
+                          ),
                         );
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
                           newTask["category"] = ddb_category_value = value!;
+                          validCategory = value != ddb_catgegoryDefaultText;
                           validate();
                         });
                       },
@@ -150,7 +163,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
                           child: Row(
                             children: [
                               Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
-                              AdaptiveText(value),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: AdaptiveText(value),
+                              ),
                             ],
                           ),
                         );
