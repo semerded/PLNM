@@ -23,8 +23,11 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
   Widget build(BuildContext context) {
     return PopupMenuButton<_googleMenu>(
       // popUpAnimationStyle: AnimationStyle(),
-      icon: GoogleUserCircleAvatar(
-        identity: currentUser!,
+      icon: Hero(
+        tag: "googleUserCircleAvatar",
+        child: GoogleUserCircleAvatar(
+          identity: currentUser!,
+        ),
       ),
       onSelected: (_googleMenu item) {
         if (item == _googleMenu.logout) {

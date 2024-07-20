@@ -97,8 +97,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GoogleUserCircleAvatar(
-                    identity: currentUser!,
+                  Hero(
+                    tag: "googleUserCircleAvatar",
+                    child: GoogleUserCircleAvatar(
+                      identity: currentUser!,
+                    ),
                   ),
                   Container(
                     width: 5,

@@ -7,7 +7,7 @@ import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
 import 'package:keeper_of_projects/widgets/home/add_project.dart';
 import 'package:keeper_of_projects/widgets/home/animated_searchbar.dart';
-import 'package:keeper_of_projects/widgets/home/taskview.dart';
+import 'package:keeper_of_projects/widgets/home/projectview.dart';
 
 class AppWrapper extends StatelessWidget {
   const AppWrapper({super.key});
@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
   final List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
   List<String> ddb_category = ["all"];
-  
 
   final FocusNode searchBarFocusNode = FocusNode();
 
@@ -64,15 +63,11 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           backgroundColor: Pallete.primary,
           title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
-          leading: FloatingActionButton(
-            onPressed: () {}, // TODO go to idea page
-            backgroundColor: Pallete.primary,
-            elevation: 0,
-            child: const Icon(Icons.lightbulb),
-          ),
+          automaticallyImplyLeading: false,
           actions: [
             currentUser == null
                 ? FloatingActionButton(
+                    heroTag: null,
                     elevation: 0,
                     backgroundColor: Pallete.primary,
                     onPressed: () {
@@ -160,11 +155,19 @@ class _HomePageState extends State<HomePage> {
               focusNode: searchBarFocusNode,
             ),
             const Expanded(
-              child: Taskview(),
+              child: ProjectView(),
             ),
           ],
         ),
-        floatingActionButton: const AddProject(),
+        floatingActionButton: AddProject(
+          taskCreated: (value) {
+            if (value) {
+              setState(() {
+                // update screen when task is created
+              });
+            }
+          },
+        ),
       ),
     );
   }
