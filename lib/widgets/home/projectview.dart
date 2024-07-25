@@ -3,7 +3,8 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class ProjectView extends StatefulWidget {
-  const ProjectView({super.key});
+  final List content;
+  const ProjectView({super.key, required this.content});
 
   @override
   State<ProjectView> createState() => _ProjectViewState();
@@ -12,7 +13,7 @@ class ProjectView extends StatefulWidget {
 class _ProjectViewState extends State<ProjectView> {
   @override
   Widget build(BuildContext context) {
-    return projectsContent.isEmpty
+    return widget.content.isEmpty
         ? Center(
             child: AdaptiveText(
               "No projects found\nCreate new ideas / projects\nor recover projects from the archive",
@@ -22,17 +23,17 @@ class _ProjectViewState extends State<ProjectView> {
             ),
           )
         : ListView.builder(
-            itemCount: projectsContent.length,
+            itemCount: widget.content.length,
             itemBuilder: (context, index) {
               return Card(
                 color: Pallete.box,
                 elevation: 2,
                 child: ListTile(
                   textColor: Pallete.text,
-                  title: AdaptiveText(projectsContent[index]["title"]),
-                  subtitle: AdaptiveText(projectsContent[index]["description"]),
+                  title: AdaptiveText(widget.content[index]["title"]),
+                  subtitle: AdaptiveText(widget.content[index]["description"]),
                   onTap: () => setState(() {
-                    projectsContent.removeAt(index);
+                    widget.content.removeAt(index);
                   }),
                 ),
               );
