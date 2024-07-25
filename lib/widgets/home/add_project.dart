@@ -90,7 +90,6 @@ class _AddProjectState extends State<AddProject> with SingleTickerProviderStateM
               ),
             ).then((callback) {
               if (callback != null && callback) {
-                print(callback);
                 widget.taskCreated(true);
               }
             });

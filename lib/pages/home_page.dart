@@ -156,21 +156,16 @@ class _HomePageState extends State<HomePage> {
               searchBarActive: searchBarActive,
               focusNode: searchBarFocusNode,
             ),
-            Expanded(
-              child: ProjectView(
-                content: projectsContent,
-              ),
+            const Expanded(
+              child: ProjectView(),
             ),
           ],
         ),
         floatingActionButton: AddProject(
           taskCreated: (value) {
-            print("$value unos");
             if (value) {
-              print("$value thos");
               setState(() {
                 projectsContent = userDataContent!["projects"];
-                print(projectsContent);
                 // update screen when task is created
               });
             }
