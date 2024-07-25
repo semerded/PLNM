@@ -12,7 +12,7 @@ GoogleSignInAccount? currentUser;
 
 List<String> projectCategories = ["app", "finish", "zolder"];
 Map<String, dynamic> projectPriorities = {"none": Colors.grey, "low": Colors.green, "medium": Colors.yellow, "high": Colors.red, "critical": Colors.purple};
-
+List projectsContent = [];
 
 
 class Pallete {

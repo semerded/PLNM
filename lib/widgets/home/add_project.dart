@@ -3,8 +3,12 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/pages/add_project_page.dart';
 
+typedef TaskCreated = void Function(bool value);
+
+
 class AddProject extends StatefulWidget {
-  const AddProject({super.key});
+  final TaskCreated taskCreated;
+  const AddProject({required this.taskCreated, super.key});
 
   @override
   State<AddProject> createState() => _AddProjectState();
@@ -84,7 +88,12 @@ class _AddProjectState extends State<AddProject> with SingleTickerProviderStateM
               MaterialPageRoute<bool>(
                 builder: (context) => const AddProjectPage(),
               ),
-            );
+            ).then((callback) {
+              if (callback != null && callback) {
+                print(callback);
+                widget.taskCreated(true);
+              }
+            });
         },
         child: const Icon(Icons.add),
       ),

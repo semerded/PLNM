@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
     ddb_sortBy_value = ddb_sortBy.first;
     ddb_category_value = ddb_category.first;
     ddb_category.addAll(projectCategories);
+    projectsContent = userDataContent!["projects"];
   }
 
   bool searchBarActive = false;
@@ -154,15 +156,21 @@ class _HomePageState extends State<HomePage> {
               searchBarActive: searchBarActive,
               focusNode: searchBarFocusNode,
             ),
-            const Expanded(
-              child: ProjectView(),
+            Expanded(
+              child: ProjectView(
+                content: projectsContent,
+              ),
             ),
           ],
         ),
         floatingActionButton: AddProject(
           taskCreated: (value) {
+            print("$value unos");
             if (value) {
+              print("$value thos");
               setState(() {
+                projectsContent = userDataContent!["projects"];
+                print(projectsContent);
                 // update screen when task is created
               });
             }
