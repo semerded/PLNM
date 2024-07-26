@@ -5,7 +5,7 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/screens/about_page.dart';
 import 'package:keeper_of_projects/screens/login_page.dart';
-import 'package:keeper_of_projects/screens/settings_page.dart';
+import 'package:keeper_of_projects/screens/settings/settings_page.dart';
 
 // ignore: camel_case_types
 enum _googleMenu { name, archive, settings, about, logout }

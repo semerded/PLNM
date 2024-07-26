@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/projects/project_view_page.dart';
 
 class ProjectView extends StatefulWidget {
   final List content;
@@ -33,7 +34,16 @@ class _ProjectViewState extends State<ProjectView> {
                   title: AdaptiveText(widget.content[index]["title"]),
                   subtitle: AdaptiveText(widget.content[index]["description"]),
                   onTap: () => setState(() {
-                    widget.content.removeAt(index);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<bool>(
+                        builder: (context) => ProjectViewPage(
+                          projectData: widget.content[index],
+                        ),
+                      ),
+                    ).then((callback) {
+                      if (callback != null && callback) {}
+                    });
                   }),
                 ),
               );

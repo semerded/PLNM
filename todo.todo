@@ -1,5 +1,5 @@
 @low update readme
-@high animation to hide searchbar under top bar
+
 @critical stop animation when page is switched
 
 @high add placeholders for ddb buttons
