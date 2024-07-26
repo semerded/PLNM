@@ -3,16 +3,25 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
-import 'package:keeper_of_projects/pages/about_page.dart';
-import 'package:keeper_of_projects/pages/archive_page.dart';
-import 'package:keeper_of_projects/pages/login_page.dart';
-import 'package:keeper_of_projects/pages/settings_page.dart';
+import 'package:keeper_of_projects/screens/about_page.dart';
+import 'package:keeper_of_projects/screens/login_page.dart';
+import 'package:keeper_of_projects/screens/settings_page.dart';
 
 // ignore: camel_case_types
 enum _googleMenu { name, archive, settings, about, logout }
 
 class GooglePopUpMenu extends StatefulWidget {
-  const GooglePopUpMenu({super.key});
+  final bool showArchive;
+  final Widget? archiveRoute;
+  GooglePopUpMenu({
+    super.key,
+    this.showArchive = false,
+    this.archiveRoute,
+  }) {
+    if (showArchive) {
+      archiveRoute!;
+    }
+  }
 
   @override
   State<GooglePopUpMenu> createState() => _GooglePopUpMenuState();
@@ -46,11 +55,10 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
             context,
             MaterialPageRoute<bool>(builder: (context) => const AboutPage()),
           );
-        }
-        else if (item == _googleMenu.archive) {
+        } else if (item == _googleMenu.archive && widget.showArchive) {
           Navigator.push(
             context,
-            MaterialPageRoute<bool>(builder: (context) => const ArchivePage()),
+            MaterialPageRoute<bool>(builder: (context) => widget.archiveRoute!),
           );
         }
       },

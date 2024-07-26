@@ -1,18 +1,16 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:keeper_of_projects/backend/validate_drive_data.dart';
+import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/google_api/google_api.dart';
-import 'package:keeper_of_projects/widgets/google_pop_up_menu.dart';
-
-const List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
-const List<String> ddb_category = ["all"];
-
-void main() {
-  runApp(const AppWrapper());
-}
+import 'package:keeper_of_projects/backend/google_api/google_api.dart';
+import 'package:keeper_of_projects/screens/projects/add_project_page.dart';
+import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
+import 'package:keeper_of_projects/common/widgets/add_animated.dart';
+import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
+import 'package:keeper_of_projects/screens/projects/project_archive_page.dart';
+import 'package:keeper_of_projects/screens/projects/widgets/projectview.dart';
 
 class AppWrapper extends StatelessWidget {
   const AppWrapper({super.key});
@@ -35,45 +33,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final SnackBar sb_connectionErr = const SnackBar(content: AdaptiveText("A connection error has occurd"));
-  final SnackBar sb_fileUploadErr = const SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
-  final SnackBar sb_fileDownloadErr = const SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
+  SnackBar sb_connectionErr = SnackBar(content: AdaptiveText("A connection error has occurd"));
+  final SnackBar sb_fileUploadErr = SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
+  final SnackBar sb_fileDownloadErr = SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  final List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"]; // TODO populate ddb lists
+  List<String> ddb_category = ["all"];
+
+  final FocusNode searchBarFocusNode = FocusNode();
 
   int availableTasks = 0;
-
-  String ddb_sortBy_value = ddb_sortBy.first;
-  String ddb_category_value = ddb_category.first;
-  bool searchBarActive = false;
+  late String ddb_sortBy_value;
+  late String ddb_category_value;
 
   @override
   void initState() {
     super.initState();
-    googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      setState(() {
-        currentUser = account;
-      });
-      fileExists();
-    });
-    googleSignIn.signInSilently();
+
+    ddb_sortBy_value = ddb_sortBy.first;
+    ddb_category_value = ddb_category.first;
+    ddb_category.addAll(projectCategories);
+    projectsContent = userDataContent!["projects"];
   }
+
+  bool searchBarActive = false;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Pallete.bg,
         appBar: AppBar(
           backgroundColor: Pallete.primary,
-          title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1
-          leading: FloatingActionButton(
-            onPressed: () {}, // TODO go to idea page
-            backgroundColor: Pallete.primary,
-            elevation: 0,
-            child: const Icon(Icons.lightbulb),
-          ),
+          title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
+          automaticallyImplyLeading: false,
           actions: [
             currentUser == null
                 ? FloatingActionButton(
+                    heroTag: null,
                     elevation: 0,
                     backgroundColor: Pallete.primary,
                     onPressed: () {
@@ -81,7 +79,10 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: const Icon(Icons.login),
                   )
-                : const GooglePopUpMenu()
+                : GooglePopUpMenu(
+                    showArchive: true,
+                    archiveRoute: const ArchivePage(),
+                  )
           ],
         ),
         body: Column(
@@ -144,16 +145,63 @@ class _HomePageState extends State<HomePage> {
                   radius: 20,
                   backgroundColor: searchBarActive ? Pallete.primary : Pallete.box,
                   child: IconButton(
+                    color: searchBarActive ? Pallete.box : Pallete.primary,
                     onPressed: () {
                       setState(() {
                         searchBarActive = !searchBarActive;
+                        searchBarActive ? FocusScope.of(context).requestFocus(searchBarFocusNode) : FocusManager.instance.primaryFocus?.unfocus();
                       });
                     },
-                    color: Pallete.primary,
                     icon: const Icon(Icons.search),
                   ),
-                )
+                ),
               ],
+            ),
+            AnimatedSearchBar(
+              searchBarActive: searchBarActive,
+              focusNode: searchBarFocusNode,
+            ),
+            Expanded(
+              child: ProjectView(
+                content: projectsContent,
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: AddProject(
+          routTo: const AddProjectPage(),
+          taskCreated: (value) {
+            if (value) {
+              setState(() {
+                projectsContent = userDataContent!["projects"];
+                // update screen when task is created
+              });
+            }
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Pallete.text,
+          selectedItemColor: Pallete.primary,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.question_mark),
+              label: 'idk',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.alarm_add_rounded),
+              label: 'Routines',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.task),
+              label: 'Todo',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_chart),
+              label: 'Projects',
             ),
           ],
         ),

@@ -4,9 +4,9 @@ import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
-import 'package:keeper_of_projects/pages/about_page.dart';
-import 'package:keeper_of_projects/pages/home_page.dart';
-import 'package:keeper_of_projects/widgets/icons/drive_icon.dart';
+import 'package:keeper_of_projects/screens/about_page.dart';
+import 'package:keeper_of_projects/screens/projects/projects_page.dart';
+import 'package:keeper_of_projects/icons/drive_icon.dart';
 
 // ignore: camel_case_types
 enum loginStatus { unset, loggedIn, notLoggedIn }
