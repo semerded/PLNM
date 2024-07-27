@@ -134,6 +134,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       isExpanded: true,
                       elevation: 15,
+                      dropdownColor: Pallete.topbox,
                       value: ddb_category_value,
                       items: ddb_category.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
@@ -167,6 +168,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       elevation: 15,
                       isExpanded: true,
+                      dropdownColor: Pallete.topbox,
                       value: ddb_priority_value,
                       items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(

@@ -14,6 +14,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Pallete.bg,
       appBar: AppBar(
         backgroundColor: Pallete.primary,
         leading: IconButton(

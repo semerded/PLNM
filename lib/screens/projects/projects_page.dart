@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                       child: DropdownButton<String>(
                         padding: const EdgeInsets.only(left: 7, right: 7),
                         isExpanded: true,
+                        dropdownColor: Pallete.topbox,
                         elevation: 15,
                         value: ddb_category_value,
                         items: ddb_category.map<DropdownMenuItem<String>>((String value) {
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(left: 7, right: 7),
                         elevation: 15,
                         isExpanded: true,
-                        dropdownColor: Colors.red,
+                        dropdownColor: Pallete.topbox,
                         value: ddb_sortBy_value,
                         items: ddb_sortBy.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(

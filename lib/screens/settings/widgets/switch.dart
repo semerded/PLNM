@@ -25,11 +25,11 @@ class SettingsSwitchState extends State<SettingsSwitch> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      padding: const EdgeInsets.only(left: 35, right: 35, top: 5, bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AdaptiveText(widget.switchTitle),
+          AdaptiveText(widget.switchTitle, fontWeight: FontWeight.w500, fontSize: 18,),
           Switch(
               value: value,
               onChanged: (value) {

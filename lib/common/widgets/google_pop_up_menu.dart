@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
@@ -35,7 +36,8 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<_googleMenu>(
-      // popUpAnimationStyle: AnimationStyle(),
+      color: Pallete.topbox,
+      popUpAnimationStyle: AnimationStyle(),
       icon: Hero(
         tag: "googleUserCircleAvatar",
         child: GoogleUserCircleAvatar(
@@ -87,28 +89,28 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.settings,
           child: ListTile(
-            leading: const Icon(Icons.settings),
+            leading: const AdaptiveIcon(Icons.settings),
             title: AdaptiveText('Settings'),
           ),
         ),
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.archive,
           child: ListTile(
-            leading: const Icon(Icons.archive),
+            leading: const AdaptiveIcon(Icons.archive),
             title: AdaptiveText('Archive'),
           ),
         ),
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.about,
           child: ListTile(
-            leading: const Icon(Icons.info_outline),
+            leading: const AdaptiveIcon(Icons.info_outline),
             title: AdaptiveText('About'),
           ),
         ),
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.logout,
           child: ListTile(
-            leading: const Icon(Icons.logout),
+            leading: const AdaptiveIcon(Icons.logout),
             title: AdaptiveText('Logout'),
           ),
         ),

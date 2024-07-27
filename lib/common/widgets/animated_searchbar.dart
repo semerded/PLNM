@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/data.dart';
 
 // ignore: must_be_immutable
 class AnimatedSearchBar extends StatefulWidget {
@@ -25,6 +27,19 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: SearchBar(
+            backgroundColor: WidgetStatePropertyAll(Pallete.topbox),
+            hintText: "Search For Projects",
+            hintStyle: WidgetStatePropertyAll(
+              TextStyle(
+                fontStyle: FontStyle.italic,
+                color: Pallete.subtext,
+              ),
+            ),
+            textStyle: WidgetStatePropertyAll(
+              TextStyle(
+                color: Pallete.text,
+              ),
+            ),
             focusNode: widget.focusNode,
             controller: widget.filterBar,
             autoFocus: false, // prevent keyboard from opening when app is opened
@@ -32,9 +47,9 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return const Icon(Icons.search);
+                    return const AdaptiveIcon(Icons.search);
                   } else {
-                    return Container(); 
+                    return Container();
                   }
                 }),
             trailing: [
@@ -43,14 +58,14 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   widget.filterBar.clear();
                 },
                 icon: FutureBuilder(
-                future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return const Icon(Icons.close);
-                  } else {
-                    return Container(); 
-                  }
-                }),
+                    future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return const AdaptiveIcon(Icons.close);
+                      } else {
+                        return Container();
+                      }
+                    }),
               ),
             ],
           ),
