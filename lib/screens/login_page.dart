@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -22,6 +23,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   loginStatus loggedIn = loginStatus.unset;
   late final AnimationController rotationLogoController;
   late final Animation<double> rotationAnimation;
+
+  void syncSettings() {
+    if (settingsDataContent!["darkmode"]) {
+      Pallete.setDarkmode(true);
+    } 
+  }
 
   @override
   void initState() {
@@ -72,6 +79,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
         backend.init().then(
           (value) {
+            syncSettings();
             rotationLogoController.dispose();
             Navigator.push(
               context,

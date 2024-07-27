@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -56,11 +60,16 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
             context,
             MaterialPageRoute<bool>(builder: (context) => const SettingsPage()),
           ).then(
-            (value) {
+            (value) async {
               if (value != null && value) {
                 setState(() {});
               }
               widget.onClose(true);
+              await saveFile(settingsData!.id!, jsonEncode(settingsDataContent)).then(
+                (value) {
+                  settingsDataNeedsSync = false;
+                },
+              );
             },
           );
         } else if (item == _googleMenu.about) {
