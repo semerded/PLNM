@@ -23,3 +23,5 @@ drive.DriveApi? driveApi;
 //^ file data for readme file
 const String readmeName = "README.txt";
 const String readmeContent = content.readme;
+
+bool settingsDataNeedsSync = false;

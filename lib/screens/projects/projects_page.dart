@@ -80,6 +80,11 @@ class _HomePageState extends State<HomePage> {
                     child: const Icon(Icons.login),
                   )
                 : GooglePopUpMenu(
+                    onClose: (value) {
+                      if (value) {
+                        setState(() {});
+                      }
+                    },
                     showArchive: true,
                     archiveRoute: const ArchivePage(),
                   )

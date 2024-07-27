@@ -10,11 +10,15 @@ import 'package:keeper_of_projects/screens/settings/settings_page.dart';
 // ignore: camel_case_types
 enum _googleMenu { name, archive, settings, about, logout }
 
+typedef OnClose = void Function(bool value);
+
 class GooglePopUpMenu extends StatefulWidget {
   final bool showArchive;
+  final OnClose onClose;
   final Widget? archiveRoute;
   GooglePopUpMenu({
     super.key,
+    required this.onClose,
     this.showArchive = false,
     this.archiveRoute,
   }) {
@@ -49,6 +53,13 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
           Navigator.push(
             context,
             MaterialPageRoute<bool>(builder: (context) => const SettingsPage()),
+          ).then(
+            (value) {
+              if (value != null && value) {
+                setState(() {});
+              }
+              widget.onClose(true);
+            },
           );
         } else if (item == _googleMenu.about) {
           Navigator.push(

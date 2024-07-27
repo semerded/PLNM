@@ -11,26 +11,43 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  void returnToPreviousPage() {
+    Navigator.of(context).pop(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Pallete.primary,
-        title: const Text("Settings"),
-      ),
-      backgroundColor: Pallete.bg,
-      body: Column(
-        children: [
-          SettingsSwitch(
-            switchTitle: "DarkMode",
-            initValue: settingsDataContent!["darkmode"],
-            onChanged: (value) {
-              setState(() {
-                Pallete.setDarkmode(value);
-              });
-            },
-          )
-        ],
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pop(context, true);
+        return Future<bool>.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Pallete.primary,
+          title: const Text("Settings"),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => returnToPreviousPage(),
+          ),
+        ),
+        backgroundColor: Pallete.bg,
+        body: Column(
+          children: [
+            SettingsSwitch(
+              switchTitle: "DarkMode",
+              initValue: settingsDataContent!["darkmode"],
+              onChanged: (value) {
+                setState(() {
+                  settingsDataContent!["darkmode"] = value;
+                  settingsDataNeedsSync = true;
+                  Pallete.setDarkmode(value);
+                });
+              },
+            )
+          ],
+        ),
       ),
     );
   }
