@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/data.dart';
@@ -27,37 +29,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   void syncSettings() {
     if (settingsDataContent!["darkmode"]) {
       Pallete.setDarkmode(true);
-    } 
+    }
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    // create animations
-    rotationLogoController = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat();
-    rotationAnimation = TweenSequence<double>(
-      [
-        TweenSequenceItem<double>(
-            tween: Tween<double>(
-              begin: 0,
-              end: 1,
-            ).chain(
-              CurveTween(curve: Curves.easeInOut),
-            ),
-            weight: 2),
-        TweenSequenceItem<double>(
-            tween: Tween<double>(
-              begin: 0,
-              end: 0,
-            ).chain(
-              CurveTween(curve: Curves.linear),
-            ),
-            weight: 2),
-      ],
-    ).animate(rotationLogoController);
-
-    // sign in with google
+  void mobileAuth() {
     googleSignIn.signInSilently();
 
     googleSignIn.isSignedIn().then(
@@ -91,6 +66,39 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         ); // initialize backend
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // create animations
+    rotationLogoController = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat();
+    rotationAnimation = TweenSequence<double>(
+      [
+        TweenSequenceItem<double>(
+            tween: Tween<double>(
+              begin: 0,
+              end: 1,
+            ).chain(
+              CurveTween(curve: Curves.easeInOut),
+            ),
+            weight: 2),
+        TweenSequenceItem<double>(
+            tween: Tween<double>(
+              begin: 0,
+              end: 0,
+            ).chain(
+              CurveTween(curve: Curves.linear),
+            ),
+            weight: 2),
+      ],
+    ).animate(rotationLogoController);
+
+    // sign in with google
+    if (Platform.isAndroid) {
+      mobileAuth();
+    }
   }
 
   @override
