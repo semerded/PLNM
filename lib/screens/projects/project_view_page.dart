@@ -25,6 +25,39 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
       ),
       body: Column(
         children: [
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
+                    child: Text(
+                      "priority: ${widget.projectData["priority"]}",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Pallete.bg,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Pallete.text),
+                      ),
+                    ),
+                    child: AdaptiveText("category: ${widget.projectData["category"]}"),
+                  ),
+                ),
+              )
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: AdaptiveText(
