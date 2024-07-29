@@ -65,11 +65,13 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
                 setState(() {});
               }
               widget.onClose(true);
-              await saveFile(settingsData!.id!, jsonEncode(settingsDataContent)).then(
-                (value) {
-                  settingsDataNeedsSync = false;
-                },
-              );
+              if (settingsDataNeedsSync) {
+                await saveFile(settingsData!.id!, jsonEncode(settingsDataContent)).then(
+                  (value) {
+                    settingsDataNeedsSync = false;
+                  },
+                );
+              }
             },
           );
         } else if (item == _googleMenu.about) {
