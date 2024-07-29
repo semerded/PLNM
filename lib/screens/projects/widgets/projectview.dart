@@ -30,6 +30,12 @@ class _ProjectViewState extends State<ProjectView> {
                 color: Pallete.box,
                 elevation: 2,
                 child: ListTile(
+                  shape: Border(
+                    left: BorderSide(
+                      width: 10,
+                      color: projectPriorities[widget.content[index]["priority"]],
+                    ),
+                  ),
                   textColor: Pallete.text,
                   title: AdaptiveText(widget.content[index]["title"]),
                   subtitle: AdaptiveText(widget.content[index]["description"]),
