@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
@@ -185,32 +186,8 @@ class _HomePageState extends State<HomePage> {
             }
           },
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Pallete.text,
-          selectedItemColor: Pallete.primary,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.question_mark),
-              label: 'idk',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.alarm_add_rounded),
-              label: 'Routines',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.task),
-              label: 'Todo',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_chart),
-              label: 'Projects',
-            ),
-          ],
-        ),
+        // ignore: prefer_const_constructors
+        bottomNavigationBar: CustomBottomNavitagionBar() //? ignore const so the color can be updated with setstate
       ),
     );
   }
