@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/editors/category/category_editor_page.dart';
 import 'package:keeper_of_projects/screens/settings/widgets/switch.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -45,6 +46,22 @@ class _SettingsPageState extends State<SettingsPage> {
                   Pallete.setDarkmode(value);
                 });
               },
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Pallete.primary),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<bool>(builder: (context) => const CategoryEditorPage()),
+                );
+              },
+              child: const Text(
+                "Edit Categories",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             )
           ],
         ),
