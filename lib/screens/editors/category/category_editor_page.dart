@@ -26,6 +26,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
           itemCount: projectCategories.length,
           itemBuilder: (context, index) {
             return Card(
+              elevation: 5,
               color: Pallete.box,
               child: ListTile(
                 title: AdaptiveText(projectCategories[index]),
