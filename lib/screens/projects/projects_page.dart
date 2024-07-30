@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   final SnackBar sb_fileUploadErr = SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
   final SnackBar sb_fileDownloadErr = SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
   // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  final List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Most)", "Priority (Least)", "Progress (Most)", "Progress (Least)"];
+  final List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Highest)", "Priority (Lowest)", "Progress (Most)", "Progress (Least)", "Size (Biggest)", "Size (Smallest)"];
   final String ddb_categoryDefaultValue = "All";
   List<String> ddb_category = [];
 
