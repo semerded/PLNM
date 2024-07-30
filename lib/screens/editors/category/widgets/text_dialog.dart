@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
-void showTextDialog(BuildContext context, String title) {
+Future<void> showTextDialog(BuildContext context, String title) async {
   TextEditingController textEditingController = TextEditingController();
-  showDialog(
+  await showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
@@ -22,7 +22,7 @@ void showTextDialog(BuildContext context, String title) {
                   hintText: "Garage Projects",
                   hintStyle: TextStyle(
                     fontStyle: FontStyle.italic,
-                    color: Pallete.subtext
+                    color: Pallete.subtext,
                   ),
                 ),
               ),

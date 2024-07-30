@@ -5,7 +5,8 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/editors/category/widgets/text_dialog.dart';
 
 class CategoryEditorPage extends StatefulWidget {
-  const CategoryEditorPage({super.key});
+  final List<String>? categories;
+  const CategoryEditorPage({super.key, this.categories});
 
   @override
   State<CategoryEditorPage> createState() => _CategoryEditorPageState();
@@ -55,9 +56,12 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          setState(() {
-            showTextDialog(context, "Add Category");
-          });
+          await showTextDialog(context, "Add Category").then(
+            (value) {
+              projectCategories = projectCategories.toList();
+              setState(() {});
+            },
+          );
         },
         backgroundColor: Pallete.primary,
         child: const Icon(Icons.add),
