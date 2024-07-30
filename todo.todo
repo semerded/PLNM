@@ -1,10 +1,34 @@
-@low update readme
+>> backend
+
+>>>> google drive
+
+@low update readme on google drive
+
+>>>> app
+
+@high add categories in savefile and default file content
+
+>> frontend
+
+>>>> functionality
 
 @critical stop animation when page is switched
 
+@high create about page
+
 @high add placeholders for ddb buttons
+
+@low change appbar title
+
+@low create archive page
 
 @optional add project size slider 
 
+>>>> tydining up
+
+@low remove lines under ddb buttons
+
+
+>> ideas
 
 @optional add a sketch feature
