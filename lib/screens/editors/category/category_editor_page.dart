@@ -38,12 +38,10 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                       onPressed: () async {
                         await editCategoryDialog(context, projectCategories[index]).then(
                           (value) {
-                            print(value);
                             if (value != null) {
                               projectCategories[index] = value;
                               projectCategoriesNeedRebuild = true;
                             }
-                            // projectCategories = projectCategories.toList();
                             setState(() {});
                           },
                         );
