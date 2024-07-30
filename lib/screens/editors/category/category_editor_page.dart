@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/editors/category/widgets/text_dialog.dart';
+import 'package:keeper_of_projects/screens/editors/category/widgets/add_category_dialog.dart';
+import 'package:keeper_of_projects/screens/editors/category/widgets/edit_category_dialog.dart';
 
 class CategoryEditorPage extends StatefulWidget {
   final List<String>? categories;
@@ -34,7 +35,19 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await editCategoryDialog(context, projectCategories[index]).then(
+                          (value) {
+                            print(value);
+                            if (value != null) {
+                              projectCategories[index] = value;
+                              projectCategoriesNeedRebuild = true;
+                            }
+                            // projectCategories = projectCategories.toList();
+                            setState(() {});
+                          },
+                        );
+                      },
                       icon: const AdaptiveIcon(Icons.edit),
                     ),
                     IconButton(
@@ -57,9 +70,10 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await showTextDialog(context, "Add Category").then(
+          await addCategoryDialog(context).then(
             (value) {
               projectCategories = projectCategories.toList();
+              projectCategoriesNeedRebuild = true;
               setState(() {});
             },
           );
