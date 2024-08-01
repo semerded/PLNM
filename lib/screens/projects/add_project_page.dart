@@ -9,6 +9,7 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
+import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.dart';
 
 class AddProjectPage extends StatefulWidget {
   const AddProjectPage({super.key});
@@ -32,7 +33,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "description": "",
     "category": null,
     "priority": "none",
-    "projectSize": null,
+    "projectSize": 0.0,
   }; // TODO switch "none" to null
 
   final String ddb_catgegoryDefaultText = "Select A Category";
@@ -195,6 +196,12 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 ),
               ),
             ],
+          ),
+          AdaptiveText("Project Size: "),
+          ProjectSizeSlider(
+            onChanged: (value) {
+              newTask["projectSize"] = value;
+            },
           ),
         ],
       ),
