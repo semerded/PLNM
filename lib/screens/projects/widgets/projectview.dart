@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/project_view_page.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:keeper_of_projects/common/functions/custom_one_border_painter.dart';
 
 class ProjectView extends StatefulWidget {
   final List content;
@@ -27,30 +29,56 @@ class _ProjectViewState extends State<ProjectView> {
             itemCount: widget.content.length,
             itemBuilder: (context, index) {
               return Card(
+                shape: Border(
+                  left: BorderSide(
+                    width: 10,
+                    color: projectPriorities[widget.content[index]["priority"]],
+                  ),
+                ),
                 color: Pallete.box,
                 elevation: 2,
-                child: ListTile(
-                  shape: Border(
-                    left: BorderSide(
-                      width: 10,
-                      color: projectPriorities[widget.content[index]["priority"]],
+                child: CustomPaint(
+                  painter: OneSideProgressBorderPainter(
+                    color: Pallete.text,
+                    progress: 0.5,
+                    strokeWidth: 3.0,
+                    side: borderSide.bottom,
+                  ),
+                  child: ListTile(
+                    isThreeLine: true,
+                    textColor: Pallete.text,
+                    title: AdaptiveText(widget.content[index]["title"]),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        AdaptiveText(widget.content[index]["description"]),
+                        LinearProgressIndicator(
+                          value: 0.5,
+                          backgroundColor: Pallete.bg,
+                          minHeight: 5,
+                        )
+                      ],
+                    ),
+                    onTap: () => setState(() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                          builder: (context) => ProjectViewPage(
+                            projectData: widget.content[index],
+                          ),
+                        ),
+                      ).then((callback) {
+                        if (callback != null && callback) {}
+                      });
+                    }),
+                    trailing: CircularPercentIndicator(
+                      radius: 25,
+                      animation: true,
+                      percent: 0.5,
                     ),
                   ),
-                  textColor: Pallete.text,
-                  title: AdaptiveText(widget.content[index]["title"]),
-                  subtitle: AdaptiveText(widget.content[index]["description"]),
-                  onTap: () => setState(() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<bool>(
-                        builder: (context) => ProjectViewPage(
-                          projectData: widget.content[index],
-                        ),
-                      ),
-                    ).then((callback) {
-                      if (callback != null && callback) {}
-                    });
-                  }),
                 ),
               );
             },
