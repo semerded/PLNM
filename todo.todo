@@ -6,11 +6,13 @@
 
 >>>> app
 
-@high add categories in savefile and default file content
+@high  @today add categories in savefile and default file content
 
 >> frontend
 
 >>>> functionality
+
+@today finish project size slider
 
 @critical stop animation when page is switched
 
