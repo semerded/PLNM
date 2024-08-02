@@ -3,6 +3,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/editors/category/category_editor_page.dart';
 import 'package:keeper_of_projects/screens/settings/widgets/switch.dart';
+import 'package:keeper_of_projects/screens/settings/widgets/switch_w_description.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -44,6 +45,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   settingsDataContent!["darkmode"] = value;
                   settingsDataNeedsSync = true;
                   Pallete.setDarkmode(value);
+                });
+              },
+            ),
+            SettingsSwitchWithDescription(
+              title: "Show Project Size",
+              description: "Shows the size of a project as a progress bar on the bottom of the project card.",
+              initValue: settingsDataContent!["showProjectSize"],
+              onChanged: (value) {
+                setState(() {
+                  settingsDataContent!["showProjectSize"] = value;
+                  settingsDataNeedsSync = true;
                 });
               },
             ),
