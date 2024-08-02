@@ -28,7 +28,7 @@ class SettingsSwitchWithDescriptionState extends State<SettingsSwitchWithDescrip
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
       child: Card(
         elevation: 4,
         color: Pallete.box,
