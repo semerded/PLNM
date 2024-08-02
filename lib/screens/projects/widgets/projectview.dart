@@ -47,19 +47,14 @@ class _ProjectViewState extends State<ProjectView> {
                   child: ListTile(
                     isThreeLine: true,
                     textColor: Pallete.text,
-                    title: AdaptiveText(widget.content[index]["title"]),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        AdaptiveText(widget.content[index]["description"]),
-                        LinearProgressIndicator(
-                          value: 0.5,
-                          backgroundColor: Pallete.bg,
-                          minHeight: 5,
-                        )
-                      ],
+                    title: AdaptiveText(
+                      widget.content[index]["title"],
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                    subtitle: Text(
+                      widget.content[index]["description"],
+                      style: TextStyle(color: Pallete.subtext, fontSize: 12),
                     ),
                     onTap: () => setState(() {
                       Navigator.push(
