@@ -54,7 +54,10 @@ class _ProjectViewState extends State<ProjectView> {
                     ),
                     subtitle: Text(
                       widget.content[index]["description"],
-                      style: TextStyle(color: Pallete.subtext, fontSize: 12),
+                      style: TextStyle(
+                        color: Pallete.subtext,
+                        fontSize: 13,
+                      ),
                     ),
                     onTap: () => setState(() {
                       Navigator.push(
