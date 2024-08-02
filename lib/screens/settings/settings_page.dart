@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
         body: Column(
           children: [
             SettingsSwitch(
-              switchTitle: "DarkMode",
+              title: "DarkMode",
               initValue: settingsDataContent!["darkmode"],
               onChanged: (value) {
                 setState(() {

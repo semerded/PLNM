@@ -6,12 +6,12 @@ typedef OnChanged = void Function(bool value);
 
 class SettingsSwitch extends StatefulWidget {
   final bool initValue;
-  final String switchTitle;
+  final String title;
   final OnChanged? onChanged;
 
   const SettingsSwitch({
     super.key,
-    required this.switchTitle,
+    required this.title,
     required this.initValue,
     this.onChanged,
   });
@@ -36,7 +36,7 @@ class SettingsSwitchState extends State<SettingsSwitch> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AdaptiveText(
-                widget.switchTitle,
+                widget.title,
                 fontWeight: FontWeight.w500,
                 fontSize: 18,
               ),
