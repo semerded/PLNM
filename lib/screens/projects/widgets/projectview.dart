@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/project_view_page.dart';
@@ -38,12 +39,14 @@ class _ProjectViewState extends State<ProjectView> {
                 color: Pallete.box,
                 elevation: 2,
                 child: CustomPaint(
-                  painter: OneSideProgressBorderPainter(
-                    color: Pallete.text,
-                    progress: 0.5,
-                    strokeWidth: 3.0,
-                    side: borderSide.bottom,
-                  ),
+                  painter: settingsDataContent!["showProjectSize"]
+                      ? OneSideProgressBorderPainter(
+                          color: Pallete.text,
+                          progress: 0.5,
+                          strokeWidth: 3.0,
+                          side: borderSide.bottom,
+                        )
+                      : null,
                   child: ListTile(
                     isThreeLine: true,
                     textColor: Pallete.text,
