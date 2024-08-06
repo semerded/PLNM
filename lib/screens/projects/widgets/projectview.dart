@@ -41,8 +41,8 @@ class _ProjectViewState extends State<ProjectView> {
                 child: CustomPaint(
                   painter: settingsDataContent!["showProjectSize"]
                       ? OneSideProgressBorderPainter(
-                          color: Pallete.text,
-                          progress: 0.5,
+                          color: Pallete.primary,
+                          progress: widget.content[index]["projectSize"] == null ? 0 : widget.content[index]["projectSize"] / 100 ,
                           strokeWidth: 3.0,
                           side: borderSide.bottom,
                         )
@@ -71,7 +71,11 @@ class _ProjectViewState extends State<ProjectView> {
                           ),
                         ),
                       ).then((callback) {
-                        if (callback != null && callback) {}
+                        if (callback != null && callback) {
+                          setState(() {
+                            
+                          });
+                        }
                       });
                     }),
                     trailing: CircularPercentIndicator(
