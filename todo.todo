@@ -12,8 +12,6 @@
 
 >>>> functionality
 
-@today finish project size slider
-
 @critical stop animation when page is switched
 
 @high create about page
@@ -23,6 +21,8 @@
 @low change appbar title
 
 @low create archive page
+
+@low add a checklist to enable multiple categories (showing Multiple in bar) and add buttons to enable and disable all categories
 
 @optional add more examples for adding a category
 
