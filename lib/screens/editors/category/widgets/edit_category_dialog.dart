@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -52,6 +53,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
               onPressed: () {
                 if (minimumtRequirementsMet) {
                   editedText = textEditingController.text;
+                  categoryDataNeedSync = true;
                   Navigator.pop(context);
                 }
               },

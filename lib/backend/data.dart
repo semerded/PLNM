@@ -6,6 +6,8 @@ const String projectsFileName = "project-data.json";
 const String projectsFileDefaultContent = defaultContent.projectsData;
 const String settingsFileName = "settings-data.json";
 const String settingsFileDefaultContent = defaultContent.settings;
+const String categoryFileName = "category-data.json";
+const String categoryFileDefaultContent = defaultContent.categoryData;
 const String parentFolderName = "com.semerded";
 const String folderName = "keeper-of-projects";
 
@@ -14,6 +16,8 @@ drive.File? projectsFileData;
 Map<String, dynamic>? projectsDataContent;
 drive.File? settingsFileData;
 Map<String, dynamic>? settingsDataContent;
+drive.File? categoryFileData;
+List<String>? categoryDataContent;
 
 Map<String, String>? authHeaders;
 GoogleHttpClient? authenticateClient;
@@ -24,3 +28,4 @@ const String readmeName = "README.txt";
 const String readmeContent = defaultContent.readme;
 
 bool settingsDataNeedsSync = false;
+bool categoryDataNeedSync = false;

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/editors/category/category_editor_page.dart';
 import 'package:keeper_of_projects/screens/settings/widgets/switch.dart';
@@ -65,7 +68,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<bool>(builder: (context) => const CategoryEditorPage()),
-                );
+                ).then((value) async {
+                  if (categoryDataNeedSync) {
+                    await saveFile(categoryFileData!.id!, jsonEncode(categoryDataContent));
+                  }
+                });
               },
               child: const Text(
                 "Edit Categories",

@@ -26,6 +26,12 @@ Future<String> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
   if (settingsFileData == null || settingsFileData!.name != settingsFileName) {
     settingsFileData = await createFile(settingsFileName, settingsFileDefaultContent, driveApi, appFolder!.id);
   }
+
+  categoryFileData = await getFile(categoryFileName, driveApi);
+  if (categoryFileData == null || categoryFileData!.name != categoryFileName) {
+    categoryFileData = await createFile(categoryFileName, categoryFileDefaultContent, driveApi, appFolder!.id);
+  }
+
   return "Files synced with Google Drive";
 }
 

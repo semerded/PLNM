@@ -50,7 +50,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     ddb_category_value = ddb_catgegoryDefaultText;
 
     ddb_category.add(ddb_catgegoryDefaultText);
-    ddb_category.addAll(projectCategories);
+    ddb_category.addAll(categoryDataContent!);
   }
 
   @override

@@ -24,6 +24,9 @@ Future<String> init() async {
   _media = await driveApi?.files.get(settingsFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
   settingsDataContent = jsonDecode(await utf8.decoder.bind(_media.stream).join());
 
+  _media = await driveApi?.files.get(categoryFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+  categoryDataContent = List<String>.from(jsonDecode(await utf8.decoder.bind(_media.stream).join()));
+
   // return the callback
   return callback;
 }

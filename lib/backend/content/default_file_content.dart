@@ -7,3 +7,6 @@ const String projectsData = '{"ideas": [], "projects": [], "archive": []}';
 
 //^ settings
 const String settings = '{"darkmode": false, "colorscheme": "orange", "showProjectSize": true}';
+
+//^ category
+const String categoryData = '["app", "finish", "zolder"]';

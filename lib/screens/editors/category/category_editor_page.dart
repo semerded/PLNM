@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -24,22 +25,22 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
       ),
       body: Expanded(
         child: ListView.builder(
-          itemCount: projectCategories.length,
+          itemCount: categoryDataContent!.length,
           itemBuilder: (context, index) {
             return Card(
               elevation: 5,
               color: Pallete.box,
               child: ListTile(
-                title: AdaptiveText(projectCategories[index]),
+                title: AdaptiveText(categoryDataContent![index]),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
                       onPressed: () async {
-                        await editCategoryDialog(context, projectCategories[index]).then(
+                        await editCategoryDialog(context, categoryDataContent![index]).then(
                           (value) {
                             if (value != null) {
-                              projectCategories[index] = value;
+                              categoryDataContent![index] = value;
                               projectCategoriesNeedRebuild = true;
                             }
                             setState(() {});
@@ -51,7 +52,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          projectCategories.removeAt(index);
+                          categoryDataContent!.removeAt(index);
                         });
                       },
                       icon: const Icon(
@@ -70,7 +71,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
         onPressed: () async {
           await addCategoryDialog(context).then(
             (value) {
-              projectCategories = projectCategories.toList();
+              categoryDataContent = categoryDataContent!.toList();
               projectCategoriesNeedRebuild = true;
               setState(() {});
             },

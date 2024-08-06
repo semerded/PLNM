@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     ddb_category = [];
     ddb_category_value = ddb_categoryDefaultValue;
     ddb_category.add(ddb_categoryDefaultValue);
-    ddb_category.addAll(projectCategories);
+    ddb_category.addAll(categoryDataContent!);
   }
 
   @override
