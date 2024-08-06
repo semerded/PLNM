@@ -13,59 +13,109 @@ class ProjectViewPage extends StatefulWidget {
 class _ProjectViewPageState extends State<ProjectViewPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Pallete.bg,
-      appBar: AppBar(
-        backgroundColor: Pallete.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pop(true);
+        return Future<bool>.value(true);
+      },
+      child: Scaffold(
+        backgroundColor: Pallete.bg,
+        appBar: AppBar(
+          backgroundColor: Pallete.primary,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+          title: Text(widget.projectData["title"]),
         ),
-        title: Text(widget.projectData["title"]),
-      ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
-                    child: Text(
-                      "priority: ${widget.projectData["priority"]}",
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Pallete.bg,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Pallete.text),
+        body: Column(
+          children: [
+            Row(
+              //^ priority visualtisation
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
+                      child: Text(
+                        "priority: ${widget.projectData["priority"]}",
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                    child: AdaptiveText("category: ${widget.projectData["category"]}"),
                   ),
                 ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AdaptiveText(
-              widget.projectData["description"] == "" ? "No Description" : widget.projectData["description"],
-              fontStyle: widget.projectData["description"] == "" ? FontStyle.italic : null,
+                //^ category visualisation
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Pallete.bg,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Pallete.text),
+                        ),
+                      ),
+                      child: AdaptiveText("category: ${widget.projectData["category"]}"),
+                    ),
+                  ),
+                )
+              ],
             ),
-          )
-        ],
+            Row(
+              //^ project size visualisation
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Pallete.bg,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Pallete.text),
+                        ),
+                      ),
+                      child: Text(
+                        "priority: ${widget.projectData["projectSize"]}",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                //^ completion visualisation
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Pallete.bg,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Pallete.text),
+                        ),
+                      ),
+                      child: AdaptiveText("category: ${widget.projectData["category"]}"),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AdaptiveText(
+                widget.projectData["description"] == "" ? "No Description" : widget.projectData["description"],
+                fontStyle: widget.projectData["description"] == "" ? FontStyle.italic : null,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
