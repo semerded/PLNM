@@ -16,12 +16,12 @@ Future<String> init() async {
   // if they are not available they will be created containing the default file content
   String callback = await checkAndRepairDriveFiles(driveApi!);
 
-  // fetch the content from the userdata file
-  drive.Media _media = await driveApi?.files.get(userData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
-  userDataContent = jsonDecode(await utf8.decoder.bind(_media.stream).join());
+  // fetch the content from the projectsFileData file
+  drive.Media _media = await driveApi?.files.get(projectsFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+  projectsDataContent = jsonDecode(await utf8.decoder.bind(_media.stream).join());
 
-  // fetch the content from the settingsdata file
-  _media = await driveApi?.files.get(settingsData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+  // fetch the content from the settingsFileData file
+  _media = await driveApi?.files.get(settingsFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
   settingsDataContent = jsonDecode(await utf8.decoder.bind(_media.stream).join());
 
   // return the callback

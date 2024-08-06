@@ -211,9 +211,9 @@ class _AddProjectPageState extends State<AddProjectPage> {
             newTask["timeCreated"] = DateTime.now().toString();
 
             setState(() {
-              userDataContent!["projects"].add(newTask); //! add deepcopy if duplication happens
+              projectsDataContent!["projects"].add(newTask); //! add deepcopy if duplication happens
               LoadingScreen.show(context, "Saving Task");
-              saveFile(userData!.id!, jsonEncode(userDataContent)).then((value) {
+              saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent)).then((value) {
                 LoadingScreen.hide(context);
                 Navigator.of(context).pop(true);
               });

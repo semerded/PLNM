@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
 
     ddb_sortBy_value = ddb_sortBy.first;
     buildDDBcategory();
-    projectsContent = userDataContent!["projects"];
+    projectsContent = projectsDataContent!["projects"];
   }
 
   bool searchBarActive = false;
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
             taskCreated: (value) {
               if (value) {
                 setState(() {
-                  projectsContent = userDataContent!["projects"];
+                  projectsContent = projectsDataContent!["projects"];
                   // update screen when task is created
                 });
               }

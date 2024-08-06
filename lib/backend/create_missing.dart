@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:googleapis/drive/v3.dart' as drive;
 
-Future<drive.File?> createFile(String fileName, String defaultFileContent, drive.DriveApi driveApi, [String? parentFolderId]) async {
+Future<drive.File?> createFile(String projectsFileName, String defaultFileContent, drive.DriveApi driveApi, [String? parentFolderId]) async {
   drive.File fileMetadata = drive.File();
-  fileMetadata.name = fileName;
+  fileMetadata.name = projectsFileName;
   if (parentFolderId != null) {
     fileMetadata.parents = [parentFolderId];
   }
@@ -44,4 +44,3 @@ Future<drive.File?> createFolder(String folderName, drive.DriveApi driveApi, [St
     return null;
   }
 }
-

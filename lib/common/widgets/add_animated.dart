@@ -70,7 +70,7 @@ class _AddProjectState extends State<AddProject> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if (userDataContent!["projects"].length == 0) {
+    if (projectsDataContent!["projects"].length == 0) {
       animationController.repeat();
     } else {
       animationController.reset();

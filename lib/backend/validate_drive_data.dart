@@ -17,22 +17,22 @@ Future<String> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
     appFolder = await createFolder(folderName, driveApi, parentAppFolder.id);
   }
 
-  userData = await getFile(fileName, driveApi);
-  if (userData == null || userData!.name != fileName) {
-    userData = await createFile(fileName, fileDefaultContent, driveApi, appFolder!.id);
+  projectsFileData = await getFile(projectsFileName, driveApi);
+  if (projectsFileData == null || projectsFileData!.name != projectsFileName) {
+    projectsFileData = await createFile(projectsFileName, projectsFileDefaultContent, driveApi, appFolder!.id);
   }
 
-  settingsData = await getFile(settingsName, driveApi);
-  if (settingsData == null || settingsData!.name != settingsName) {
-    settingsData = await createFile(settingsName, settingsDefaultContent, driveApi, appFolder!.id);
+  settingsFileData = await getFile(settingsFileName, driveApi);
+  if (settingsFileData == null || settingsFileData!.name != settingsFileName) {
+    settingsFileData = await createFile(settingsFileName, settingsFileDefaultContent, driveApi, appFolder!.id);
   }
   return "Files synced with Google Drive";
 }
 
-Future<drive.File?> getFile(String fileName, drive.DriveApi driveApi, [String? parentFolderName]) async {
+Future<drive.File?> getFile(String projectsFileName, drive.DriveApi driveApi, [String? parentFolderName]) async {
   try {
     drive.FileList result = await driveApi.files.list(
-      q: "name = '$fileName'",
+      q: "name = '$projectsFileName'",
       spaces: 'drive',
       $fields: "files(id, name)",
     );
