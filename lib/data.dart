@@ -10,11 +10,41 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 
 GoogleSignInAccount? currentUser;
 
-List<String> projectCategories = ["app", "finish", "zolder"];
 const String projectCategoryUnknown = "Unknown Category";
 bool projectCategoriesNeedRebuild = false;
-Map<String, dynamic> projectPriorities = {"none": Colors.grey, "low": Colors.green, "medium": Colors.yellow, "high": Colors.red, "critical": Colors.purple};
+Map<String, dynamic> projectPriorities = {
+  "none": Colors.grey,
+  "low": Colors.green,
+  "medium": Colors.yellow,
+  "high": Colors.red,
+  "critical": Colors.purple,
+};
 List projectsContent = [];
+
+const List<String> projectSizeListing = [
+  "Unknown",
+  "Very Small",
+  "Small",
+  "Small Medium",
+  "Medium",
+  "Medium Big",
+  "Big",
+  "Huge",
+  "Year-Plan",
+  "Enormous",
+];
+const List<String> projectSizeListingAlternative = [
+  "IDK (not really planned)", // unknown
+  "Toilet Business", // very small
+  "Afternooning Doing", // small
+  "Sunny Day job", // small medium
+  "Weekend Done", // medium
+  "Workweek (payed)", // medium big
+  "There Goes My Holidays", // big
+  "Months & months of work", // huge
+  "Multiple Calenders", // year-plan
+  "The Great Wall of China", // enormous
+];
 
 class Pallete {
   static const MaterialColor primary = Colors.orange;
