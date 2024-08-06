@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -82,8 +83,15 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         ),
                       ),
                       child: Text(
-                        "priority: ${widget.projectData["size"]}",
-                        style: const TextStyle(color: Colors.white),
+                        () {
+                          List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
+                          if (widget.projectData["size"] == 0) {
+                            return currentProjectSizeDescription[0];
+                          }
+                          double value = ((widget.projectData["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+                          return currentProjectSizeDescription[value.toInt()];
+                        }(),
+                        style: TextStyle(color: Pallete.text),
                       ),
                     ),
                   ),

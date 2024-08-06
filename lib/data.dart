@@ -21,7 +21,7 @@ Map<String, dynamic> projectPriorities = {
 };
 List projectsContent = [];
 
-const List<String> projectSizeListing = [
+const List<String> projectSizeDescription = [
   "Unknown",
   "Very Small",
   "Small",
@@ -33,7 +33,7 @@ const List<String> projectSizeListing = [
   "Year-Plan",
   "Enormous",
 ];
-const List<String> projectSizeListingAlternative = [
+const List<String> projectSizeDescriptionAlternative = [
   "IDK (not really planned)", // unknown
   "Toilet Business", // very small
   "Afternooning Doing", // small
@@ -45,6 +45,7 @@ const List<String> projectSizeListingAlternative = [
   "Multiple Calenders", // year-plan
   "The Great Wall of China", // enormous
 ];
+const double projectSizeDescriptionSubdivisionNumber = 99 / 8;
 
 class Pallete {
   static const MaterialColor primary = Colors.orange;
