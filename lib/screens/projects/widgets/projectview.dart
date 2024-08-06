@@ -42,7 +42,7 @@ class _ProjectViewState extends State<ProjectView> {
                   painter: settingsDataContent!["showProjectSize"]
                       ? OneSideProgressBorderPainter(
                           color: Pallete.primary,
-                          progress: widget.content[index]["projectSize"] == null ? 0 : widget.content[index]["projectSize"] / 100 ,
+                          progress: widget.content[index]["size"] == null ? 0 : widget.content[index]["size"] / 100,
                           strokeWidth: 3.0,
                           side: borderSide.bottom,
                         )
@@ -72,9 +72,7 @@ class _ProjectViewState extends State<ProjectView> {
                         ),
                       ).then((callback) {
                         if (callback != null && callback) {
-                          setState(() {
-                            
-                          });
+                          setState(() {});
                         }
                       });
                     }),

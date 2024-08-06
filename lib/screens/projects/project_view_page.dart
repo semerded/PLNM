@@ -82,7 +82,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         ),
                       ),
                       child: Text(
-                        "priority: ${widget.projectData["projectSize"]}",
+                        "priority: ${widget.projectData["size"]}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),

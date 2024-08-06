@@ -33,7 +33,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "description": "",
     "category": null,
     "priority": "none",
-    "projectSize": 0.0,
+    "size": 0.0,
   }; // TODO switch "none" to null
 
   final String ddb_catgegoryDefaultText = "Select A Category";
@@ -200,7 +200,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
           AdaptiveText("Project Size: "),
           ProjectSizeSlider(
             onChanged: (value) {
-              newTask["projectSize"] = value.toInt();
+              newTask["size"] = value.toInt();
             },
           ),
         ],
