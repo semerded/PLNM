@@ -200,7 +200,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
           AdaptiveText("Project Size: "),
           ProjectSizeSlider(
             onChanged: (value) {
-              newTask["projectSize"] = value;
+              newTask["projectSize"] = value.toInt();
             },
           ),
         ],
