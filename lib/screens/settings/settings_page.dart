@@ -62,6 +62,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
               },
             ),
+            SettingsSwitchWithDescription(
+              title: "Funny Project Sizes",
+              description: "Add some funny project size descriptions into the mix, this changes the default {small, medium, big, ...} into something more... funny ;)",
+              initValue: settingsDataContent!["funnyProjectSize"],
+              onChanged: (value) {
+                setState(() {
+                  settingsDataContent!["funnyProjectSize"] = value;
+                  settingsDataNeedsSync = true;
+                });
+              },
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Pallete.primary),
               onPressed: () {
