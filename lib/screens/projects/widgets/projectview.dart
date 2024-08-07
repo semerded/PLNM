@@ -4,7 +4,7 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/project_view_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:keeper_of_projects/common/functions/custom_one_border_painter.dart';
+import 'package:keeper_of_projects/common/custom/custom_one_border_painter.dart';
 
 class ProjectView extends StatefulWidget {
   final List content;

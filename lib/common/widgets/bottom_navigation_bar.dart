@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class CustomBottomNavitagionBar extends StatelessWidget {
@@ -10,7 +9,7 @@ class CustomBottomNavitagionBar extends StatelessWidget {
     return Theme(
       data: ThemeData(
         canvasColor: Pallete.topbox,
-      primaryColor: Colors.red
+        primaryColor: Colors.red,
       ),
       child: BottomNavigationBar(
         unselectedItemColor: Pallete.text,
