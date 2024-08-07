@@ -38,7 +38,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
@@ -52,7 +52,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 //^ category visualisation
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
@@ -74,27 +74,6 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8),
-                    // child: ElevatedButton(
-                    //   onPressed: () {},
-                    //   style: ElevatedButton.styleFrom(
-                    //     backgroundColor: Pallete.bg,
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(18.0),
-                    //       side: BorderSide(color: Pallete.text),
-                    //     ),
-                    //   ),
-                    //   child: Text(
-                    //     () {
-                    //       List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
-                    //       if (widget.projectData["size"] == 0) {
-                    //         return currentProjectSizeDescription[0];
-                    //       }
-                    //       double value = ((widget.projectData["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
-                    //       return currentProjectSizeDescription[value.toInt()];
-                    //     }(),
-                    //     style: TextStyle(color: Pallete.text),
-                    //   ),
-                    // ),
                     child: ProgressElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Pallete.bg,
