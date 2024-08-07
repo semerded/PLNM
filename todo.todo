@@ -8,17 +8,19 @@
 
 >> frontend
 
-@high @today show project size and project progress with a progress button (search online or create custom)
+@high show project progress with a progress button
+
+@low change appbar title
 
 >>>> functionality
 
 @critical stop animation when page is switched
 
+@critical @today add project parts with tasks
+
 @high @today create about page
 
 @high add placeholders for ddb buttons
-
-@low change appbar title
 
 @low create archive page
 
