@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -72,9 +73,29 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    // child: ElevatedButton(
+                    //   onPressed: () {},
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Pallete.bg,
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(18.0),
+                    //       side: BorderSide(color: Pallete.text),
+                    //     ),
+                    //   ),
+                    //   child: Text(
+                    //     () {
+                    //       List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
+                    //       if (widget.projectData["size"] == 0) {
+                    //         return currentProjectSizeDescription[0];
+                    //       }
+                    //       double value = ((widget.projectData["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+                    //       return currentProjectSizeDescription[value.toInt()];
+                    //     }(),
+                    //     style: TextStyle(color: Pallete.text),
+                    //   ),
+                    // ),
+                    child: ProgressElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Pallete.bg,
                         shape: RoundedRectangleBorder(
@@ -82,6 +103,12 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           side: BorderSide(color: Pallete.text),
                         ),
                       ),
+                      onPressed: () {},
+                      progress: () {
+                        int size = widget.projectData["size"];
+                        return size.toDouble() / 100;
+                      }(),
+                      progressColor: Pallete.primary,
                       child: Text(
                         () {
                           List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
