@@ -172,10 +172,20 @@ class _AddProjectPageState extends State<AddProjectPage> {
               ),
             ],
           ),
-          AdaptiveText("Project Size: "),
+          AdaptiveText("Project Size: ${() {
+            List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
+            if (newTask["size"] == 0) {
+              return currentProjectSizeDescription[0];
+            }
+            double value = ((newTask["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+            return currentProjectSizeDescription[value.toInt()];
+          }()}"),
           ProjectSizeSlider(
             onChanged: (value) {
+              setState(() {
+                
               newTask["size"] = value.toInt();
+              });
             },
           ),
           ElevatedButton.icon(
