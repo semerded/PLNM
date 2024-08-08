@@ -3,6 +3,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 
 class ProjectViewPage extends StatefulWidget {
   final Map<String, dynamic> projectData;
@@ -40,7 +41,12 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showInfoDialog(
+                          context,
+                          "Tasks have different priorities. A task has a general priority while its task parts can have different priorities that are not linked to the general priority.",
+                        );
+                      },
                       style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
                       child: Text(
                         "priority: ${widget.projectData["priority"]}",
@@ -54,7 +60,12 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showInfoDialog(
+                          context,
+                          "The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Pallete.bg,
                         shape: RoundedRectangleBorder(
@@ -82,7 +93,12 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           side: BorderSide(color: Pallete.text),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showInfoDialog(
+                          context,
+                          "Shows the size of the project, the description converts a percental scale to something more readable. The background shows the percental scale.",
+                        );
+                      },
                       progress: () {
                         int size = widget.projectData["size"];
                         return size.toDouble() / 100;
@@ -107,7 +123,12 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showInfoDialog(
+                          context,
+                          "This shows how much of the task parts have been completed.",
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Pallete.bg,
                         shape: RoundedRectangleBorder(
