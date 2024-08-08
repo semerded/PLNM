@@ -44,7 +44,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       onPressed: () {
                         showInfoDialog(
                           context,
-                          "Tasks have different priorities. A task has a general priority while its task parts can have different priorities that are not linked to the general priority.",
+                          "Project Prioirty: projects have different priorities. A project has a general priority while its project parts can have different priorities that are not linked to the general priority.",
                         );
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
@@ -63,7 +63,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       onPressed: () {
                         showInfoDialog(
                           context,
-                          "The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
+                          "Project Category: The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -96,7 +96,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       onPressed: () {
                         showInfoDialog(
                           context,
-                          "Shows the size of the project, the description converts a percental scale to something more readable. The background shows the percental scale.",
+                          "Project Size: Shows the size of the project, the description converts a percental scale to something more readable. The background shows the percental scale.",
                         );
                       },
                       progress: () {
@@ -126,7 +126,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       onPressed: () {
                         showInfoDialog(
                           context,
-                          "This shows how much of the task parts have been completed.",
+                          "Project completion, This shows how much of the project parts have been completed.",
                         );
                       },
                       style: ElevatedButton.styleFrom(
