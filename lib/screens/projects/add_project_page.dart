@@ -5,10 +5,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
+import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
+import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
+import 'package:keeper_of_projects/screens/projects/add_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.dart';
 
 class AddProjectPage extends StatefulWidget {
@@ -34,6 +38,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "category": null,
     "priority": "none",
     "size": 0.0,
+    "part": [],
   }; // TODO switch "none" to null
 
   final String ddb_catgegoryDefaultText = "Select A Category";
@@ -67,61 +72,30 @@ class _AddProjectPageState extends State<AddProjectPage> {
       body: Column(
         children: [
           // add a title
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Focus(
-              onFocusChange: (_) => setState(() {}), // updates the focus colors
-              child: TextField(
-                focusNode: titleFocusNode,
-                decoration: InputDecoration(
-                  enabledBorder: enabledBorder(),
-                  focusedBorder: focusedBorder(),
-                  hintText: "A unique title for your project",
-                  hintStyle: TextStyle(color: Pallete.text, fontStyle: FontStyle.italic),
-                  labelText: "Title",
-                  labelStyle: TextStyle(color: titleFocusNode.hasFocus ? Pallete.primary : Pallete.text),
-                ),
-                style: TextStyle(color: Pallete.text),
-                cursorColor: Pallete.primary,
-                onChanged: (value) {
-                  setState(() {
-                    validTitle = value.length >= 2;
-                    newTask["title"] = value;
-                    validate();
-                  });
-                },
-              ),
-            ),
+          TitleTextField(
+            focusNode: titleFocusNode,
+            hintText: "A unique title for your project",
+            onChanged: (value) {
+              setState(() {
+                validTitle = value.length >= 2;
+                newTask["title"] = value;
+                validate();
+              });
+            },
           ),
 
           // add a description
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Focus(
-              onFocusChange: (_) => setState(() {}),
-              child: TextField(
-                focusNode: descriptionFocusNode,
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  enabledBorder: enabledBorder(),
-                  focusedBorder: focusedBorder(),
-                  hintText: "Describe your project here",
-                  hintStyle: TextStyle(color: Pallete.text, fontStyle: FontStyle.italic),
-                  labelText: "Description",
-                  labelStyle: TextStyle(color: descriptionFocusNode.hasFocus ? Pallete.primary : Pallete.text),
-                  helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
-                  helperStyle: const TextStyle(color: Colors.red),
-                ),
-                style: TextStyle(color: Pallete.text),
-                cursorColor: Pallete.primary,
-                onChanged: (value) {
-                  setState(() {
-                    newTask["description"] = value;
-                    validate();
-                  });
-                },
-              ),
-            ),
+          DescriptionTextField(
+            focusNode: descriptionFocusNode,
+            controller: descriptionController,
+            hintText: "Describe your project here",
+            helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
+            onChanged: (value) {
+              setState(() {
+                newTask["description"] = value;
+                validate();
+              });
+            },
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -203,12 +177,74 @@ class _AddProjectPageState extends State<AddProjectPage> {
               newTask["size"] = value.toInt();
             },
           ),
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<Map<String, dynamic>>(
+                  builder: (context) => const AddProjectPartPage(),
+                ),
+              ).then(
+                (value) {
+                  if (value != null) {
+                    print(value);
+                    setState(() {
+                      newTask["part"].add(value);
+                    });
+                  }
+                },
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Pallete.topbox,
+            ),
+            label: AdaptiveText("Add Project Part"),
+            icon: const Icon(
+              Icons.add,
+              color: Pallete.primary,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: newTask["part"].length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> part = newTask["part"][index];
+                return ListTile(
+                  isThreeLine: true,
+                  title: AdaptiveText(part["title"]),
+                  subtitle: RichText(
+                    text: TextSpan(
+                      text: "${part["subtasks"].length} • ",
+                      style: TextStyle(color: Pallete.text, fontWeight: FontWeight.bold, overflow: TextOverflow.fade),
+                      children: <TextSpan>[
+                        TextSpan(text: part["description"], style: TextStyle(color: Pallete.subtext)),
+                      ],
+                    ),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const AdaptiveIcon(Icons.edit),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const AdaptiveIcon(Icons.delete),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (taskValidated) {
             newTask["timeCreated"] = DateTime.now().toString();
+            newTask["size"] = newTask["size"].toInt();
 
             setState(() {
               projectsDataContent!["projects"].add(newTask); //! add deepcopy if duplication happens
