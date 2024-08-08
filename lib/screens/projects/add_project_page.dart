@@ -172,48 +172,55 @@ class _AddProjectPageState extends State<AddProjectPage> {
               ),
             ],
           ),
-          AdaptiveText("Project Size: ${() {
-            List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
-            if (newTask["size"] == 0) {
-              return currentProjectSizeDescription[0];
-            }
-            double value = ((newTask["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
-            return currentProjectSizeDescription[value.toInt()];
-          }()}"),
-          ProjectSizeSlider(
-            onChanged: (value) {
-              setState(() {
-                
-              newTask["size"] = value.toInt();
-              });
-            },
-          ),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<Map<String, dynamic>>(
-                  builder: (context) => const AddProjectPartPage(),
-                ),
-              ).then(
-                (value) {
-                  if (value != null) {
-                    print(value);
-                    setState(() {
-                      newTask["part"].add(value);
-                    });
-                  }
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  AdaptiveText("Size: ${() {
+                    if (newTask["size"] == 0) {
+                      return projectSizeDescription[0];
+                    }
+                    double value = ((newTask["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+                    return projectSizeDescription[value.toInt()];
+                  }()}"),
+                  ProjectSizeSlider(
+                    onChanged: (value) {
+                      setState(() {
+                        newTask["size"] = value.toInt();
+                      });
+                    },
+                  ),
+                ],
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<Map<String, dynamic>>(
+                      builder: (context) => const AddProjectPartPage(),
+                    ),
+                  ).then(
+                    (value) {
+                      if (value != null) {
+                        print(value);
+                        setState(() {
+                          newTask["part"].add(value);
+                        });
+                      }
+                    },
+                  );
                 },
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Pallete.topbox,
-            ),
-            label: AdaptiveText("Add Project Part"),
-            icon: const Icon(
-              Icons.add,
-              color: Pallete.primary,
-            ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Pallete.topbox,
+                ),
+                label: AdaptiveText("Add Project Part"),
+                icon: const Icon(
+                  Icons.add,
+                  color: Pallete.primary,
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: ListView.builder(
