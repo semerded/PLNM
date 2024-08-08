@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
-import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
 
 Future addTask(BuildContext context) {
@@ -10,6 +9,7 @@ Future addTask(BuildContext context) {
     "title": "",
     "description": "",
     "priority": "none",
+    "completed": false,
   };
 
   final FocusNode descriptionFocusNode = FocusNode();

@@ -27,6 +27,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
     "description": "",
     "priority": "none",
     "tasks": [],
+    "completed": false,
   };
 
   void validate() {
@@ -170,18 +171,18 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                     title: AdaptiveText(task["title"]),
                     subtitle: AdaptiveText(task["description"]),
                     trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const AdaptiveIcon(Icons.edit),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const AdaptiveIcon(Icons.delete),
-                      ),
-                    ],
-                  ),
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const AdaptiveIcon(Icons.edit),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const AdaptiveIcon(Icons.delete),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
