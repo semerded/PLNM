@@ -32,7 +32,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
   late String ddb_priority_value;
   late String ddb_category_value;
 
-  Map<String, dynamic> newTask = {
+  Map<String, dynamic> newProject = {
     "title": null,
     "description": "",
     "category": null,
@@ -79,7 +79,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
             onChanged: (value) {
               setState(() {
                 validTitle = value.length >= 2;
-                newTask["title"] = value;
+                newProject["title"] = value;
                 validate();
               });
             },
@@ -93,7 +93,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
             helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
             onChanged: (value) {
               setState(() {
-                newTask["description"] = value;
+                newProject["description"] = value;
                 validate();
               });
             },
@@ -126,7 +126,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
-                          newTask["category"] = ddb_category_value = value!;
+                          newProject["category"] = ddb_category_value = value!;
                           validCategory = value != ddb_catgegoryDefaultText;
                           validate();
                         });
@@ -162,7 +162,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
-                          newTask["priority"] = ddb_priority_value = value!;
+                          newProject["priority"] = ddb_priority_value = value!;
                           validate();
                         });
                       },
@@ -178,16 +178,16 @@ class _AddProjectPageState extends State<AddProjectPage> {
               Column(
                 children: [
                   AdaptiveText("Size: ${() {
-                    if (newTask["size"] == 0) {
+                    if (newProject["size"] == 0) {
                       return projectSizeDescription[0];
                     }
-                    double value = ((newTask["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+                    double value = ((newProject["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
                     return projectSizeDescription[value.toInt()];
                   }()}"),
                   ProjectSizeSlider(
                     onChanged: (value) {
                       setState(() {
-                        newTask["size"] = value.toInt();
+                        newProject["size"] = value.toInt();
                       });
                     },
                   ),
@@ -205,7 +205,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       if (value != null) {
                         print(value);
                         setState(() {
-                          newTask["part"].add(value);
+                          newProject["part"].add(value);
                         });
                       }
                     },
@@ -224,33 +224,36 @@ class _AddProjectPageState extends State<AddProjectPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: newTask["part"].length,
+              itemCount: newProject["part"].length,
               itemBuilder: (context, index) {
-                Map<String, dynamic> part = newTask["part"][index];
-                return ListTile(
-                  isThreeLine: true,
-                  title: AdaptiveText(part["title"]),
-                  subtitle: RichText(
-                    text: TextSpan(
-                      text: "${part["subtasks"].length} • ",
-                      style: TextStyle(color: Pallete.text, fontWeight: FontWeight.bold, overflow: TextOverflow.fade),
-                      children: <TextSpan>[
-                        TextSpan(text: part["description"], style: TextStyle(color: Pallete.subtext)),
+                Map<String, dynamic> part = newProject["part"][index];
+                return Card(
+                  color: Pallete.topbox,
+                  child: ListTile(
+                    isThreeLine: true,
+                    title: AdaptiveText(part["title"]),
+                    subtitle: RichText(
+                      text: TextSpan(
+                        text: "${part["tasks"].length} • ",
+                        style: TextStyle(color: Pallete.text, fontWeight: FontWeight.bold, overflow: TextOverflow.fade),
+                        children: <TextSpan>[
+                          TextSpan(text: part["description"], style: TextStyle(color: Pallete.subtext)),
+                        ],
+                      ),
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const AdaptiveIcon(Icons.edit),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const AdaptiveIcon(Icons.delete),
+                        ),
                       ],
                     ),
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const AdaptiveIcon(Icons.edit),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const AdaptiveIcon(Icons.delete),
-                      ),
-                    ],
                   ),
                 );
               },
@@ -261,11 +264,11 @@ class _AddProjectPageState extends State<AddProjectPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (taskValidated) {
-            newTask["timeCreated"] = DateTime.now().toString();
-            newTask["size"] = newTask["size"].toInt();
+            newProject["timeCreated"] = DateTime.now().toString();
+            newProject["size"] = newProject["size"].toInt();
 
             setState(() {
-              projectsDataContent!["projects"].add(newTask); //! add deepcopy if duplication happens
+              projectsDataContent!["projects"].add(newProject); //! add deepcopy if duplication happens
               LoadingScreen.show(context, "Saving Task");
               saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent)).then((value) {
                 LoadingScreen.hide(context);
