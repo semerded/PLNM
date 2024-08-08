@@ -24,6 +24,7 @@ class AdaptiveText extends StatelessWidget {
     return Text(
       data!,
       textAlign: textAlign,
+      key: key,
       style: TextStyle(
         color: Pallete.text,
         fontSize: fontSize,
