@@ -9,7 +9,6 @@ import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
-import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
 import 'package:keeper_of_projects/screens/projects/add_project_part_page.dart';
