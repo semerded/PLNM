@@ -63,6 +63,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     return Scaffold(
       backgroundColor: Pallete.bg,
       appBar: AppBar(
+        title: const Text("Create a new project"),
         backgroundColor: Pallete.primary,
         leading: IconButton(
           icon: const Icon(Icons.close),
