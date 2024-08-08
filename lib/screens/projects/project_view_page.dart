@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/projects/project_part_view_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 
 class ProjectViewPage extends StatefulWidget {
@@ -147,6 +149,43 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
               child: AdaptiveText(
                 widget.projectData["description"] == "" ? "No Description" : widget.projectData["description"],
                 fontStyle: widget.projectData["description"] == "" ? FontStyle.italic : null,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: widget.projectData["part"].length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> part = widget.projectData["part"][index];
+                  return Card(
+                    color: Pallete.topbox,
+                    child: ListTile(
+                      title: AdaptiveText(part["title"]),
+                      subtitle: AdaptiveText(part["description"]),
+                      shape: Border(
+                        left: BorderSide(
+                          width: 10,
+                          color: projectPriorities[part["priority"]],
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<bool>(
+                            builder: (context) => ProjectPartViewPage(
+                              part: part,
+                            ),
+                          ),
+                        ).then((callback) {
+                          if (callback != null && callback) {}
+                        });
+                      },
+                      trailing: IconButton(
+                        icon: const AdaptiveIcon(Icons.check),
+                        onPressed: () {},
+                      ),
+                    ),
+                  );
+                },
               ),
             )
           ],
