@@ -92,8 +92,12 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                       ),
                     ),
                     trailing: IconButton(
-                      icon: const AdaptiveIcon(Icons.check),
-                      onPressed: () {},
+                      icon: AdaptiveIcon(task["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                      onPressed: () {
+                        setState(() {
+                          task["completed"] = !task["completed"];
+                        });
+                      },
                     ),
                   ),
                 );

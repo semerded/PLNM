@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/project_view_page.dart';
@@ -29,11 +30,14 @@ class _ProjectViewState extends State<ProjectView> {
         : ListView.builder(
             itemCount: widget.content.length,
             itemBuilder: (context, index) {
+              Map<String, dynamic> project = widget.content[index];
+              double projectCompletion = calculateCompletion(project["part"]);
+              print(projectCompletion);
               return Card(
                 shape: Border(
                   left: BorderSide(
                     width: 10,
-                    color: projectPriorities[widget.content[index]["priority"]],
+                    color: projectPriorities[project["priority"]],
                   ),
                 ),
                 color: Pallete.box,
@@ -42,7 +46,7 @@ class _ProjectViewState extends State<ProjectView> {
                   painter: settingsDataContent!["showProjectSize"]
                       ? OneSideProgressBorderPainter(
                           color: Pallete.primary,
-                          progress: widget.content[index]["size"] == null ? 0 : widget.content[index]["size"] / 100,
+                          progress: project["size"] == null ? 0 : project["size"] / 100,
                           strokeWidth: 3.0,
                           side: borderSide.bottom,
                         )
@@ -51,12 +55,12 @@ class _ProjectViewState extends State<ProjectView> {
                     isThreeLine: true,
                     textColor: Pallete.text,
                     title: AdaptiveText(
-                      widget.content[index]["title"],
+                      project["title"],
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     ),
                     subtitle: Text(
-                      widget.content[index]["description"],
+                      project["description"],
                       style: TextStyle(
                         color: Pallete.subtext,
                         fontSize: 13,
@@ -67,7 +71,7 @@ class _ProjectViewState extends State<ProjectView> {
                         context,
                         MaterialPageRoute<bool>(
                           builder: (context) => ProjectViewPage(
-                            projectData: widget.content[index],
+                            projectData: project,
                           ),
                         ),
                       ).then((callback) {
@@ -79,7 +83,9 @@ class _ProjectViewState extends State<ProjectView> {
                     trailing: CircularPercentIndicator(
                       radius: 25,
                       animation: true,
-                      percent: 0.5,
+                      percent: projectCompletion,
+                      progressColor: Colors.green,
+                      center: AdaptiveText("${(projectCompletion * 100).toInt()}%"),
                     ),
                   ),
                 ),

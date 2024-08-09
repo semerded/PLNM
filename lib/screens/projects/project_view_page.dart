@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
+import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/project_part_view_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProjectViewPage extends StatefulWidget {
   final Map<String, dynamic> projectData;
@@ -156,34 +158,53 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 itemCount: widget.projectData["part"].length,
                 itemBuilder: (context, index) {
                   Map<String, dynamic> part = widget.projectData["part"][index];
+                  double partCompletion = calculateCompletion(part["tasks"]);
+                  print(partCompletion);
+                  if (!partCompletion.isNaN) {
+                    part["completed"] = partCompletion == 1.0;
+                  }
                   return Card(
                     color: Pallete.topbox,
                     child: ListTile(
-                      title: AdaptiveText(part["title"]),
-                      subtitle: AdaptiveText(part["description"]),
-                      shape: Border(
-                        left: BorderSide(
-                          width: 10,
-                          color: projectPriorities[part["priority"]],
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<bool>(
-                            builder: (context) => ProjectPartViewPage(
-                              part: part,
-                            ),
+                        title: AdaptiveText(part["title"]),
+                        subtitle: AdaptiveText(part["description"]),
+                        shape: Border(
+                          left: BorderSide(
+                            width: 10,
+                            color: projectPriorities[part["priority"]],
                           ),
-                        ).then((callback) {
-                          if (callback != null && callback) {}
-                        });
-                      },
-                      trailing: IconButton(
-                        icon: const AdaptiveIcon(Icons.check),
-                        onPressed: () {},
-                      ),
-                    ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<bool>(
+                              builder: (context) => ProjectPartViewPage(
+                                part: part,
+                              ),
+                            ),
+                          ).then((callback) {
+                            setState(() {
+                              partCompletion = calculateCompletion(part["tasks"]);
+                            });
+                            if (callback != null && callback) {}
+                          });
+                        },
+                        trailing: part["tasks"].length == 0
+                            ? IconButton(
+                                icon: AdaptiveIcon(part["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                                onPressed: () {
+                                  setState(() {
+                                    part["completed"] = !part["completed"];
+                                  });
+                                },
+                              )
+                            : CircularPercentIndicator(
+                                progressColor: Colors.green,
+                                center: AdaptiveText("${(partCompletion * 100).toInt()}%"),
+                                radius: 24,
+                                animation: true,
+                                percent: partCompletion,
+                              )),
                   );
                 },
               ),
