@@ -18,13 +18,16 @@ class ProjectViewPage extends StatefulWidget {
 }
 
 class _ProjectViewPageState extends State<ProjectViewPage> {
+  late double projectCompletion = calculateCompletion(widget.projectData["part"]);
+  bool projectNeedsSync = false;
+
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
-        Navigator.of(context).pop(true);
-        return Future<bool>.value(true);
+        Navigator.of(context).pop(projectNeedsSync);
+        return Future<bool>.value(false);
       },
       child: Scaffold(
         backgroundColor: Pallete.bg,
@@ -32,7 +35,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
           backgroundColor: Pallete.primary,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => Navigator.of(context).pop(projectNeedsSync),
           ),
           title: Text(widget.projectData["title"]),
         ),
@@ -125,24 +128,27 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 //^ completion visualisation
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showInfoDialog(
-                          context,
-                          "Project completion, This shows how much of the project parts have been completed.",
+                      padding: const EdgeInsets.all(8.0),
+                      child: () {
+                        return ProgressElevatedButton(
+                          onPressed: () {
+                            showInfoDialog(
+                              context,
+                              "Project completion, This shows how much of the project parts have been completed.",
+                            );
+                          },
+                          progress: projectCompletion,
+                          progressColor: Colors.green,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Pallete.bg,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Pallete.text),
+                            ),
+                          ),
+                          child: AdaptiveText("completion: ${(projectCompletion * 100).toInt()}"),
                         );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.bg,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Pallete.text),
-                        ),
-                      ),
-                      child: AdaptiveText("category: ${widget.projectData["category"]}"),
-                    ),
-                  ),
+                      }()),
                 )
               ],
             ),
@@ -159,52 +165,59 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 itemBuilder: (context, index) {
                   Map<String, dynamic> part = widget.projectData["part"][index];
                   double partCompletion = calculateCompletion(part["tasks"]);
-                  print(partCompletion);
-                  if (!partCompletion.isNaN) {
-                    part["completed"] = partCompletion == 1.0;
-                  }
                   return Card(
                     color: Pallete.topbox,
                     child: ListTile(
-                        title: AdaptiveText(part["title"]),
-                        subtitle: AdaptiveText(part["description"]),
-                        shape: Border(
-                          left: BorderSide(
-                            width: 10,
-                            color: projectPriorities[part["priority"]],
-                          ),
+                      title: AdaptiveText(part["title"]),
+                      subtitle: AdaptiveText(part["description"]),
+                      shape: Border(
+                        left: BorderSide(
+                          width: 10,
+                          color: projectPriorities[part["priority"]],
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<bool>(
-                              builder: (context) => ProjectPartViewPage(
-                                part: part,
-                              ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<bool>(
+                            builder: (context) => ProjectPartViewPage(
+                              part: part,
                             ),
-                          ).then((callback) {
+                          ),
+                        ).then(
+                          (callback) {
+                            if (callback != null && callback) {
+                              projectNeedsSync = true;
+                            }
                             setState(() {
                               partCompletion = calculateCompletion(part["tasks"]);
+                              if (!partCompletion.isNaN) {
+                                part["completed"] = partCompletion == 1.0;
+                              }
+                              projectCompletion = calculateCompletion(widget.projectData["part"]);
                             });
-                            if (callback != null && callback) {}
-                          });
-                        },
-                        trailing: part["tasks"].length == 0
-                            ? IconButton(
-                                icon: AdaptiveIcon(part["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
-                                onPressed: () {
-                                  setState(() {
-                                    part["completed"] = !part["completed"];
-                                  });
-                                },
-                              )
-                            : CircularPercentIndicator(
-                                progressColor: Colors.green,
-                                center: AdaptiveText("${(partCompletion * 100).toInt()}%"),
-                                radius: 24,
-                                animation: true,
-                                percent: partCompletion,
-                              )),
+                          },
+                        );
+                      },
+                      trailing: part["tasks"].length == 0
+                          ? IconButton(
+                              icon: AdaptiveIcon(part["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                              onPressed: () {
+                                setState(() {
+                                  part["completed"] = !part["completed"];
+                                  projectCompletion = calculateCompletion(widget.projectData["part"]);
+                                  projectNeedsSync = true;
+                                });
+                              },
+                            )
+                          : CircularPercentIndicator(
+                              progressColor: Colors.green,
+                              center: AdaptiveText("${(partCompletion * 100).toInt()}%"),
+                              radius: 24,
+                              animation: true,
+                              percent: partCompletion,
+                            ),
+                    ),
                   );
                 },
               ),
