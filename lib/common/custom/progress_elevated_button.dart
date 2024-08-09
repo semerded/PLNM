@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-final GlobalKey buttonKey = GlobalKey();
-
 class ProgressElevatedButton extends StatefulWidget {
+  final GlobalKey buttonKey = GlobalKey();
+
   final VoidCallback onPressed;
   final VoidCallback? onLongPress;
   final ValueChanged<bool>? onHover;
@@ -17,7 +17,7 @@ class ProgressElevatedButton extends StatefulWidget {
   final IconAlignment iconAlignment;
   final Color progressColor;
 
-  const ProgressElevatedButton({
+  ProgressElevatedButton({
     super.key,
     required this.onPressed,
     this.onLongPress,
@@ -42,7 +42,7 @@ class _ProgressElevatedButtonState extends State<ProgressElevatedButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      key: buttonKey,
+      key: widget.buttonKey,
       onPressed: widget.onPressed,
       autofocus: widget.autofocus,
       clipBehavior: widget.clipBehavior,
@@ -57,7 +57,7 @@ class _ProgressElevatedButtonState extends State<ProgressElevatedButton> {
         alignment: Alignment.center,
         children: [
           CustomPaint(
-            painter: ProgressPainter(buttonKey: buttonKey, progress: widget.progress, paintColor: widget.progressColor),
+            painter: ProgressPainter(buttonKey: widget.buttonKey, progress: widget.progress, paintColor: widget.progressColor),
           ),
           widget.child
         ],
