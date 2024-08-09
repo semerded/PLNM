@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -32,7 +35,6 @@ class _ProjectViewState extends State<ProjectView> {
             itemBuilder: (context, index) {
               Map<String, dynamic> project = widget.content[index];
               double projectCompletion = calculateCompletion(project["part"]);
-              print(projectCompletion);
               return Card(
                 shape: Border(
                   left: BorderSide(
@@ -74,9 +76,10 @@ class _ProjectViewState extends State<ProjectView> {
                             projectData: project,
                           ),
                         ),
-                      ).then((callback) {
+                      ).then((callback) async {
                         if (callback != null && callback) {
                           setState(() {});
+                          await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
                         }
                       });
                     }),
