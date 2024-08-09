@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
+import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -14,6 +16,8 @@ class ProjectPartViewPage extends StatefulWidget {
 
 class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
   bool partWasUpdated = false;
+  late double partCompletion = calculateCompletion(widget.part["tasks"]);
+
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
@@ -55,13 +59,15 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
+                    child: ProgressElevatedButton(
                       onPressed: () {
                         showInfoDialog(
                           context,
                           "Part completion, This shows how much of the part parts have been completed.",
                         );
                       },
+                      progress: partCompletion,
+                      progressColor: Colors.green,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Pallete.bg,
                         shape: RoundedRectangleBorder(
@@ -69,7 +75,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                           side: BorderSide(color: Pallete.text),
                         ),
                       ),
-                      child: AdaptiveText("category: ${widget.part["category"]}"),
+                      child: AdaptiveText("Progress: ${(partCompletion * 100).toInt()}"),
                     ),
                   ),
                 )
@@ -103,6 +109,8 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                         onPressed: () {
                           setState(() {
                             task["completed"] = !task["completed"];
+                            partCompletion = calculateCompletion(widget.part["tasks"]);
+
                             partWasUpdated = true;
                           });
                         },
