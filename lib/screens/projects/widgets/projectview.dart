@@ -6,7 +6,7 @@ import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/projects/project_view_page.dart';
+import 'package:keeper_of_projects/screens/projects/view_project_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:keeper_of_projects/common/custom/custom_one_border_painter.dart';
 
@@ -54,7 +54,6 @@ class _ProjectViewState extends State<ProjectView> {
                         )
                       : null,
                   child: ListTile(
-                    isThreeLine: true,
                     textColor: Pallete.text,
                     title: AdaptiveText(
                       project["title"],

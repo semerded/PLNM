@@ -3,9 +3,10 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/projects/project_part_view_page.dart';
+import 'package:keeper_of_projects/screens/projects/view_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -38,6 +39,28 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
             onPressed: () => Navigator.of(context).pop(projectNeedsSync),
           ),
           title: Text(widget.projectData["title"]),
+          actions: [
+            TaskPopUpMenu(
+              onEdit: () {},
+              onArchive: () {},
+              onCompleteAll: () {
+                projectNeedsSync = true;
+                setState(() {
+                  bool setValue = projectCompletion != 1.0;
+                  for (Map<String, dynamic> part in widget.projectData["part"]) {
+                    part["completed"] = setValue;
+                    for (Map<String, dynamic> tasks in part["tasks"]) {
+                      tasks["completed"] = setValue;
+                    }
+                  }
+                  projectCompletion = calculateCompletion(widget.projectData["part"]);
+                });
+              },
+              onDelete: () {},
+              completeAllState: projectCompletion == 1.0,
+              archiveState: false,
+            ),
+          ],
         ),
         body: Column(
           children: [
