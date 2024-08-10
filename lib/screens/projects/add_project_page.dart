@@ -229,7 +229,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 return Card(
                   color: Pallete.topbox,
                   child: ListTile(
-                    isThreeLine: true,
                     title: AdaptiveText(part["title"]),
                     subtitle: RichText(
                       text: TextSpan(
