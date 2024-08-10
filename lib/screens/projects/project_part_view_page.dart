@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
+import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -16,6 +17,7 @@ class ProjectPartViewPage extends StatefulWidget {
 
 class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
   bool partWasUpdated = false;
+  PageCallback pageCallback = PageCallback.none;
   late double partCompletion = calculateCompletion(widget.part["tasks"]);
 
   @override
@@ -47,7 +49,13 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                           "Part prioirty: parts have different priorities. A part has a general priority while its part parts can have different priorities that are not linked to the general priority.",
                         );
                       },
-                      style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.part["priority"]]),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: projectPriorities[widget.part["priority"]],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Pallete.text),
+                        ),
+                      ),
                       child: Text(
                         "priority: ${widget.part["priority"]}",
                         style: const TextStyle(color: Colors.white),
@@ -59,24 +67,41 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ProgressElevatedButton(
-                      onPressed: () {
-                        showInfoDialog(
-                          context,
-                          "Part completion, This shows how much of the part parts have been completed.",
-                        );
-                      },
-                      progress: partCompletion,
-                      progressColor: Colors.green,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.bg,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Pallete.text),
-                        ),
-                      ),
-                      child: AdaptiveText("Progress: ${(partCompletion * 100).toInt()}"),
-                    ),
+                    child: widget.part["tasks"].length == 0
+                        ? ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                pageCallback = PageCallback.edited;
+                                widget.part["completed"] = !widget.part["completed"];
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: widget.part["completed"] ? Colors.green : Pallete.bg,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Pallete.text),
+                              ),
+                            ),
+                            child: AdaptiveText("complete${widget.part["completed"] ? "d" : ""}"),
+                          )
+                        : ProgressElevatedButton(
+                            onPressed: () {
+                              showInfoDialog(
+                                context,
+                                "Part completion, This shows how much of the part parts have been completed.",
+                              );
+                            },
+                            progress: partCompletion,
+                            progressColor: Colors.green,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Pallete.bg,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Pallete.text),
+                              ),
+                            ),
+                            child: AdaptiveText("Progress: ${(partCompletion * 100).toInt()}"),
+                          ),
                   ),
                 )
               ],
