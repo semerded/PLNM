@@ -5,15 +5,13 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 Future addTask(BuildContext context) {
-  Map<String, dynamic> newTask = {
+  Map newTask = {
     "title": "",
     "description": "",
     "priority": "none",
     "completed": false,
   };
 
-  final FocusNode descriptionFocusNode = FocusNode();
-  final FocusNode titleFocusNode = FocusNode();
   final TextEditingController descriptionController = TextEditingController();
   return showDialog(
     context: context,
@@ -28,7 +26,6 @@ Future addTask(BuildContext context) {
                 child: Column(
                   children: [
                     TitleTextField(
-                      focusNode: titleFocusNode,
                       onChanged: (value) {
                         setState(
                           () {
@@ -39,7 +36,6 @@ Future addTask(BuildContext context) {
                       hintText: "Add a description for your task",
                     ),
                     DescriptionTextField(
-                      focusNode: descriptionFocusNode,
                       onChanged: (value) {
                         setState(
                           () {
