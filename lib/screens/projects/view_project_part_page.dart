@@ -8,7 +8,7 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 
 class ProjectPartViewPage extends StatefulWidget {
-  final Map<String, dynamic> part;
+  final Map part;
   const ProjectPartViewPage({super.key, required this.part});
 
   @override
@@ -71,7 +71,6 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                         ? ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                pageCallback = PageCallback.edited;
                                 widget.part["completed"] = !widget.part["completed"];
                               });
                             },
@@ -117,7 +116,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
               child: ListView.builder(
                 itemCount: widget.part["tasks"].length,
                 itemBuilder: (context, index) {
-                  Map<String, dynamic> task = widget.part["tasks"][index];
+                  Map task = widget.part["tasks"][index];
                   return Card(
                     color: Pallete.topbox,
                     child: ListTile(

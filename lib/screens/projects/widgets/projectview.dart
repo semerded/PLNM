@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
+import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -33,7 +34,7 @@ class _ProjectViewState extends State<ProjectView> {
         : ListView.builder(
             itemCount: widget.content.length,
             itemBuilder: (context, index) {
-              Map<String, dynamic> project = widget.content[index];
+              Map project = widget.content[index];
               double projectCompletion = calculateCompletion(project["part"]);
               return Card(
                 shape: Border(
@@ -70,15 +71,20 @@ class _ProjectViewState extends State<ProjectView> {
                     onTap: () => setState(() {
                       Navigator.push(
                         context,
-                        MaterialPageRoute<bool>(
+                        MaterialPageRoute<PageCallback>(
                           builder: (context) => ProjectViewPage(
+                            index: index,
                             projectData: project,
                           ),
                         ),
                       ).then((callback) async {
-                        if (callback != null && callback) {
-                          setState(() {});
-                          await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
+                        if (callback != null) {
+                          if (callback == PageCallback.setState || callback == PageCallback.setStateAndSync) {
+                            setState(() {});
+                            if (callback == PageCallback.setStateAndSync) {
+                              await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
+                            }
+                          }
                         }
                       });
                     }),

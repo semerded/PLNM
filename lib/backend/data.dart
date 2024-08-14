@@ -13,9 +13,9 @@ const String folderName = "keeper-of-projects";
 
 drive.File? appFolder;
 drive.File? projectsFileData;
-Map<String, dynamic>? projectsDataContent;
+Map? projectsDataContent;
 drive.File? settingsFileData;
-Map<String, dynamic>? settingsDataContent;
+Map? settingsDataContent;
 drive.File? categoryFileData;
 List<String>? categoryDataContent;
 

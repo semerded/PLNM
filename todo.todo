@@ -14,11 +14,12 @@
 
 @low change appbar title
 
+@optional add animations when a task slider increases or decreases
+
 >>>> functionality
 
 @critical stop animation when page is switched
 
-@critical @today make something for project parts without a task ???
 
 @high add the ability to edit and delete projects
 

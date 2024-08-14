@@ -1,18 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
+import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/projects/edit_project_page.dart';
 import 'package:keeper_of_projects/screens/projects/view_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProjectViewPage extends StatefulWidget {
-  final Map<String, dynamic> projectData;
-  const ProjectViewPage({required this.projectData, super.key});
+  Map projectData;
+  final int index;
+  ProjectViewPage({required this.projectData, required this.index, super.key});
 
   @override
   State<ProjectViewPage> createState() => _ProjectViewPageState();
@@ -20,14 +26,14 @@ class ProjectViewPage extends StatefulWidget {
 
 class _ProjectViewPageState extends State<ProjectViewPage> {
   late double projectCompletion = calculateCompletion(widget.projectData["part"]);
-  bool projectNeedsSync = false;
+  PageCallback pageCallback = PageCallback.none;
 
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
-        Navigator.of(context).pop(projectNeedsSync);
+        Navigator.pop(context, pageCallback);
         return Future<bool>.value(false);
       },
       child: Scaffold(
@@ -36,20 +42,36 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
           backgroundColor: Pallete.primary,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(projectNeedsSync),
+            onPressed: () => Navigator.pop(context, pageCallback),
           ),
           title: Text(widget.projectData["title"]),
           actions: [
             TaskPopUpMenu(
-              onEdit: () {},
+              onEdit: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<List>(
+                    builder: (context) => EditProjectPage(projectData: widget.projectData, projectIndex: widget.index),
+                  ),
+                ).then((callback) async {
+                  if (callback != null) {
+                    setState(() {
+                      projectsContent[widget.index] = Map.from(callback[1]);
+                      widget.projectData = Map.from(callback[1]);
+                      pageCallback = PageCallback.setState; // TODO
+                    });
+                    await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
+                  }
+                });
+              },
               onArchive: () {},
               onCompleteAll: () {
-                projectNeedsSync = true;
+                pageCallback = PageCallback.setStateAndSync;
                 setState(() {
                   bool setValue = projectCompletion != 1.0;
-                  for (Map<String, dynamic> part in widget.projectData["part"]) {
+                  for (Map part in widget.projectData["part"]) {
                     part["completed"] = setValue;
-                    for (Map<String, dynamic> tasks in part["tasks"]) {
+                    for (Map tasks in part["tasks"]) {
                       tasks["completed"] = setValue;
                     }
                   }
@@ -186,7 +208,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
               child: ListView.builder(
                 itemCount: widget.projectData["part"].length,
                 itemBuilder: (context, index) {
-                  Map<String, dynamic> part = widget.projectData["part"][index];
+                  Map part = widget.projectData["part"][index];
                   double partCompletion = calculateCompletion(part["tasks"]);
                   return Card(
                     color: Pallete.topbox,
@@ -210,7 +232,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         ).then(
                           (callback) {
                             if (callback != null && callback) {
-                              projectNeedsSync = true;
+                              pageCallback = PageCallback.setStateAndSync;
                             }
                             setState(() {
                               partCompletion = calculateCompletion(part["tasks"]);
@@ -229,7 +251,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                                 setState(() {
                                   part["completed"] = !part["completed"];
                                   projectCompletion = calculateCompletion(widget.projectData["part"]);
-                                  projectNeedsSync = true;
+                                  pageCallback = PageCallback.setStateAndSync;
                                 });
                               },
                             )
