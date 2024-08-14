@@ -25,13 +25,11 @@ class _AddProjectPageState extends State<AddProjectPage> {
   bool taskValidated = false;
   bool validTitle = false;
   bool validCategory = false;
-  final FocusNode descriptionFocusNode = FocusNode();
-  final FocusNode titleFocusNode = FocusNode();
   final TextEditingController descriptionController = TextEditingController();
   late String ddb_priority_value;
   late String ddb_category_value;
 
-  Map<String, dynamic> newProject = {
+  Map newProject = {
     "title": null,
     "description": "",
     "category": null,
@@ -73,7 +71,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
         children: [
           // add a title
           TitleTextField(
-            focusNode: titleFocusNode,
             hintText: "A unique title for your project",
             onChanged: (value) {
               setState(() {
@@ -86,7 +83,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
 
           // add a description
           DescriptionTextField(
-            focusNode: descriptionFocusNode,
             controller: descriptionController,
             hintText: "Describe your project here",
             helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
@@ -196,7 +192,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute<Map<String, dynamic>>(
+                    MaterialPageRoute<Map>(
                       builder: (context) => const AddProjectPartPage(),
                     ),
                   ).then(
@@ -225,7 +221,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
             child: ListView.builder(
               itemCount: newProject["part"].length,
               itemBuilder: (context, index) {
-                Map<String, dynamic> part = newProject["part"][index];
+                Map part = newProject["part"][index];
                 return Card(
                   color: Pallete.topbox,
                   child: ListTile(

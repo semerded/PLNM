@@ -6,14 +6,12 @@ typedef OnChanged = void Function(String value);
 
 class DescriptionTextField extends StatefulWidget {
   final OnChanged onChanged;
-  final FocusNode focusNode;
   final TextEditingController? controller;
   final String hintText;
   final String? helperText;
   final String? initialValue;
   const DescriptionTextField({
     super.key,
-    required this.focusNode,
     required this.onChanged,
     this.hintText = "A unique title for your project",
     this.helperText,
@@ -26,6 +24,7 @@ class DescriptionTextField extends StatefulWidget {
 }
 
 class _DescriptionTextFieldState extends State<DescriptionTextField> {
+  FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,7 +32,7 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
       child: Focus(
         onFocusChange: (_) => setState(() {}),
         child: TextFormField(
-          focusNode: widget.focusNode,
+          focusNode: focusNode,
           controller: widget.controller,
           initialValue: widget.initialValue,
           decoration: InputDecoration(
@@ -42,7 +41,7 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
             hintText: widget.hintText,
             hintStyle: TextStyle(color: Pallete.text, fontStyle: FontStyle.italic),
             labelText: "Description",
-            labelStyle: TextStyle(color: widget.focusNode.hasFocus ? Pallete.primary : Pallete.text),
+            labelStyle: TextStyle(color: focusNode.hasFocus ? Pallete.primary : Pallete.text),
             helperText: widget.helperText,
             helperStyle: const TextStyle(color: Colors.red),
           ),

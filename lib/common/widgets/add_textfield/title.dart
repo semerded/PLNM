@@ -6,12 +6,10 @@ typedef OnChanged = void Function(String value);
 
 class TitleTextField extends StatefulWidget {
   final OnChanged onChanged;
-  final FocusNode focusNode;
   final String hintText;
   final String? initialValue;
   const TitleTextField({
     super.key,
-    required this.focusNode,
     required this.onChanged,
     this.hintText = "A unique title for your project",
     this.initialValue,
@@ -22,6 +20,7 @@ class TitleTextField extends StatefulWidget {
 }
 
 class _TitleTextFieldState extends State<TitleTextField> {
+  FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +29,7 @@ class _TitleTextFieldState extends State<TitleTextField> {
         onFocusChange: (_) => setState(() {}), // updates the focus colors
         child: TextFormField(
           autofocus: true,
-          focusNode: widget.focusNode,
+          focusNode: focusNode,
           initialValue: widget.initialValue,
           decoration: InputDecoration(
             enabledBorder: enabledBorder(),
@@ -38,7 +37,7 @@ class _TitleTextFieldState extends State<TitleTextField> {
             hintText: widget.hintText,
             hintStyle: TextStyle(color: Pallete.text, fontStyle: FontStyle.italic),
             labelText: "Title",
-            labelStyle: TextStyle(color: widget.focusNode.hasFocus ? Pallete.primary : Pallete.text),
+            labelStyle: TextStyle(color: focusNode.hasFocus ? Pallete.primary : Pallete.text),
           ),
           style: TextStyle(color: Pallete.text),
           cursorColor: Pallete.primary,

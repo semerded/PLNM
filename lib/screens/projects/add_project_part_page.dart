@@ -17,12 +17,10 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
   bool taskValidated = false;
   bool validTitle = false;
   bool validCategory = false;
-  final FocusNode descriptionFocusNode = FocusNode();
-  final FocusNode titleFocusNode = FocusNode();
   final TextEditingController descriptionController = TextEditingController();
   late String ddb_priority_value;
 
-  Map<String, dynamic> newPart = {
+  Map newPart = {
     "title": null,
     "description": "",
     "priority": "none",
@@ -58,7 +56,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
         children: [
           // add a title
           TitleTextField(
-            focusNode: titleFocusNode,
             hintText: "A unique title for your project part",
             onChanged: (value) {
               setState(() {
@@ -71,7 +68,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
 
           // add a description
           DescriptionTextField(
-            focusNode: descriptionFocusNode,
             controller: descriptionController,
             hintText: "Describe your project part here",
             helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
@@ -134,7 +130,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                     );
                     // Navigator.push(
                     //   context,
-                    //   MaterialPageRoute<Map<String, dynamic>>(
+                    //   MaterialPageRoute<Map>(
                     //     builder: (context) => const (),
                     //   ),
                     // ).then(
@@ -164,7 +160,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
             child: ListView.builder(
               itemCount: newPart["tasks"].length,
               itemBuilder: (context, index) {
-                Map<String, dynamic> task = newPart["tasks"][index];
+                Map task = newPart["tasks"][index];
                 return Card(
                   color: Pallete.topbox,
                   child: ListTile(
