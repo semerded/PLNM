@@ -10,6 +10,7 @@ class DescriptionTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String hintText;
   final String? helperText;
+  final String? initialValue;
   const DescriptionTextField({
     super.key,
     required this.focusNode,
@@ -17,6 +18,7 @@ class DescriptionTextField extends StatefulWidget {
     this.hintText = "A unique title for your project",
     this.helperText,
     this.controller,
+    this.initialValue,
   });
 
   @override
@@ -30,9 +32,10 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
       padding: const EdgeInsets.all(10),
       child: Focus(
         onFocusChange: (_) => setState(() {}),
-        child: TextField(
+        child: TextFormField(
           focusNode: widget.focusNode,
           controller: widget.controller,
+          initialValue: widget.initialValue,
           decoration: InputDecoration(
             enabledBorder: enabledBorder(),
             focusedBorder: focusedBorder(),
