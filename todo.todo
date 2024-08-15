@@ -20,6 +20,8 @@
 
 @critical stop animation when page is switched
 
+@critical @today fix edit button and delete button for project part & task cards
+
 
 @high add the ability to edit and delete projects
 
@@ -28,6 +30,10 @@
 @high add a dialog when the user closes the add project page to make sure that the user wants to close the page
 
 @high add placeholders for ddb buttons
+
+@high create pop up menu for project part view
+
+@low add alert dialogs when a user exits edit or add page
 
 @low create archive page
 
@@ -38,11 +44,6 @@
 @optional add more examples for adding a category
 
 >>>> tydining up
-
-@low remove lines under ddb buttons
-
-@low make font for ddb buttons on project page smaller to keep the text on 1 line
-
 
 >> ideas
 
