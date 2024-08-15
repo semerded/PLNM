@@ -58,10 +58,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.bg,
+      backgroundColor: Palette.bg,
       appBar: AppBar(
         title: const Text("Create a new project"),
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
@@ -100,12 +100,12 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(4),
                   child: Container(
-                    color: Pallete.box,
+                    color: Palette.box,
                     child: DropdownButton<String>(
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       isExpanded: true,
                       elevation: 15,
-                      dropdownColor: Pallete.topbox,
+                      dropdownColor: Palette.topbox,
                       value: ddb_category_value,
                       items: ddb_category.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
@@ -134,12 +134,12 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(4),
                   child: Container(
-                    color: Pallete.box,
+                    color: Palette.box,
                     child: DropdownButton<String>(
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       elevation: 15,
                       isExpanded: true,
-                      dropdownColor: Pallete.topbox,
+                      dropdownColor: Palette.topbox,
                       value: ddb_priority_value,
                       items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
@@ -207,12 +207,12 @@ class _AddProjectPageState extends State<AddProjectPage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Pallete.topbox,
+                  backgroundColor: Palette.topbox,
                 ),
                 label: AdaptiveText("Add Project Part"),
                 icon: const Icon(
                   Icons.add,
-                  color: Pallete.primary,
+                  color: Palette.primary,
                 ),
               ),
             ],
@@ -223,12 +223,12 @@ class _AddProjectPageState extends State<AddProjectPage> {
               itemBuilder: (context, index) {
                 Map part = newProject["part"][index];
                 return Card(
-                  color: Pallete.topbox,
+                  color: Palette.topbox,
                   child: ListTile(
                     title: AdaptiveText(part["title"]),
                     subtitle: Text(
                       "${part["tasks"].length} • ${part["description"]}",
-                      style: TextStyle(color: Pallete.subtext),
+                      style: TextStyle(color: Palette.subtext),
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,

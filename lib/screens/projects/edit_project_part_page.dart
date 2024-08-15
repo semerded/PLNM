@@ -16,9 +16,9 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
         return Future.value(false);
       },
       child: Scaffold(
-        backgroundColor: Pallete.bg,
+        backgroundColor: Palette.bg,
         appBar: AppBar(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
         ),
       ),
     );

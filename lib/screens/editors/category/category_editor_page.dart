@@ -18,9 +18,9 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.bg,
+      backgroundColor: Palette.bg,
       appBar: AppBar(
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         title: const Text("Edit Categories"),
       ),
       body: Expanded(
@@ -29,7 +29,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
           itemBuilder: (context, index) {
             return Card(
               elevation: 5,
-              color: Pallete.box,
+              color: Palette.box,
               child: ListTile(
                 title: AdaptiveText(categoryDataContent![index]),
                 trailing: Row(
@@ -77,7 +77,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
             },
           );
         },
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         child: const Icon(Icons.add),
       ),
     );

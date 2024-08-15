@@ -19,7 +19,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          backgroundColor: Pallete.topbox,
+          backgroundColor: Palette.topbox,
           contentPadding: const EdgeInsets.all(16),
           content: Row(
             children: [
@@ -29,7 +29,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
                     checkMinimumRequirements(textEditingController.text, uneditedText, 2);
                   }),
                   style: TextStyle(
-                    color: textEditingController.text == uneditedText ? Pallete.subtext : Pallete.text,
+                    color: textEditingController.text == uneditedText ? Palette.subtext : Palette.text,
                     fontStyle: textEditingController.text == uneditedText ? FontStyle.italic : FontStyle.normal,
                   ),
                   controller: textEditingController,
@@ -60,7 +60,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
               child: Text(
                 "Accept",
                 style: TextStyle(
-                  color: minimumtRequirementsMet ? Pallete.text : Colors.red,
+                  color: minimumtRequirementsMet ? Palette.text : Colors.red,
                 ),
               ),
             )

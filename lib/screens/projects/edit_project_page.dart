@@ -45,9 +45,9 @@ class _EditProjectPageState extends State<EditProjectPage> {
         return Future<bool>.value(false);
       },
       child: Scaffold(
-        backgroundColor: Pallete.bg,
+        backgroundColor: Palette.bg,
         appBar: AppBar(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
           title: Text("Editing: ${widget.projectData["title"]}"),
         ),
         body: Column(
@@ -71,12 +71,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: Container(
-                      color: Pallete.box,
+                      color: Palette.box,
                       child: DropdownButton<String>(
                         padding: const EdgeInsets.only(left: 7, right: 7),
                         isExpanded: true,
                         elevation: 15,
-                        dropdownColor: Pallete.topbox,
+                        dropdownColor: Palette.topbox,
                         value: updatedProjectData["category"], // check if exist
                         items: categoryDataContent?.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
@@ -100,12 +100,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: Container(
-                      color: Pallete.box,
+                      color: Palette.box,
                       child: DropdownButton<String>(
                         padding: const EdgeInsets.only(left: 7, right: 7),
                         elevation: 15,
                         isExpanded: true,
-                        dropdownColor: Pallete.topbox,
+                        dropdownColor: Palette.topbox,
                         value: updatedProjectData["priority"],
                         items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
@@ -173,12 +173,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Pallete.topbox,
+                    backgroundColor: Palette.topbox,
                   ),
                   label: AdaptiveText("Add Project Part"),
                   icon: const Icon(
                     Icons.add,
-                    color: Pallete.primary,
+                    color: Palette.primary,
                   ),
                 ),
               ],
@@ -189,12 +189,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                 itemBuilder: (context, index) {
                   Map part = updatedProjectData["part"][index];
                   return Card(
-                    color: Pallete.topbox,
+                    color: Palette.topbox,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
                       subtitle: Text(
                         "${part["tasks"].length} • ${part["description"]}",
-                        style: TextStyle(color: Pallete.subtext),
+                        style: TextStyle(color: Palette.subtext),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -217,7 +217,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
           onPressed: () {
             // projectsContent[widget.projectIndex] = Map.from(widget.projectData);
 

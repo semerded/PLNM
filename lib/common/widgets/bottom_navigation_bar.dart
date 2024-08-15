@@ -8,12 +8,12 @@ class CustomBottomNavitagionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-        canvasColor: Pallete.topbox,
+        canvasColor: Palette.topbox,
         primaryColor: Colors.red,
       ),
       child: BottomNavigationBar(
-        unselectedItemColor: Pallete.text,
-        selectedItemColor: Pallete.primary,
+        unselectedItemColor: Palette.text,
+        selectedItemColor: Palette.primary,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.question_mark),

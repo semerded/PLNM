@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   void syncSettings() {
     if (settingsDataContent!["darkmode"]) {
-      Pallete.setDarkmode(true);
+      Palette.setDarkmode(true);
     }
   }
 
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.bg,
+      backgroundColor: Palette.bg,
       body: () {
         if (loggedIn == loginStatus.loggedIn) {
           return Column(
@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 children: [
                   FloatingActionButton(
                     elevation: 0,
-                    backgroundColor: Pallete.primary,
+                    backgroundColor: Palette.primary,
                     onPressed: () {
                       handleSignIn();
                     },
@@ -172,11 +172,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 icon: const Icon(
                   Icons.info,
                   size: 24,
-                  color: Pallete.primary,
+                  color: Palette.primary,
                 ),
                 style: ButtonStyle(
                   elevation: const WidgetStatePropertyAll(0),
-                  backgroundColor: WidgetStatePropertyAll(Pallete.bg),
+                  backgroundColor: WidgetStatePropertyAll(Palette.bg),
                 ),
               ),
             ],

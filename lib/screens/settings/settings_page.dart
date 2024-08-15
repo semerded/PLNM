@@ -30,14 +30,14 @@ class _SettingsPageState extends State<SettingsPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
           title: const Text("Settings"),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => returnToPreviousPage(),
           ),
         ),
-        backgroundColor: Pallete.bg,
+        backgroundColor: Palette.bg,
         body: Column(
           children: [
             SettingsSwitch(
@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   settingsDataContent!["darkmode"] = value;
                   settingsDataNeedsSync = true;
-                  Pallete.setDarkmode(value);
+                  Palette.setDarkmode(value);
                 });
               },
             ),
@@ -74,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Pallete.primary),
+              style: ElevatedButton.styleFrom(backgroundColor: Palette.primary),
               onPressed: () {
                 Navigator.push(
                   context,

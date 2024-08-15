@@ -27,17 +27,17 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: SearchBar(
-            backgroundColor: WidgetStatePropertyAll(Pallete.topbox),
+            backgroundColor: WidgetStatePropertyAll(Palette.topbox),
             hintText: "Search For Projects",
             hintStyle: WidgetStatePropertyAll(
               TextStyle(
                 fontStyle: FontStyle.italic,
-                color: Pallete.subtext,
+                color: Palette.subtext,
               ),
             ),
             textStyle: WidgetStatePropertyAll(
               TextStyle(
-                color: Pallete.text,
+                color: Palette.text,
               ),
             ),
             focusNode: widget.focusNode,

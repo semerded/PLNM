@@ -40,7 +40,7 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<_googleMenu>(
-      color: Pallete.topbox,
+      color: Palette.topbox,
       popUpAnimationStyle: AnimationStyle(),
       icon: Hero(
         tag: "googleUserCircleAvatar",

@@ -19,7 +19,7 @@ Future addTask(BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           title: AdaptiveText("add a subtask"),
-          backgroundColor: Pallete.bg,
+          backgroundColor: Palette.bg,
           content: Stack(
             children: [
               Form(

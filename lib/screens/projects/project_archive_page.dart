@@ -12,7 +12,7 @@ class _ArchivePageState extends State<ArchivePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.bg,
+      backgroundColor: Palette.bg,
       body: ListView.builder(itemBuilder: (context, index) => null),
     );
   }

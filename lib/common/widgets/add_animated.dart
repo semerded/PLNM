@@ -80,7 +80,7 @@ class _AddProjectState extends State<AddProject> with SingleTickerProviderStateM
       position: slideAnimation,
       child: FloatingActionButton(
         elevation: 5,
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         onPressed: () {
           Navigator.push(
             context,

@@ -31,7 +31,7 @@ class SettingsSwitchWithDescriptionState extends State<SettingsSwitchWithDescrip
       padding: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
       child: Card(
         elevation: 4,
-        color: Pallete.box,
+        color: Palette.box,
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15),
           child: Column(
@@ -58,7 +58,7 @@ class SettingsSwitchWithDescriptionState extends State<SettingsSwitchWithDescrip
               Text(
                       widget.description,
                       style: TextStyle(
-                        color: Pallete.subtext,
+                        color: Palette.subtext,
                         fontSize: 13,
                       ),
                     ),

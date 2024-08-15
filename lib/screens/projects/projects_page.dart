@@ -71,9 +71,9 @@ class _HomePageState extends State<HomePage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-          backgroundColor: Pallete.bg,
+          backgroundColor: Palette.bg,
           appBar: AppBar(
-            backgroundColor: Pallete.primary,
+            backgroundColor: Palette.primary,
             title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
             automaticallyImplyLeading: false,
             actions: [
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                   ? FloatingActionButton(
                       heroTag: null,
                       elevation: 0,
-                      backgroundColor: Pallete.primary,
+                      backgroundColor: Palette.primary,
                       onPressed: () {
                         handleSignIn();
                       },
@@ -111,11 +111,11 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Container(
-                        color: Pallete.box,
+                        color: Palette.box,
                         child: DropdownButton<String>(
                           padding: const EdgeInsets.only(left: 7, right: 7),
                           isExpanded: true,
-                          dropdownColor: Pallete.topbox,
+                          dropdownColor: Palette.topbox,
                           elevation: 15,
                           value: ddb_category_value,
                           items: ddb_category.map<DropdownMenuItem<String>>((String value) {
@@ -137,12 +137,12 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Container(
-                        color: Pallete.box,
+                        color: Palette.box,
                         child: DropdownButton<String>(
                           padding: const EdgeInsets.only(left: 7, right: 7),
                           elevation: 15,
                           isExpanded: true,
-                          dropdownColor: Pallete.topbox,
+                          dropdownColor: Palette.topbox,
                           value: ddb_sortBy_value,
                           items: ddb_sortBy.map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem(
@@ -161,9 +161,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   CircleAvatar(
                     radius: 20,
-                    backgroundColor: searchBarActive ? Pallete.primary : Pallete.box,
+                    backgroundColor: searchBarActive ? Palette.primary : Palette.box,
                     child: IconButton(
-                      color: searchBarActive ? Pallete.box : Pallete.primary,
+                      color: searchBarActive ? Palette.box : Palette.primary,
                       onPressed: () {
                         setState(() {
                           searchBarActive = !searchBarActive;

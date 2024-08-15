@@ -29,7 +29,7 @@ class SettingsSwitchState extends State<SettingsSwitch> {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
       child: Card(
         elevation: 4,
-        color: Pallete.box,
+        color: Palette.box,
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15),
           child: Row(

@@ -7,7 +7,7 @@ void showInfoDialog(BuildContext context, String info) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: Pallete.box,
+        backgroundColor: Palette.box,
         title: AdaptiveText(info),
         actions: [
           TextButton(
@@ -16,7 +16,7 @@ void showInfoDialog(BuildContext context, String info) {
             },
             child: const Text(
               "Close",
-              style: TextStyle(color: Pallete.primary),
+              style: TextStyle(color: Palette.primary),
             ),
           )
         ],

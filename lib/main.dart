@@ -14,7 +14,7 @@ class AppWrapper extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Pallete.primary,
+          cursorColor: Palette.primary,
         ),
       ),
       home: const Scaffold(

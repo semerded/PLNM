@@ -33,7 +33,7 @@ class AdaptiveIcon extends StatelessWidget {
     return Icon(
       icon,
       applyTextScaling: applyTextScaling,
-      color: color ?? Pallete.text,
+      color: color ?? Palette.text,
       fill: fill,
       grade: grade,
       key: key,

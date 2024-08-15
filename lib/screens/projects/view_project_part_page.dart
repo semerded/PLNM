@@ -29,9 +29,9 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
         return Future<bool>.value(false);
       },
       child: Scaffold(
-        backgroundColor: Pallete.bg,
+        backgroundColor: Palette.bg,
         appBar: AppBar(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
           title: Text(widget.part["title"]),
         ),
         body: Column(
@@ -53,7 +53,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                         backgroundColor: projectPriorities[widget.part["priority"]],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Pallete.text),
+                          side: BorderSide(color: Palette.text),
                         ),
                       ),
                       child: Text(
@@ -75,10 +75,10 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                               });
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: widget.part["completed"] ? Colors.green : Pallete.bg,
+                              backgroundColor: widget.part["completed"] ? Colors.green : Palette.bg,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Pallete.text),
+                                side: BorderSide(color: Palette.text),
                               ),
                             ),
                             child: AdaptiveText("complete${widget.part["completed"] ? "d" : ""}"),
@@ -93,10 +93,10 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                             progress: partCompletion,
                             progressColor: Colors.green,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Pallete.bg,
+                              backgroundColor: Palette.bg,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Pallete.text),
+                                side: BorderSide(color: Palette.text),
                               ),
                             ),
                             child: AdaptiveText("Progress: ${(partCompletion * 100).toInt()}"),
@@ -118,7 +118,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                 itemBuilder: (context, index) {
                   Map task = widget.part["tasks"][index];
                   return Card(
-                    color: Pallete.topbox,
+                    color: Palette.topbox,
                     child: ListTile(
                       title: AdaptiveText(task["title"]),
                       subtitle: AdaptiveText(task["description"]),

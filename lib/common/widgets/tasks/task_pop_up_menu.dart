@@ -40,7 +40,7 @@ class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<_taskMenu>(
-      color: Pallete.topbox,
+      color: Palette.topbox,
       icon: const Icon(Icons.more_vert),
       popUpAnimationStyle: AnimationStyle(),
       onSelected: (_taskMenu item) {
@@ -80,7 +80,7 @@ class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
             title: Text(
               'Archive',
               style: TextStyle(
-                color: widget.archiveState ? Pallete.text : Pallete.subtext,
+                color: widget.archiveState ? Palette.text : Palette.subtext,
                 fontStyle: widget.archiveState ? FontStyle.normal : FontStyle.italic,
               ),
             ),

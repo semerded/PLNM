@@ -8,9 +8,9 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.bg,
+      backgroundColor: Palette.bg,
       appBar: AppBar(
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         title: Text("About ..."), // TODO change to app name
       ),
       body: Padding(

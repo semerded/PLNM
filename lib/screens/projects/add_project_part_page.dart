@@ -41,10 +41,10 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.bg,
+      backgroundColor: Palette.bg,
       appBar: AppBar(
         title: const Text("Add a new part for your project"),
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -85,12 +85,12 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(4),
                   child: Container(
-                    color: Pallete.box,
+                    color: Palette.box,
                     child: DropdownButton<String>(
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       elevation: 15,
                       isExpanded: true,
-                      dropdownColor: Pallete.topbox,
+                      dropdownColor: Palette.topbox,
                       value: ddb_priority_value,
                       items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem(
@@ -145,12 +145,12 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                     // );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Pallete.topbox,
+                    backgroundColor: Palette.topbox,
                   ),
                   label: AdaptiveText("Add Task"),
                   icon: const Icon(
                     Icons.add,
-                    color: Pallete.primary,
+                    color: Palette.primary,
                   ),
                 ),
               ),
@@ -162,7 +162,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
               itemBuilder: (context, index) {
                 Map task = newPart["tasks"][index];
                 return Card(
-                  color: Pallete.topbox,
+                  color: Palette.topbox,
                   child: ListTile(
                     title: AdaptiveText(task["title"]),
                     subtitle: AdaptiveText(task["description"]),
@@ -187,7 +187,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Pallete.primary,
+        backgroundColor: Palette.primary,
         onPressed: () {
           Navigator.pop(context, newPart);
         },

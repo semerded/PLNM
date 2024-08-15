@@ -43,19 +43,19 @@ class _ProjectViewState extends State<ProjectView> {
                     color: projectPriorities[project["priority"]],
                   ),
                 ),
-                color: Pallete.box,
+                color: Palette.box,
                 elevation: 2,
                 child: CustomPaint(
                   painter: settingsDataContent!["showProjectSize"]
                       ? OneSideProgressBorderPainter(
-                          color: Pallete.primary,
+                          color: Palette.primary,
                           progress: project["size"] == null ? 0 : project["size"] / 100,
                           strokeWidth: 3.0,
                           side: borderSide.bottom,
                         )
                       : null,
                   child: ListTile(
-                    textColor: Pallete.text,
+                    textColor: Palette.text,
                     title: AdaptiveText(
                       project["title"],
                       fontWeight: FontWeight.w500,
@@ -64,7 +64,7 @@ class _ProjectViewState extends State<ProjectView> {
                     subtitle: Text(
                       project["description"],
                       style: TextStyle(
-                        color: Pallete.subtext,
+                        color: Palette.subtext,
                         fontSize: 13,
                       ),
                     ),

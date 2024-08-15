@@ -18,13 +18,13 @@ Future<void> addCategoryDialog(BuildContext context) async {
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          backgroundColor: Pallete.topbox,
+          backgroundColor: Palette.topbox,
           contentPadding: const EdgeInsets.all(16),
           content: Row(
             children: [
               Expanded(
                 child: TextField(
-                  style: TextStyle(color: Pallete.text),
+                  style: TextStyle(color: Palette.text),
                   controller: textEditingController,
                   onChanged: (value) => setState(
                     () {
@@ -37,7 +37,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
                     hintText: "Garage Projects",
                     hintStyle: TextStyle(
                       fontStyle: FontStyle.italic,
-                      color: Pallete.subtext,
+                      color: Palette.subtext,
                     ),
                   ),
                 ),
@@ -62,7 +62,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
               child: Text(
                 "Accept",
                 style: TextStyle(
-                  color: minimumtRequirementsMet ? Pallete.text : Colors.red,
+                  color: minimumtRequirementsMet ? Palette.text : Colors.red,
                 ),
               ),
             )

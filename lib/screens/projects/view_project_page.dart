@@ -37,9 +37,9 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
         return Future<bool>.value(false);
       },
       child: Scaffold(
-        backgroundColor: Pallete.bg,
+        backgroundColor: Palette.bg,
         appBar: AppBar(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, pageCallback),
@@ -119,10 +119,10 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.bg,
+                        backgroundColor: Palette.bg,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Pallete.text),
+                          side: BorderSide(color: Palette.text),
                         ),
                       ),
                       child: AdaptiveText("category: ${widget.projectData["category"]}"),
@@ -139,10 +139,10 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     child: ProgressElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.bg,
+                        backgroundColor: Palette.bg,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Pallete.text),
+                          side: BorderSide(color: Palette.text),
                         ),
                       ),
                       onPressed: () {
@@ -155,7 +155,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         int size = widget.projectData["size"];
                         return size.toDouble() / 100;
                       }(),
-                      progressColor: Pallete.primary,
+                      progressColor: Palette.primary,
                       child: Text(
                         () {
                           List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
@@ -165,7 +165,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           double value = ((widget.projectData["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
                           return currentProjectSizeDescription[value.toInt()];
                         }(),
-                        style: TextStyle(color: Pallete.text),
+                        style: TextStyle(color: Palette.text),
                       ),
                     ),
                   ),
@@ -185,10 +185,10 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           progress: projectCompletion,
                           progressColor: Colors.green,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Pallete.bg,
+                            backgroundColor: Palette.bg,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Pallete.text),
+                              side: BorderSide(color: Palette.text),
                             ),
                           ),
                           child: AdaptiveText("completion: ${(projectCompletion * 100).toInt()}"),
@@ -211,7 +211,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   Map part = widget.projectData["part"][index];
                   double partCompletion = calculateCompletion(part["tasks"]);
                   return Card(
-                    color: Pallete.topbox,
+                    color: Palette.topbox,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
                       subtitle: AdaptiveText(part["description"]),
