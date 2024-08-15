@@ -9,6 +9,7 @@ class AdaptiveText extends StatelessWidget {
   FontWeight? fontWeight;
   TextAlign? textAlign;
   FontStyle? fontStyle;
+  TextOverflow? overflow;
 
   AdaptiveText(
     this.data, {
@@ -17,6 +18,7 @@ class AdaptiveText extends StatelessWidget {
     this.fontWeight,
     this.textAlign,
     this.fontStyle,
+    this.overflow
   });
 
   @override
@@ -30,6 +32,7 @@ class AdaptiveText extends StatelessWidget {
         fontSize: fontSize,
         fontWeight: fontWeight,
         fontStyle: fontStyle,
+        overflow: overflow,
       ),
     );
   }

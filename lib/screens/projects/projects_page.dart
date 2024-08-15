@@ -121,7 +121,10 @@ class _HomePageState extends State<HomePage> {
                           items: ddb_category.map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem(
                               value: value,
-                              child: AdaptiveText(value),
+                              child: AdaptiveText(
+                                value,
+                                overflow: TextOverflow.fade,
+                              ),
                             );
                           }).toList(),
                           onChanged: (String? value) {
@@ -147,7 +150,10 @@ class _HomePageState extends State<HomePage> {
                           items: ddb_sortBy.map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem(
                               value: value,
-                              child: AdaptiveText(value),
+                              child: AdaptiveText(
+                                value,
+                                overflow: TextOverflow.fade,
+                              ),
                             );
                           }).toList(),
                           onChanged: (String? value) {

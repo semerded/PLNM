@@ -99,7 +99,10 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                                 Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
-                                  child: AdaptiveText(value),
+                                  child: AdaptiveText(
+                                    value,
+                                    overflow: TextOverflow.fade,
+                                  ),
                                 ),
                               ],
                             ),

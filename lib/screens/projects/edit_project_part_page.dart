@@ -9,7 +9,10 @@ import 'package:keeper_of_projects/data.dart';
 
 class EditProjectPartPage extends StatefulWidget {
   final Map partData;
-  const EditProjectPartPage({super.key, required this.partData,});
+  const EditProjectPartPage({
+    super.key,
+    required this.partData,
+  });
 
   @override
   State<EditProjectPartPage> createState() => _EditProjectPartPageState();
@@ -23,6 +26,7 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
     super.initState();
     updatedPart = Map.from(widget.partData.deepcopy());
   }
+
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
@@ -72,7 +76,10 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
                                 Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
-                                  child: AdaptiveText(value),
+                                  child: AdaptiveText(
+                                    value,
+                                    overflow: TextOverflow.fade,
+                                  ),
                                 ),
                               ],
                             ),
