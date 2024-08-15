@@ -40,158 +40,143 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Palette.bg,
-      appBar: AppBar(
-        title: const Text("Add a new part for your project"),
-        backgroundColor: Palette.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pop(null);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: Palette.bg,
+        appBar: AppBar(
+          title: const Text("Add a new part for your project"),
+          backgroundColor: Palette.primary,
         ),
-      ),
-      body: Column(
-        children: [
-          // add a title
-          TitleTextField(
-            hintText: "A unique title for your project part",
-            onChanged: (value) {
-              setState(() {
-                validTitle = value.length >= 2;
-                newPart["title"] = value;
-                validate();
-              });
-            },
-          ),
-
-          // add a description
-          DescriptionTextField(
-            controller: descriptionController,
-            hintText: "Describe your project part here",
-            helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
-            onChanged: (value) {
-              setState(() {
-                newPart["description"] = value;
-                validate();
-              });
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Container(
-                    color: Palette.box,
-                    child: DropdownButton<String>(
-                      padding: const EdgeInsets.only(left: 7, right: 7),
-                      elevation: 15,
-                      isExpanded: true,
-                      dropdownColor: Palette.topbox,
-                      value: ddb_priority_value,
-                      items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: AdaptiveText(value),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          newPart["priority"] = ddb_priority_value = value!;
-                          validate();
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    addTask(context).then(
-                      (value) {
-                        if (value != null) {
-                          setState(() {
-                            newPart["tasks"].add(value);
-                          });
-                        }
-                      },
-                    );
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute<Map>(
-                    //     builder: (context) => const (),
-                    //   ),
-                    // ).then(
-                    //   (value) {
-                    //     if (value != null) {
-                    //       print(value);
-                    //       setState(() {
-                    //         // newPart["task"].add(value);
-                    //       });
-                    //     }
-                    //   },
-                    // );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.topbox,
-                  ),
-                  label: AdaptiveText("Add Task"),
-                  icon: const Icon(
-                    Icons.add,
-                    color: Palette.primary,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: newPart["tasks"].length,
-              itemBuilder: (context, index) {
-                Map task = newPart["tasks"][index];
-                return Card(
-                  color: Palette.topbox,
-                  child: ListTile(
-                    title: AdaptiveText(task["title"]),
-                    subtitle: AdaptiveText(task["description"]),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const AdaptiveIcon(Icons.edit),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const AdaptiveIcon(Icons.delete),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+        body: Column(
+          children: [
+            // add a title
+            TitleTextField(
+              hintText: "A unique title for your project part",
+              onChanged: (value) {
+                setState(() {
+                  validTitle = value.length >= 2;
+                  newPart["title"] = value;
+                  validate();
+                });
               },
             ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Palette.primary,
-        onPressed: () {
-          Navigator.pop(context, newPart);
-        },
-        child: const Icon(Icons.check),
+
+            // add a description
+            DescriptionTextField(
+              controller: descriptionController,
+              hintText: "Describe your project part here",
+              helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
+              onChanged: (value) {
+                setState(() {
+                  newPart["description"] = value;
+                  validate();
+                });
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Container(
+                      color: Palette.box,
+                      child: DropdownButton<String>(
+                        padding: const EdgeInsets.only(left: 7, right: 7),
+                        elevation: 15,
+                        isExpanded: true,
+                        dropdownColor: Palette.topbox,
+                        value: ddb_priority_value,
+                        items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Row(
+                              children: [
+                                Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: AdaptiveText(value),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            newPart["priority"] = ddb_priority_value = value!;
+                            validate();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      addTask(context).then(
+                        (value) {
+                          if (value != null) {
+                            setState(() {
+                              newPart["tasks"].add(value);
+                            });
+                          }
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Palette.topbox,
+                    ),
+                    label: AdaptiveText("Add Task"),
+                    icon: const Icon(
+                      Icons.add,
+                      color: Palette.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: newPart["tasks"].length,
+                itemBuilder: (context, index) {
+                  Map task = newPart["tasks"][index];
+                  return Card(
+                    color: Palette.topbox,
+                    child: ListTile(
+                      title: AdaptiveText(task["title"]),
+                      subtitle: AdaptiveText(task["description"]),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const AdaptiveIcon(Icons.edit),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const AdaptiveIcon(Icons.delete),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Palette.primary,
+          onPressed: () {
+            Navigator.pop(context, newPart);
+          },
+          child: const Icon(Icons.check),
+        ),
       ),
     );
   }
