@@ -50,14 +50,14 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
               onEdit: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute<List>(
+                  MaterialPageRoute<Map>(
                     builder: (context) => EditProjectPage(projectData: widget.projectData,),
                   ),
                 ).then((callback) async {
                   if (callback != null) {
                     setState(() {
-                      projectsContent[widget.index] = Map.from(callback[1]);
-                      widget.projectData = Map.from(callback[1]);
+                      projectsContent[widget.index] = Map.from(callback);
+                      widget.projectData = Map.from(callback);
                       pageCallback = PageCallback.setState; // TODO
                     });
                     await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));

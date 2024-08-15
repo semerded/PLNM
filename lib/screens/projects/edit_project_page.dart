@@ -36,10 +36,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
-        print("backup used");
-        // print(widget.projectData);
-        // projectsContent[widget.projectIndex] = Map.from(backupProjectData);
-        Navigator.pop(context, [EditCallback.canceled, null]);
+        Navigator.pop(context, null);
         return Future<bool>.value(false);
       },
       child: Scaffold(
@@ -232,9 +229,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Palette.primary,
           onPressed: () {
-            // projectsContent[widget.projectIndex] = Map.from(widget.projectData);
-
-            Navigator.pop(context, [EditCallback.edited, updatedProjectData]);
+            Navigator.pop(context, updatedProjectData);
           },
           child: const Icon(Icons.save),
         ),
