@@ -13,11 +13,9 @@ import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.
 
 class EditProjectPage extends StatefulWidget {
   final Map projectData;
-  final int projectIndex;
   const EditProjectPage({
     super.key,
     required this.projectData,
-    required this.projectIndex,
   });
 
   @override
@@ -200,7 +198,22 @@ class _EditProjectPageState extends State<EditProjectPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<Map>(
+                                  builder: (context) => EditProjectPartPage(
+                                    partData: part,
+                                  ),
+                                ),
+                              ).then((value) {
+                                if (value != null) {
+                                  setState(() {
+                                    updatedProjectData["part"][index] = value;
+                                  });
+                                }
+                              });
+                            },
                             icon: const AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(

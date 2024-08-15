@@ -51,7 +51,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<List>(
-                    builder: (context) => EditProjectPage(projectData: widget.projectData, projectIndex: widget.index),
+                    builder: (context) => EditProjectPage(projectData: widget.projectData,),
                   ),
                 ).then((callback) async {
                   if (callback != null) {
