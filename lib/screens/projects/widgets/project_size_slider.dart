@@ -5,14 +5,25 @@ typedef OnChanged = void Function(double value);
 // ignore: must_be_immutable
 class ProjectSizeSlider extends StatefulWidget {
   final OnChanged onChanged;
-  const ProjectSizeSlider({super.key, required this.onChanged});
+  final double? initialValue;
+  const ProjectSizeSlider({super.key, required this.onChanged, this.initialValue});
 
   @override
   State<ProjectSizeSlider> createState() => _ProjectSizeSliderState();
 }
 
 class _ProjectSizeSliderState extends State<ProjectSizeSlider> {
-  double sliderValue = 0;
+  late double sliderValue;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialValue != null && widget.initialValue! >= 0 && widget.initialValue! <= 100) {
+      sliderValue = widget.initialValue!;
+    }
+    else {
+      sliderValue = 0.0;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Slider(
