@@ -226,14 +226,9 @@ class _AddProjectPageState extends State<AddProjectPage> {
                   color: Pallete.topbox,
                   child: ListTile(
                     title: AdaptiveText(part["title"]),
-                    subtitle: RichText(
-                      text: TextSpan(
-                        text: "${part["tasks"].length} • ",
-                        style: TextStyle(color: Pallete.text, fontWeight: FontWeight.bold, overflow: TextOverflow.fade),
-                        children: <TextSpan>[
-                          TextSpan(text: part["description"], style: TextStyle(color: Pallete.subtext)),
-                        ],
-                      ),
+                    subtitle: Text(
+                      "${part["tasks"].length} • ${part["description"]}",
+                      style: TextStyle(color: Pallete.subtext),
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,

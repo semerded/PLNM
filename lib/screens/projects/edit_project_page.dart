@@ -3,8 +3,13 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:deepcopy/deepcopy.dart';
+import 'package:keeper_of_projects/screens/projects/add_project_part_page.dart';
+import 'package:keeper_of_projects/screens/projects/edit_project_part_page.dart';
+import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.dart';
 
 class EditProjectPage extends StatefulWidget {
   final Map projectData;
@@ -20,12 +25,12 @@ class EditProjectPage extends StatefulWidget {
 }
 
 class _EditProjectPageState extends State<EditProjectPage> {
-  Map newProjectData = {};
+  Map updatedProjectData = {};
 
   @override
   void initState() {
     super.initState();
-    newProjectData = Map.from(widget.projectData.deepcopy());
+    updatedProjectData = Map.from(widget.projectData.deepcopy());
   }
 
   @override
@@ -49,14 +54,165 @@ class _EditProjectPageState extends State<EditProjectPage> {
           children: [
             TitleTextField(
               onChanged: (value) {
-                newProjectData["title"] = value;
+                updatedProjectData["title"] = value;
               },
-              initialValue: newProjectData["title"],
+              initialValue: updatedProjectData["title"],
             ),
-            DescriptionTextField(onChanged: (value) {
-              newProjectData["description"] = value;
-            },
-            initialValue: newProjectData["description"],
+            DescriptionTextField(
+              onChanged: (value) {
+                updatedProjectData["description"] = value;
+              },
+              initialValue: updatedProjectData["description"],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Container(
+                      color: Pallete.box,
+                      child: DropdownButton<String>(
+                        padding: const EdgeInsets.only(left: 7, right: 7),
+                        isExpanded: true,
+                        elevation: 15,
+                        dropdownColor: Pallete.topbox,
+                        value: updatedProjectData["category"], // check if exist
+                        items: categoryDataContent?.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: AdaptiveText(value),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            updatedProjectData["category"] = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Container(
+                      color: Pallete.box,
+                      child: DropdownButton<String>(
+                        padding: const EdgeInsets.only(left: 7, right: 7),
+                        elevation: 15,
+                        isExpanded: true,
+                        dropdownColor: Pallete.topbox,
+                        value: updatedProjectData["priority"],
+                        items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Row(
+                              children: [
+                                Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: AdaptiveText(value),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            updatedProjectData["priority"] = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    AdaptiveText("Size: ${() {
+                      if (updatedProjectData["size"] == 0) {
+                        return projectSizeDescription[0];
+                      }
+                      double value = ((updatedProjectData["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+                      return projectSizeDescription[value.toInt()];
+                    }()}"),
+                    ProjectSizeSlider(
+                      initialValue: updatedProjectData["size"].toDouble(),
+                      onChanged: (value) {
+                        setState(() {
+                          updatedProjectData["size"] = value.toInt();
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<Map>(
+                        builder: (context) => const AddProjectPartPage(),
+                      ),
+                    ).then(
+                      (value) {
+                        if (value != null) {
+                          print(value);
+                          setState(() {
+                            updatedProjectData["part"].add(value);
+                          });
+                        }
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Pallete.topbox,
+                  ),
+                  label: AdaptiveText("Add Project Part"),
+                  icon: const Icon(
+                    Icons.add,
+                    color: Pallete.primary,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: updatedProjectData["part"].length,
+                itemBuilder: (context, index) {
+                  Map part = updatedProjectData["part"][index];
+                  return Card(
+                    color: Pallete.topbox,
+                    child: ListTile(
+                      title: AdaptiveText(part["title"]),
+                      subtitle: Text(
+                        "${part["tasks"].length} • ${part["description"]}",
+                        style: TextStyle(color: Pallete.subtext),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const AdaptiveIcon(Icons.edit),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const AdaptiveIcon(Icons.delete),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             )
           ],
         ),
@@ -65,7 +221,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
           onPressed: () {
             // projectsContent[widget.projectIndex] = Map.from(widget.projectData);
 
-            Navigator.pop(context, [EditCallback.edited, newProjectData]);
+            Navigator.pop(context, [EditCallback.edited, updatedProjectData]);
           },
           child: const Icon(Icons.save),
         ),
