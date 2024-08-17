@@ -12,6 +12,8 @@ Future addTask(BuildContext context) {
     "completed": false,
   };
 
+  bool validTitle = false;
+
   final TextEditingController descriptionController = TextEditingController();
   return showDialog(
     context: context,
@@ -29,6 +31,7 @@ Future addTask(BuildContext context) {
                       onChanged: (value) {
                         setState(
                           () {
+                            validTitle = value.length >= 2;
                             newTask["title"] = value;
                           },
                         );
@@ -43,6 +46,7 @@ Future addTask(BuildContext context) {
                           },
                         );
                       },
+                      helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
                       controller: descriptionController,
                       hintText: "Add a description for your task",
                     ),
