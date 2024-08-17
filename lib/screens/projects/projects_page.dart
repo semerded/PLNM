@@ -10,6 +10,7 @@ import 'package:keeper_of_projects/screens/projects/add_project_page.dart';
 import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/add_animated.dart';
 import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
+import 'package:keeper_of_projects/screens/projects/ideas_page.dart';
 import 'package:keeper_of_projects/screens/projects/project_archive_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/projectview.dart';
 
@@ -62,6 +63,7 @@ class _HomePageState extends State<HomePage> {
     ddb_sortBy_value = ddb_sortBy.first;
     buildDDBcategory();
     projectsContent = projectsDataContent!["projects"];
+    ideasContent = projectsDataContent!["ideas"];
   }
 
   bool searchBarActive = false;
@@ -75,7 +77,21 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             backgroundColor: Palette.primary,
             title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
-            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: Icon(Icons.lightbulb_outline),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<bool>(
+                    builder: (context) => const IdeasPage(),
+                  ),
+                ).then((callback) {
+                  if (callback != null && callback) {
+                    setState(() {});
+                  }
+                });
+              },
+            ),
             actions: [
               currentUser == null
                   ? FloatingActionButton(
