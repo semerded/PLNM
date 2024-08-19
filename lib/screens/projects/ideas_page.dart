@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -15,6 +16,7 @@ class _IdeasPageState extends State<IdeasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Palette.bg,
       appBar: AppBar(
         title: Text("You have ${ideasContent.length} idea${ideasContent.length != 1 ? "s" : ""}"),
         backgroundColor: Palette.primary,
@@ -37,7 +39,13 @@ class _IdeasPageState extends State<IdeasPage> {
                       icon: const AdaptiveIcon(Icons.lightbulb),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (await showConfirmDialog(context, "Delete this idea")) {
+                          setState(() {
+                            ideasContent.removeAt(index);
+                          });
+                        }
+                      },
                       icon: const AdaptiveIcon(Icons.delete),
                     ),
                   ],
