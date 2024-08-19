@@ -45,7 +45,6 @@ class _HomePageState extends State<HomePage> {
 
   final FocusNode searchBarFocusNode = FocusNode();
 
-  int availableTasks = 0;
   late String ddb_sortBy_value;
   late String ddb_category_value;
 
@@ -76,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Palette.bg,
           appBar: AppBar(
             backgroundColor: Palette.primary,
-            title: AdaptiveText("$availableTasks task${availableTasks == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
+            title: Text("You have ${projectsContent.length} project${projectsContent.length == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
             leading: IconButton(
               icon: Icon(Icons.lightbulb_outline),
               onPressed: () {
