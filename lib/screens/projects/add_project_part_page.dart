@@ -163,7 +163,9 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                               editTask(context, task).then((editedTask) {
                                 if (!const DeepCollectionEquality().equals(task, editedTask)) {
                                   setState(() {
-                                    newPart["tasks"][index] = Map.from(editedTask);
+                                    if (editedTask != null) {
+                                      newPart["tasks"][index] = Map.from(editedTask);
+                                    }
                                   });
                                 }
                               });
