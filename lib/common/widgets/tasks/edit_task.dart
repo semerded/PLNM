@@ -33,7 +33,7 @@ Future editTask(BuildContext context, Map initTask) {
                           },
                         );
                       },
-                      hintText: "Add a description for your task",
+                      hintText: "Add a title for your task",
                     ),
                     DescriptionTextField(
                       initialValue: editedTask["description"],

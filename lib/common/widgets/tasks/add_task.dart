@@ -36,7 +36,7 @@ Future addTask(BuildContext context) {
                           },
                         );
                       },
-                      hintText: "Add a description for your task",
+                      hintText: "Add a title for your task",
                     ),
                     DescriptionTextField(
                       onChanged: (value) {
