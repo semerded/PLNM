@@ -3,6 +3,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -35,8 +36,10 @@ class _EditProjectPageState extends State<EditProjectPage> {
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context, null);
+      onWillPop: () async {
+        if (await showConfirmDialog(context, "Undo changes made to this project?")) {
+          Navigator.pop(context, null);
+        }
         return Future<bool>.value(false);
       },
       child: Scaffold(
@@ -44,6 +47,14 @@ class _EditProjectPageState extends State<EditProjectPage> {
         appBar: AppBar(
           backgroundColor: Palette.primary,
           title: Text("Editing: ${widget.projectData["title"]}"),
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () async {
+              if (await showConfirmDialog(context, "Undo changes made to this project?")) {
+                Navigator.pop(context, null);
+              }
+            },
+          ),
         ),
         body: Column(
           children: [

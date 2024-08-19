@@ -7,6 +7,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -57,221 +58,233 @@ class _AddProjectPageState extends State<AddProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Palette.bg,
-      appBar: AppBar(
-        title: const Text("Create a new project"),
-        backgroundColor: Palette.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
+    return WillPopScope(
+      onWillPop: () async {
+        if (await showConfirmDialog(context, "Cancel making this project")) {
+          Navigator.pop(context);
+        }
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: Palette.bg,
+        appBar: AppBar(
+          title: const Text("Create a new project"),
+          backgroundColor: Palette.primary,
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () async {
+              if (await showConfirmDialog(context, "Undo creating this project?")) {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          // add a title
-          TitleTextField(
-            hintText: "A unique title for your project",
-            onChanged: (value) {
-              setState(() {
-                validTitle = value.length >= 2;
-                newProject["title"] = value;
-                validate();
-              });
-            },
-          ),
-
-          // add a description
-          DescriptionTextField(
-            controller: descriptionController,
-            hintText: "Describe your project here",
-            helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
-            onChanged: (value) {
-              setState(() {
-                newProject["description"] = value;
-                validate();
-              });
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Container(
-                    color: Palette.box,
-                    child: DropdownButton<String>(
-                      padding: const EdgeInsets.only(left: 7, right: 7),
-                      isExpanded: true,
-                      elevation: 15,
-                      dropdownColor: Palette.topbox,
-                      value: ddb_category_value,
-                      items: ddb_category.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: AdaptiveText(
-                              value,
-                              overflow: TextOverflow.fade,
-                              fontStyle: value == ddb_catgegoryDefaultText ? FontStyle.italic : FontStyle.normal,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          newProject["category"] = ddb_category_value = value!;
-                          validCategory = value != ddb_catgegoryDefaultText;
-                          validate();
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Container(
-                    color: Palette.box,
-                    child: DropdownButton<String>(
-                      padding: const EdgeInsets.only(left: 7, right: 7),
-                      elevation: 15,
-                      isExpanded: true,
-                      dropdownColor: Palette.topbox,
-                      value: ddb_priority_value,
-                      items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: AdaptiveText(
-                                  value,
-                                  overflow: TextOverflow.fade,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          newProject["priority"] = ddb_priority_value = value!;
-                          validate();
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  AdaptiveText("Size: ${() {
-                    if (newProject["size"] == 0) {
-                      return projectSizeDescription[0];
-                    }
-                    double value = ((newProject["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
-                    return projectSizeDescription[value.toInt()];
-                  }()}"),
-                  ProjectSizeSlider(
-                    onChanged: (value) {
-                      setState(() {
-                        newProject["size"] = value.toInt();
-                      });
-                    },
-                  ),
-                ],
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<Map>(
-                      builder: (context) => const AddProjectPartPage(),
-                    ),
-                  ).then(
-                    (value) {
-                      if (value != null) {
-                        print(value);
-                        setState(() {
-                          newProject["part"].add(value);
-                        });
-                      }
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Palette.topbox,
-                ),
-                label: AdaptiveText("Add Project Part"),
-                icon: const Icon(
-                  Icons.add,
-                  color: Palette.primary,
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: newProject["part"].length,
-              itemBuilder: (context, index) {
-                Map part = newProject["part"][index];
-                return Card(
-                  color: Palette.topbox,
-                  child: ListTile(
-                    title: AdaptiveText(part["title"]),
-                    subtitle: Text(
-                      "${part["tasks"].length} • ${part["description"]}",
-                      style: TextStyle(color: Palette.subtext),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const AdaptiveIcon(Icons.edit),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const AdaptiveIcon(Icons.delete),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+        body: Column(
+          children: [
+            // add a title
+            TitleTextField(
+              hintText: "A unique title for your project",
+              onChanged: (value) {
+                setState(() {
+                  validTitle = value.length >= 2;
+                  newProject["title"] = value;
+                  validate();
+                });
               },
             ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (taskValidated) {
-            newProject["timeCreated"] = DateTime.now().toString();
-            newProject["size"] = newProject["size"].toInt();
 
-            setState(() {
-              projectsDataContent!["projects"].add(newProject); //! add deepcopy if duplication happens
-              LoadingScreen.show(context, "Saving Task");
-              saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent)).then((value) {
-                LoadingScreen.hide(context);
-                Navigator.of(context).pop(true);
+            // add a description
+            DescriptionTextField(
+              controller: descriptionController,
+              hintText: "Describe your project here",
+              helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
+              onChanged: (value) {
+                setState(() {
+                  newProject["description"] = value;
+                  validate();
+                });
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Container(
+                      color: Palette.box,
+                      child: DropdownButton<String>(
+                        padding: const EdgeInsets.only(left: 7, right: 7),
+                        isExpanded: true,
+                        elevation: 15,
+                        dropdownColor: Palette.topbox,
+                        value: ddb_category_value,
+                        items: ddb_category.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: AdaptiveText(
+                                value,
+                                overflow: TextOverflow.fade,
+                                fontStyle: value == ddb_catgegoryDefaultText ? FontStyle.italic : FontStyle.normal,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            newProject["category"] = ddb_category_value = value!;
+                            validCategory = value != ddb_catgegoryDefaultText;
+                            validate();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Container(
+                      color: Palette.box,
+                      child: DropdownButton<String>(
+                        padding: const EdgeInsets.only(left: 7, right: 7),
+                        elevation: 15,
+                        isExpanded: true,
+                        dropdownColor: Palette.topbox,
+                        value: ddb_priority_value,
+                        items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Row(
+                              children: [
+                                Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: AdaptiveText(
+                                    value,
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            newProject["priority"] = ddb_priority_value = value!;
+                            validate();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    AdaptiveText("Size: ${() {
+                      if (newProject["size"] == 0) {
+                        return projectSizeDescription[0];
+                      }
+                      double value = ((newProject["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
+                      return projectSizeDescription[value.toInt()];
+                    }()}"),
+                    ProjectSizeSlider(
+                      onChanged: (value) {
+                        setState(() {
+                          newProject["size"] = value.toInt();
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<Map>(
+                        builder: (context) => const AddProjectPartPage(),
+                      ),
+                    ).then(
+                      (value) {
+                        if (value != null) {
+                          print(value);
+                          setState(() {
+                            newProject["part"].add(value);
+                          });
+                        }
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Palette.topbox,
+                  ),
+                  label: AdaptiveText("Add Project Part"),
+                  icon: const Icon(
+                    Icons.add,
+                    color: Palette.primary,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: newProject["part"].length,
+                itemBuilder: (context, index) {
+                  Map part = newProject["part"][index];
+                  return Card(
+                    color: Palette.topbox,
+                    child: ListTile(
+                      title: AdaptiveText(part["title"]),
+                      subtitle: Text(
+                        "${part["tasks"].length} • ${part["description"]}",
+                        style: TextStyle(color: Palette.subtext),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const AdaptiveIcon(Icons.edit),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const AdaptiveIcon(Icons.delete),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            if (taskValidated) {
+              newProject["timeCreated"] = DateTime.now().toString();
+              newProject["size"] = newProject["size"].toInt();
+
+              setState(() {
+                projectsDataContent!["projects"].add(newProject); //! add deepcopy if duplication happens
+                LoadingScreen.show(context, "Saving Task");
+                saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent)).then((value) {
+                  LoadingScreen.hide(context);
+                  Navigator.of(context).pop(true);
+                });
               });
-            });
-          }
-        },
-        backgroundColor: taskValidated ? Colors.green : Colors.red,
-        child: const Icon(Icons.check),
+            }
+          },
+          backgroundColor: taskValidated ? Colors.green : Colors.red,
+          child: const Icon(Icons.check),
+        ),
       ),
     );
   }
