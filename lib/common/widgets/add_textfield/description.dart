@@ -24,7 +24,21 @@ class DescriptionTextField extends StatefulWidget {
 }
 
 class _DescriptionTextFieldState extends State<DescriptionTextField> {
+  String? initialValue;
   FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialValue != null) {
+      if (widget.controller == null) {
+        initialValue = widget.initialValue;
+      } else {
+        widget.controller!.text = widget.initialValue!;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,8 +47,8 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
         onFocusChange: (_) => setState(() {}),
         child: TextFormField(
           focusNode: focusNode,
+          // initialValue: initialValue,
           controller: widget.controller,
-          initialValue: widget.initialValue,
           decoration: InputDecoration(
             enabledBorder: enabledBorder(),
             focusedBorder: focusedBorder(),
