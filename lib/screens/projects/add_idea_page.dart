@@ -5,6 +5,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/data.dart';
 
 class AddIdeaPage extends StatefulWidget {
   const AddIdeaPage({super.key});
@@ -23,7 +24,9 @@ class _AddIdeaPageState extends State<AddIdeaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Palette.bg,
       appBar: AppBar(
+        backgroundColor: Palette.primary,
         title: Text("Add a new idea"),
       ),
       body: Column(
