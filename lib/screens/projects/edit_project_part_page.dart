@@ -1,9 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:deepcopy/deepcopy.dart';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/add_task.dart';
+import 'package:keeper_of_projects/common/widgets/tasks/edit_task.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -133,11 +135,23 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              editTask(context, task).then((editedTask) {
+                                if (!const DeepCollectionEquality().equals(task, editedTask)) {
+                                  setState(() {
+                                    updatedPart["tasks"][index] = Map.from(editedTask);
+                                  });
+                                }
+                              });
+                            },
                             icon: const AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                updatedPart["tasks"].removeAt(index);
+                              });
+                            },
                             icon: const AdaptiveIcon(Icons.delete),
                           ),
                         ],

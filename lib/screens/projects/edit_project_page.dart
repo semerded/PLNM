@@ -231,7 +231,11 @@ class _EditProjectPageState extends State<EditProjectPage> {
                             icon: const AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                updatedProjectData["part"].removeAt(index);
+                              });
+                            },
                             icon: const AdaptiveIcon(Icons.delete),
                           ),
                         ],

@@ -13,6 +13,7 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
 import 'package:keeper_of_projects/screens/projects/add_project_part_page.dart';
+import 'package:keeper_of_projects/screens/projects/edit_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.dart';
 
 class AddProjectPage extends StatefulWidget {
@@ -250,11 +251,28 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<Map>(
+                                    builder: (context) => EditProjectPartPage(partData: newProject["part"][index]),
+                                  ),
+                                ).then((value) {
+                                  if (value != null) {
+                                    setState(() {
+                                      newProject["part"][index] = value;
+                                    });
+                                  }
+                                });
+                              });
+                            },
                             icon: const AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              newProject["part"].removeAt(index);
+                            },
                             icon: const AdaptiveIcon(Icons.delete),
                           ),
                         ],
