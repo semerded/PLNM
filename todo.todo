@@ -10,38 +10,25 @@
 
 >> frontend
 
-@high show project progress with a progress button
-
-@low change appbar title
-
 @optional add animations when a task slider increases or decreases
 
 >>>> functionality
 
 @critical stop animation when page is switched
 
-@critical @today give functionality to idea card buttons
-
-@critical @today fix save safety when editing a task and when converting idea into project
-
-
-@high add the ability to edit and delete projects
+@critical @today make filter system
 
 @high @today create about page
 
-@high add a dialog when the user closes the add project page to make sure that the user wants to close the page
-
 @high add placeholders for ddb buttons
 
-@high create pop up menu for project part view
-
-@low add alert dialogs when a user exits edit or add page
+@high @today create pop up menu for project part view
 
 @low create archive page
 
-@low add a button to only show the project parts and hide the rest vice versa
+@low @today add a button to only show the project parts and hide the rest vice versa
 
-@low add a checklist to enable multiple categories (showing Multiple in bar) and add buttons to enable and disable all categories
+@low @today add a checklist to enable multiple categories (showing Multiple in bar) and add buttons to enable and disable all categories
 
 @optional add more examples for adding a category
 
