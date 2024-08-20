@@ -6,6 +6,7 @@ import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -81,7 +82,17 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   projectCompletion = calculateCompletion(widget.projectData["part"]);
                 });
               },
-              onDelete: () {},
+              onDelete: () {
+                showConfirmDialog(context, 'Delete "${widget.projectData["title"]}" permanently? This can\'t be undone!').then((value) {
+                  if (value) {
+                    setState(() {
+                      projectsContent.removeAt(widget.index);
+                    });
+                    pageCallback = PageCallback.setStateAndSync;
+                    Navigator.pop(context, pageCallback);
+                  }
+                });
+              },
               completeAllState: projectCompletion == 1.0,
               archiveState: false,
             ),

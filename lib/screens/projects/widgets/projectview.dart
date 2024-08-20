@@ -11,9 +11,16 @@ import 'package:keeper_of_projects/screens/projects/view_project_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:keeper_of_projects/common/custom/custom_one_border_painter.dart';
 
+typedef OnUpdated = void Function();
+
 class ProjectView extends StatefulWidget {
   final List content;
-  const ProjectView({super.key, required this.content});
+  final OnUpdated onUpdated;
+  const ProjectView({
+    super.key,
+    required this.content,
+    required this.onUpdated,
+  });
 
   @override
   State<ProjectView> createState() => _ProjectViewState();
@@ -81,6 +88,7 @@ class _ProjectViewState extends State<ProjectView> {
                         if (callback != null) {
                           if (callback == PageCallback.setState || callback == PageCallback.setStateAndSync) {
                             setState(() {});
+                            widget.onUpdated();
                             if (callback == PageCallback.setStateAndSync) {
                               await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
                             }

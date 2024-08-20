@@ -203,6 +203,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ProjectView(
                   content: projectsContent,
+                  onUpdated: () => setState(() {}),
                 ),
               ),
             ],
