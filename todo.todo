@@ -22,9 +22,7 @@
 
 @critical @today give functionality to idea card buttons
 
-@critical @today fix add idea page
-
-@critical @today fix edit button and delete button for project part & task cards
+@critical @today fix save safety when editing a task and when converting idea into project
 
 
 @high add the ability to edit and delete projects

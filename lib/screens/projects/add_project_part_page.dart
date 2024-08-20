@@ -31,7 +31,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
   };
 
   void validate() {
-    taskValidated = validTitle && validCategory ? true : false;
+    taskValidated = validTitle && validCategory;
   }
 
   @override

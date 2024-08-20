@@ -51,7 +51,9 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<Map>(
-                    builder: (context) => EditProjectPage(projectData: widget.projectData,),
+                    builder: (context) => EditProjectPage(
+                      projectData: widget.projectData,
+                    ),
                   ),
                 ).then((callback) async {
                   if (callback != null) {
@@ -59,6 +61,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       projectsContent[widget.index] = Map.from(callback);
                       widget.projectData = Map.from(callback);
                       pageCallback = PageCallback.setState; // TODO
+                      projectCompletion = calculateCompletion(widget.projectData["part"]);
                     });
                     await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
                   }

@@ -44,7 +44,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
   List<String> ddb_category = [];
 
   void validate() {
-    taskValidated = validTitle && validCategory ? true : false;
+    taskValidated = validTitle && validCategory && newProject["part"].length >= 1;
   }
 
   @override
@@ -218,6 +218,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                           print(value);
                           setState(() {
                             newProject["part"].add(value);
+                            validate();
                           });
                         }
                       },
