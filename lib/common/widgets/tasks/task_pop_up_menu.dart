@@ -5,7 +5,7 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 
 // ignore: camel_case_types
-enum _taskMenu {
+enum TaskOptions {
   edit,
   completeAll,
   archive,
@@ -15,22 +15,37 @@ enum _taskMenu {
 typedef OnSelect = void Function();
 
 class TaskPopUpMenu extends StatefulWidget {
-  final OnSelect onEdit;
-  final OnSelect onCompleteAll;
-  final OnSelect onArchive;
-  final OnSelect onDelete;
-  final bool completeAllState;
-  final bool archiveState;
+  final List<TaskOptions> enabledTasks;
+  final OnSelect? onEdit;
+  final OnSelect? onCompleteAll;
+  final OnSelect? onArchive;
+  final OnSelect? onDelete;
+  final bool? completeAllState;
+  final bool? archiveState;
 
-  const TaskPopUpMenu({
+  TaskPopUpMenu({
     super.key,
-    required this.onEdit,
-    required this.onArchive,
-    required this.onCompleteAll,
-    required this.onDelete,
-    required this.completeAllState,
-    required this.archiveState,
-  });
+    required this.enabledTasks,
+    this.onEdit,
+    this.onArchive,
+    this.onCompleteAll,
+    this.onDelete,
+    this.completeAllState,
+    this.archiveState,
+  }) {
+    if (enabledTasks.contains(TaskOptions.archive)) {
+      assert(onArchive != null && archiveState != null);
+    }
+    if (enabledTasks.contains(TaskOptions.completeAll)) {
+      assert(onCompleteAll != null && completeAllState != null);
+    }
+    if (enabledTasks.contains(TaskOptions.delete)) {
+      assert(onDelete != null);
+    }
+    if (enabledTasks.contains(TaskOptions.edit)) {
+      assert(onEdit != null);
+    }
+  }
 
   @override
   State<TaskPopUpMenu> createState() => _TaskPopUpMenuState();
@@ -39,61 +54,82 @@ class TaskPopUpMenu extends StatefulWidget {
 class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<_taskMenu>(
+    return PopupMenuButton<TaskOptions>(
       color: Palette.topbox,
       icon: const Icon(Icons.more_vert),
       popUpAnimationStyle: AnimationStyle(),
-      onSelected: (_taskMenu item) {
-        if (item == _taskMenu.archive) {
-          if (widget.archiveState) {
-            widget.onArchive();
+      onSelected: (TaskOptions item) {
+        if (item == TaskOptions.archive) {
+          if (widget.archiveState!) {
+            widget.onArchive!();
           } else {
             showInfoDialog(context, "First complete all tasks before archiving.");
           }
-        } else if (item == _taskMenu.completeAll) {
-          widget.onCompleteAll();
-        } else if (item == _taskMenu.delete) {
-          widget.onDelete();
-        } else if (item == _taskMenu.edit) {
-          widget.onEdit();
+        } else if (item == TaskOptions.completeAll) {
+          widget.onCompleteAll!();
+        } else if (item == TaskOptions.delete) {
+          widget.onDelete!();
+        } else if (item == TaskOptions.edit) {
+          widget.onEdit!();
         }
       },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<_taskMenu>>[
-        PopupMenuItem<_taskMenu>(
-          value: _taskMenu.edit,
-          child: ListTile(
-            leading: const AdaptiveIcon(Icons.edit),
-            title: AdaptiveText("Edit"),
-          ),
-        ),
-        PopupMenuItem<_taskMenu>(
-          value: _taskMenu.completeAll,
-          child: ListTile(
-            leading: AdaptiveIcon(widget.completeAllState ? Icons.list : Icons.checklist),
-            title: AdaptiveText(widget.completeAllState ? 'Decomplete All' : 'Complete All'),
-          ),
-        ),
-        PopupMenuItem<_taskMenu>(
-          value: _taskMenu.archive,
-          child: ListTile(
-            leading: const AdaptiveIcon(Icons.archive),
-            title: Text(
-              'Archive',
-              style: TextStyle(
-                color: widget.archiveState ? Palette.text : Palette.subtext,
-                fontStyle: widget.archiveState ? FontStyle.normal : FontStyle.italic,
+      itemBuilder: (BuildContext context) {
+        List<PopupMenuEntry<TaskOptions>> popupMenuItems = [];
+        if (widget.enabledTasks.contains(TaskOptions.edit)) {
+          popupMenuItems.add(
+            PopupMenuItem<TaskOptions>(
+              value: TaskOptions.edit,
+              child: ListTile(
+                leading: const AdaptiveIcon(Icons.edit),
+                title: AdaptiveText("Edit"),
               ),
             ),
-          ),
-        ),
-        PopupMenuItem<_taskMenu>(
-          value: _taskMenu.delete,
-          child: ListTile(
-            leading: const AdaptiveIcon(Icons.delete_forever),
-            title: AdaptiveText('Delete'),
-          ),
-        ),
-      ],
+          );
+        }
+        if (widget.enabledTasks.contains(TaskOptions.completeAll)) {
+          popupMenuItems.add(
+            PopupMenuItem<TaskOptions>(
+              value: TaskOptions.completeAll,
+              child: ListTile(
+                leading: AdaptiveIcon(widget.completeAllState! ? Icons.list : Icons.checklist),
+                title: AdaptiveText(widget.completeAllState! ? 'Decomplete All' : 'Complete All'),
+              ),
+            ),
+          );
+        }
+        if (widget.enabledTasks.contains(TaskOptions.archive)) {
+          popupMenuItems.add(
+            PopupMenuItem<TaskOptions>(
+              value: TaskOptions.archive,
+              child: ListTile(
+                leading: const AdaptiveIcon(Icons.archive),
+                title: Text(
+                  'Archive',
+                  style: TextStyle(
+                    color: widget.archiveState! ? Palette.text : Palette.subtext,
+                    fontStyle: widget.archiveState! ? FontStyle.normal : FontStyle.italic,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+        if (widget.enabledTasks.contains(TaskOptions.delete)) {
+          popupMenuItems.add(
+            PopupMenuItem<TaskOptions>(
+              value: TaskOptions.delete,
+              child: ListTile(
+                leading: const Icon(
+                  Icons.delete_forever,
+                  color: Colors.red,
+                ),
+                title: AdaptiveText('Delete'),
+              ),
+            ),
+          );
+        }
+        return popupMenuItems;
+      },
     );
   }
 }
