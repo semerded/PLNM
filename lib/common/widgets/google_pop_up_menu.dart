@@ -10,6 +10,7 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/screens/about_page.dart';
 import 'package:keeper_of_projects/screens/login_page.dart';
+import 'package:keeper_of_projects/screens/profile_page.dart';
 import 'package:keeper_of_projects/screens/settings/settings_page.dart';
 
 // ignore: camel_case_types
@@ -83,6 +84,11 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
           Navigator.push(
             context,
             MaterialPageRoute<bool>(builder: (context) => widget.archiveRoute!),
+          );
+        } else if (item == _googleMenu.name) {
+          Navigator.push(
+            context,
+            MaterialPageRoute<bool>(builder: (context) => const ProfilePage()),
           );
         }
       },
