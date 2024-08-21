@@ -48,6 +48,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
           title: Text(widget.projectData["title"]),
           actions: [
             TaskPopUpMenu(
+              enabledTasks: const [TaskOptions.archive, TaskOptions.completeAll, TaskOptions.delete, TaskOptions.edit],
               onEdit: () {
                 Navigator.push(
                   context,

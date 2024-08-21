@@ -262,7 +262,10 @@ class _ConvertIdeaIntoProjectPageState extends State<ConvertIdeaIntoProjectPage>
                                 projectDataFromIdea["part"].removeAt(index);
                               });
                             },
-                            icon: const AdaptiveIcon(Icons.delete),
+                            icon: const Icon(
+                              Icons.delete_forever,
+                              color: Colors.red,
+                            ),
                           ),
                         ],
                       ),

@@ -274,7 +274,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
                             onPressed: () {
                               newProject["part"].removeAt(index);
                             },
-                            icon: const AdaptiveIcon(Icons.delete),
+                            icon: const Icon(
+                              Icons.delete_forever,
+                              color: Colors.red,
+                            ),
                           ),
                         ],
                       ),

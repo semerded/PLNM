@@ -3,8 +3,10 @@ import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/projects/edit_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 
 class ProjectPartViewPage extends StatefulWidget {
@@ -17,7 +19,6 @@ class ProjectPartViewPage extends StatefulWidget {
 
 class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
   bool partWasUpdated = false;
-  PageCallback pageCallback = PageCallback.none;
   late double partCompletion = calculateCompletion(widget.part["tasks"]);
 
   @override
@@ -33,6 +34,56 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
         appBar: AppBar(
           backgroundColor: Palette.primary,
           title: Text(widget.part["title"]),
+          actions: [
+            TaskPopUpMenu(
+              enabledTasks: const [TaskOptions.completeAll, TaskOptions.delete, TaskOptions.edit],
+              onEdit: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<Map>(
+                    builder: (context) => EditProjectPartPage(
+                      partData: widget.part,
+                    ),
+                  ),
+                ).then((callback) async {
+                  if (callback != null) {
+                    setState(() {
+                      partWasUpdated = true;
+                      // projectsContent[widget.index] = Map.from(callback);
+                      // widget.projectData = Map.from(callback);
+                      // pageCallback = PageCallback.setState; // TODO
+                      // projectCompletion = calculateCompletion(widget.projectData["part"]);
+                    });
+                  }
+                });
+              },
+              onCompleteAll: () {
+                setState(() {
+                  partWasUpdated = true;
+                  // bool setValue = projectCompletion != 1.0;
+                  // for (Map part in widget.projectData["part"]) {
+                  //   part["completed"] = setValue;
+                  //   for (Map tasks in part["tasks"]) {
+                  //     tasks["completed"] = setValue;
+                  //   }
+                  // }
+                  // projectCompletion = calculateCompletion(widget.projectData["part"]);
+                });
+              },
+              onDelete: () {
+                // showConfirmDialog(context, 'Delete "${widget.projectData["title"]}" permanently? This can\'t be undone!').then((value) {
+                //   if (value) {
+                //     setState(() {
+                //       projectsContent.removeAt(widget.index);
+                //     });
+                //     pageCallback = PageCallback.setStateAndSync;
+                //     Navigator.pop(context, pageCallback);
+                //   }
+                // });
+              },
+              completeAllState: partCompletion == 1.0,
+            ),
+          ],
         ),
         body: Column(
           children: [
