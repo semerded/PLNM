@@ -1,5 +1,7 @@
 >> backend
 
+@critical fix being stuck on google drive logo
+
 >>>> google drive
 
 @critical make a background upload service that uploads the project file data everytime there is a change; when a change happens when an old file is already uploading there will be made a queue (a boolean that tells that a sync need happening)
@@ -12,17 +14,19 @@
 
 @optional add animations when a task slider increases or decreases
 
+@optional add statistics to profile page
+
 >>>> functionality
 
 @critical stop animation when page is switched
+
+@critical @today add functionality to project part pop up menu
 
 @critical @today make filter system
 
 @high @today create about page
 
 @high add placeholders for ddb buttons
-
-@high @today create pop up menu for project part view
 
 @low create archive page
 
