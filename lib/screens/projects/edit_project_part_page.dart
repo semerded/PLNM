@@ -25,6 +25,7 @@ class EditProjectPartPage extends StatefulWidget {
 
 class _EditProjectPartPageState extends State<EditProjectPartPage> {
   Map updatedPart = {};
+  bool validTitle = false;
 
   @override
   void initState() {
@@ -59,7 +60,11 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
           children: [
             TitleTextField(
               onChanged: (value) {
-                updatedPart["title"] = value;
+                setState(() {
+                  validTitle = value.length >= 2;
+
+                  updatedPart["title"] = value;
+                });
               },
               initialValue: updatedPart["title"],
             ),
@@ -184,9 +189,11 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Palette.primary,
+          backgroundColor: validTitle ? Colors.green : Colors.red,
           onPressed: () {
-            Navigator.pop(context, updatedPart);
+            if (validTitle) {
+              Navigator.pop(context, updatedPart);
+            }
           },
           child: const Icon(Icons.save),
         ),
