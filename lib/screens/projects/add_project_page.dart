@@ -244,9 +244,20 @@ class _AddProjectPageState extends State<AddProjectPage> {
                     color: Palette.topbox,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
-                      subtitle: Text(
-                        "${part["tasks"].length} • ${part["description"]}",
-                        style: TextStyle(color: Palette.subtext),
+                      subtitle: RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Palette.subtext),
+                          text: "${part["tasks"].length} • ",
+                          children: [
+                            TextSpan(
+                              text: "${part["description"] != "" ? part["description"] : "no description"}",
+                              style: TextStyle(
+                                color: Palette.subtext,
+                                fontStyle: part["description"] != "" ? FontStyle.normal : FontStyle.italic,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,

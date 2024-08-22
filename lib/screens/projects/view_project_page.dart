@@ -240,7 +240,21 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                     color: Palette.topbox,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
-                      subtitle: AdaptiveText(part["description"]),
+                      subtitle: RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Palette.subtext),
+                          text: "${part["tasks"].length} • ",
+                          children: [
+                            TextSpan(
+                              text: "${part["description"] != "" ? part["description"] : "no description"}",
+                              style: TextStyle(
+                                color: Palette.subtext,
+                                fontStyle: part["description"] != "" ? FontStyle.normal : FontStyle.italic,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                       shape: Border(
                         left: BorderSide(
                           width: 10,
