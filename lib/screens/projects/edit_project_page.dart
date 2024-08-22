@@ -232,8 +232,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              setState(() {
-                                updatedProjectData["part"].removeAt(index);
+                              showConfirmDialog(context, 'Delete "${part["title"]}" permanently? This can\'t be undone!').then((value) {
+                                setState(() {
+                                  if (value) {
+                                    updatedProjectData["part"].removeAt(index);
+                                  }
+                                });
                               });
                             },
                             icon: const Icon(

@@ -3,6 +3,7 @@ import 'package:deepcopy/deepcopy.dart';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/add_task.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/edit_task.dart';
@@ -11,9 +12,11 @@ import 'package:keeper_of_projects/data.dart';
 
 class EditProjectPartPage extends StatefulWidget {
   final Map partData;
+  final bool editingFromProjectPart;
   const EditProjectPartPage({
     super.key,
     required this.partData,
+    this.editingFromProjectPart = false,
   });
 
   @override
@@ -41,6 +44,16 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
         backgroundColor: Palette.bg,
         appBar: AppBar(
           backgroundColor: Palette.primary,
+          leading: widget.editingFromProjectPart
+              ? IconButton(
+                  onPressed: () async {
+                    if (await showConfirmDialog(context, "Undo changes made to this project?")) {
+                      Navigator.pop(context, null);
+                    }
+                  },
+                  icon: const Icon(Icons.close),
+                )
+              : null,
         ),
         body: Column(
           children: [
@@ -148,8 +161,12 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              setState(() {
-                                updatedPart["tasks"].removeAt(index);
+                              showConfirmDialog(context, 'Delete "${task["title"]}" permanently? This can\'t be undone!').then((value) {
+                                if (value) {
+                                  setState(() {
+                                    updatedPart["tasks"].removeAt(index);
+                                  });
+                                }
                               });
                             },
                             icon: const Icon(
@@ -169,8 +186,6 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Palette.primary,
           onPressed: () {
-            // projectsContent[widget.projectIndex] = Map.from(widget.projectData);
-
             Navigator.pop(context, updatedPart);
           },
           child: const Icon(Icons.save),
