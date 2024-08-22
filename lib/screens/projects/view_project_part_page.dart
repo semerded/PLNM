@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -10,8 +11,15 @@ import 'package:keeper_of_projects/screens/projects/edit_project_part_page.dart'
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
 
 class ProjectPartViewPage extends StatefulWidget {
-  final Map part;
-  const ProjectPartViewPage({super.key, required this.part});
+  Map part;
+  final int index;
+  final Map projectData;
+  ProjectPartViewPage({
+    super.key,
+    required this.part,
+    required this.index,
+    required this.projectData,
+  });
 
   @override
   State<ProjectPartViewPage> createState() => _ProjectPartViewPageState();
@@ -36,23 +44,29 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
           title: Text(widget.part["title"]),
           actions: [
             TaskPopUpMenu(
-              enabledTasks: const [TaskOptions.completeAll, TaskOptions.delete, TaskOptions.edit],
+              enabledTasks: (() {
+                List<TaskOptions> enabledTasks = [TaskOptions.delete, TaskOptions.edit];
+                if (widget.part["tasks"].length != 0) {
+                  enabledTasks.add(TaskOptions.completeAll);
+                }
+                return enabledTasks;
+              }()),
               onEdit: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute<Map>(
                     builder: (context) => EditProjectPartPage(
                       partData: widget.part,
+                      editingFromProjectPart: true,
                     ),
                   ),
                 ).then((callback) async {
                   if (callback != null) {
                     setState(() {
                       partWasUpdated = true;
-                      // projectsContent[widget.index] = Map.from(callback);
-                      // widget.projectData = Map.from(callback);
-                      // pageCallback = PageCallback.setState; // TODO
-                      // projectCompletion = calculateCompletion(widget.projectData["part"]);
+                      widget.projectData["part"][widget.index] = Map.from(callback);
+                      widget.part = Map.from(callback);
+                      partCompletion = calculateCompletion(widget.part["tasks"]);
                     });
                   }
                 });
@@ -60,26 +74,24 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
               onCompleteAll: () {
                 setState(() {
                   partWasUpdated = true;
-                  // bool setValue = projectCompletion != 1.0;
-                  // for (Map part in widget.projectData["part"]) {
-                  //   part["completed"] = setValue;
-                  //   for (Map tasks in part["tasks"]) {
-                  //     tasks["completed"] = setValue;
-                  //   }
-                  // }
-                  // projectCompletion = calculateCompletion(widget.projectData["part"]);
+                  bool setValue = partCompletion != 1.0;
+                  for (Map tasks in widget.part["tasks"]) {
+                    tasks["completed"] = setValue;
+                  }
+
+                  partCompletion = calculateCompletion(widget.part["tasks"]);
                 });
               },
               onDelete: () {
-                // showConfirmDialog(context, 'Delete "${widget.projectData["title"]}" permanently? This can\'t be undone!').then((value) {
-                //   if (value) {
-                //     setState(() {
-                //       projectsContent.removeAt(widget.index);
-                //     });
-                //     pageCallback = PageCallback.setStateAndSync;
-                //     Navigator.pop(context, pageCallback);
-                //   }
-                // });
+                showConfirmDialog(context, 'Delete "${widget.part["title"]}" permanently? This can\'t be undone!').then((value) {
+                  if (value) {
+                    setState(() {
+                      widget.projectData["part"].removeAt(widget.index);
+                    });
+                    partWasUpdated = true;
+                    Navigator.pop(context, partWasUpdated);
+                  }
+                });
               },
               completeAllState: partCompletion == 1.0,
             ),

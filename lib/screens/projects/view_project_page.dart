@@ -242,6 +242,8 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           MaterialPageRoute<bool>(
                             builder: (context) => ProjectPartViewPage(
                               part: part,
+                              projectData: widget.projectData,
+                              index: index,
                             ),
                           ),
                         ).then(
