@@ -56,18 +56,18 @@ Future editTask(BuildContext context, Map initTask) {
           actions: [
             TextButton(
               onPressed: () {
+                Navigator.pop(context, null);
+              },
+              child: AdaptiveText("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
                 if (validTitle) {
                   Navigator.pop(context, editedTask);
                 }
               },
               child: Text("Save", style: TextStyle(color: validTitle ? Palette.primary : Palette.subtext)),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, null);
-              },
-              child: AdaptiveText("Cancel"),
-            )
           ],
         ),
       );
