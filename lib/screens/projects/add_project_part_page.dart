@@ -18,7 +18,6 @@ class AddProjectPartPage extends StatefulWidget {
 class _AddProjectPartPageState extends State<AddProjectPartPage> {
   bool taskValidated = false;
   bool validTitle = false;
-  bool validCategory = false;
   final TextEditingController descriptionController = TextEditingController();
   late String ddb_priority_value;
 
@@ -30,9 +29,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
     "completed": false,
   };
 
-  void validate() {
-    taskValidated = validTitle && validCategory;
-  }
+  
 
   @override
   void initState() {
@@ -62,7 +59,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                 setState(() {
                   validTitle = value.length >= 2;
                   newPart["title"] = value;
-                  validate();
                 });
               },
             ),
@@ -75,7 +71,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
               onChanged: (value) {
                 setState(() {
                   newPart["description"] = value;
-                  validate();
                 });
               },
             ),
@@ -113,7 +108,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                         onChanged: (String? value) {
                           setState(() {
                             newPart["priority"] = ddb_priority_value = value!;
-                            validate();
                           });
                         },
                       ),
