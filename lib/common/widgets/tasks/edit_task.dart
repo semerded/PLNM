@@ -9,6 +9,7 @@ Future editTask(BuildContext context, Map initTask) {
   Map editedTask = Map.from(initTask.deepcopy());
 
   bool validTitle = initTask.length >= 2;
+  String ddb_priority_value = projectPriorities.keys.first;
 
   final TextEditingController descriptionController = TextEditingController();
   return showDialog(
@@ -47,6 +48,41 @@ Future editTask(BuildContext context, Map initTask) {
                       helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
                       controller: descriptionController,
                       hintText: "Add a description for your task",
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Container(
+                        color: Palette.box,
+                        child: DropdownButton<String>(
+                          padding: const EdgeInsets.only(left: 7, right: 7),
+                          elevation: 15,
+                          isExpanded: true,
+                          dropdownColor: Palette.topbox,
+                          value: ddb_priority_value,
+                          items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Row(
+                                children: [
+                                  Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: AdaptiveText(
+                                      value,
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? value) {
+                            setState(() {
+                              editedTask["priority"] = ddb_priority_value = value!;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
