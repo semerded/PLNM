@@ -25,12 +25,13 @@ class EditProjectPartPage extends StatefulWidget {
 
 class _EditProjectPartPageState extends State<EditProjectPartPage> {
   Map updatedPart = {};
-  bool validTitle = false;
+  late bool validTitle;
 
   @override
   void initState() {
     super.initState();
     updatedPart = Map.from(widget.partData.deepcopy());
+    validTitle = updatedPart["title"].length >= 2;
   }
 
   @override

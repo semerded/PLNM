@@ -25,11 +25,21 @@ class EditProjectPage extends StatefulWidget {
 
 class _EditProjectPageState extends State<EditProjectPage> {
   Map updatedProjectData = {};
+  late bool taskValidated;
+  bool validTitle = false;
+  final TextEditingController descriptionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+
     updatedProjectData = Map.from(widget.projectData.deepcopy());
+    validTitle = updatedProjectData["title"].length >= 2;
+    validate();
+  }
+
+  void validate() {
+    taskValidated = validTitle && updatedProjectData["part"].length >= 1;
   }
 
   @override
@@ -60,7 +70,11 @@ class _EditProjectPageState extends State<EditProjectPage> {
           children: [
             TitleTextField(
               onChanged: (value) {
-                updatedProjectData["title"] = value;
+                setState(() {
+                  updatedProjectData["title"] = value;
+                  validTitle = value.length >= 2;
+                  validate();
+                });
               },
               initialValue: updatedProjectData["title"],
             ),
@@ -69,6 +83,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                 updatedProjectData["description"] = value;
               },
               initialValue: updatedProjectData["description"],
+              helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -180,6 +195,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                           setState(() {
                             updatedProjectData["part"].add(value);
                           });
+                          validate();
                         }
                       },
                     );
@@ -236,6 +252,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                                 setState(() {
                                   if (value) {
                                     updatedProjectData["part"].removeAt(index);
+                                    validate();
                                   }
                                 });
                               });
@@ -255,10 +272,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Palette.primary,
+          backgroundColor: taskValidated ? Colors.green : Colors.red,
           onPressed: () {
-            // TODO
-            Navigator.pop(context, updatedProjectData);
+            if (taskValidated) {
+              updatedProjectData["size"] = updatedProjectData["size"].toInt();
+              Navigator.pop(context, updatedProjectData);
+            }
           },
           child: const Icon(Icons.save),
         ),
