@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -43,6 +44,9 @@ class _HomePageState extends State<HomePage> {
   final String ddb_categoryDefaultValue = "All";
   List<String> ddb_category = [];
 
+  final filterController = TextEditingController();
+
+
   final FocusNode searchBarFocusNode = FocusNode();
 
   late String ddb_sortBy_value;
@@ -65,8 +69,6 @@ class _HomePageState extends State<HomePage> {
     ideasContent = projectsDataContent!["ideas"];
   }
 
-  bool searchBarActive = false;
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -77,7 +79,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Palette.primary,
             title: Text("You have ${projectsContent.length} project${projectsContent.length == 1 ? "" : "s"}"), //? add extra s if task is not equal to 1 to make it plural
             leading: IconButton(
-              icon: Icon(Icons.lightbulb_outline),
+              icon: const Icon(Icons.lightbulb_outline),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -197,8 +199,13 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               AnimatedSearchBar(
+                filterController: filterController,
                 searchBarActive: searchBarActive,
                 focusNode: searchBarFocusNode,
+                // onUpdated: (value) {}, // TODO
+                onUpdated: (value) => setState(() {
+                  searchbarValue = value;
+                }),
               ),
               Expanded(
                 child: ProjectView(
