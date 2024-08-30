@@ -5,6 +5,7 @@ import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/common/widgets/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:deepcopy/deepcopy.dart';
@@ -121,41 +122,13 @@ class _EditProjectPageState extends State<EditProjectPage> {
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Container(
-                      color: Palette.box,
-                      child: DropdownButton<String>(
-                        padding: const EdgeInsets.only(left: 7, right: 7),
-                        elevation: 15,
-                        isExpanded: true,
-                        dropdownColor: Palette.topbox,
+                  child: SelectPriority(
                         value: updatedProjectData["priority"],
-                        items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Row(
-                              children: [
-                                Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: AdaptiveText(
-                                    value,
-                                    overflow: TextOverflow.fade,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
+                        onUpdated: (value) {
                           setState(() {
                             updatedProjectData["priority"] = value;
                           });
-                        },
-                      ),
-                    ),
-                  ),
+                        }),
                 ),
               ],
             ),

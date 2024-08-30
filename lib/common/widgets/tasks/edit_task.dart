@@ -2,6 +2,7 @@ import 'package:deepcopy/deepcopy.dart';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
+import 'package:keeper_of_projects/common/widgets/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -49,41 +50,13 @@ Future editTask(BuildContext context, Map initTask) {
                       controller: descriptionController,
                       hintText: "Add a description for your task",
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: Container(
-                        color: Palette.box,
-                        child: DropdownButton<String>(
-                          padding: const EdgeInsets.only(left: 7, right: 7),
-                          elevation: 15,
-                          isExpanded: true,
-                          dropdownColor: Palette.topbox,
-                          value: ddb_priority_value,
-                          items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: Row(
-                                children: [
-                                  Container(width: 30, height: 30, decoration: BoxDecoration(color: projectPriorities[value], shape: BoxShape.circle)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: AdaptiveText(
-                                      value,
-                                      overflow: TextOverflow.fade,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            setState(() {
-                              editedTask["priority"] = ddb_priority_value = value!;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
+                    SelectPriority(
+                        value: ddb_priority_value,
+                        onUpdated: (value) {
+                          setState(() {
+                            editedTask["priority"] = value;
+                          });
+                        }),
                   ],
                 ),
               )
