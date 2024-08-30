@@ -23,49 +23,47 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
         backgroundColor: Palette.primary,
         title: const Text("Edit Categories"),
       ),
-      body: Expanded(
-        child: ListView.builder(
-          itemCount: categoryDataContent!.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 5,
-              color: Palette.box,
-              child: ListTile(
-                title: AdaptiveText(categoryDataContent![index]),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      onPressed: () async {
-                        await editCategoryDialog(context, categoryDataContent![index]).then(
-                          (value) {
-                            if (value != null) {
-                              categoryDataContent![index] = value;
-                              projectCategoriesNeedRebuild = true;
-                            }
-                            setState(() {});
-                          },
-                        );
-                      },
-                      icon: const AdaptiveIcon(Icons.edit),
+      body: ListView.builder(
+        itemCount: categoryDataContent!.length,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 5,
+            color: Palette.box,
+            child: ListTile(
+              title: AdaptiveText(categoryDataContent![index]),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      await editCategoryDialog(context, categoryDataContent![index]).then(
+                        (value) {
+                          if (value != null) {
+                            categoryDataContent![index] = value;
+                            projectCategoriesNeedRebuild = true;
+                          }
+                          setState(() {});
+                        },
+                      );
+                    },
+                    icon: const AdaptiveIcon(Icons.edit),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        categoryDataContent!.removeAt(index);
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          categoryDataContent!.removeAt(index);
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

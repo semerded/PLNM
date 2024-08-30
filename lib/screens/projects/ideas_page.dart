@@ -28,58 +28,56 @@ class _IdeasPageState extends State<IdeasPage> {
           title: Text("You have ${ideasContent.length} idea${ideasContent.length != 1 ? "s" : ""}"),
           backgroundColor: Palette.primary,
         ),
-        body: Expanded(
-          child: ListView.builder(
-            itemCount: ideasContent.length,
-            itemBuilder: (context, index) {
-              Map idea = ideasContent[index];
-              return Card(
-                color: Palette.box,
-                child: ListTile(
-                  title: AdaptiveText(idea["title"]),
-                  subtitle: AdaptiveText(idea["description"]),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<Map>(
-                              builder: (context) => ConvertIdeaIntoProjectPage(
-                                idea: idea,
-                                ideaIndex: index,
-                              ),
+        body: ListView.builder(
+          itemCount: ideasContent.length,
+          itemBuilder: (context, index) {
+            Map idea = ideasContent[index];
+            return Card(
+              color: Palette.box,
+              child: ListTile(
+                title: AdaptiveText(idea["title"]),
+                subtitle: AdaptiveText(idea["description"]),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<Map>(
+                            builder: (context) => ConvertIdeaIntoProjectPage(
+                              idea: idea,
+                              ideaIndex: index,
                             ),
-                          ).then((callback) {
-                            if (callback != null) {
-                              setState(() {
-                                projectsContent.add(callback);
-                              });
-                            }
-                          });
-                        },
-                        icon: const AdaptiveIcon(Icons.lightbulb),
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          if (await showConfirmDialog(context, "Delete this idea")) {
+                          ),
+                        ).then((callback) {
+                          if (callback != null) {
                             setState(() {
-                              ideasContent.removeAt(index);
+                              projectsContent.add(callback);
                             });
                           }
-                        },
-                        icon: const Icon(
-                          Icons.delete_forever,
-                          color: Colors.red,
-                        ),
+                        });
+                      },
+                      icon: const AdaptiveIcon(Icons.lightbulb),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        if (await showConfirmDialog(context, "Delete this idea")) {
+                          setState(() {
+                            ideasContent.removeAt(index);
+                          });
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Palette.primary,
