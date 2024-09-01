@@ -126,7 +126,6 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: MenuAnchor(
-                       
                       style: MenuStyle(backgroundColor: WidgetStatePropertyAll(Palette.topbox)),
                       childFocusNode: _buttonFocusNode,
                       menuChildren: () {
@@ -219,6 +218,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: ProjectView(
+                  searchbarController: filterController,
                   content: projectsContent,
                   onUpdated: () => setState(() {}),
                 ),
