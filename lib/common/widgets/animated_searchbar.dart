@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
 
 typedef OnUpdated = void Function(String value);
@@ -30,14 +31,17 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: widget.milliseconds),
-      height: widget.searchBarActive ? 48 : 0,
+      height: widget.searchBarActive ? 60 : 0,
       child: AnimatedOpacity(
         opacity: widget.searchBarActive ? 1 : 0,
         duration: Duration(milliseconds: widget.milliseconds ~/ 2),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: TextField(
+            style: TextStyle(color: Palette.text),
             decoration: InputDecoration(
+              enabledBorder: enabledBorder(),
+              focusedBorder: focusedBorder(),
               fillColor: Palette.topbox,
               hintText: "Search For Projects",
               hintStyle: TextStyle(
@@ -47,31 +51,43 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               helperStyle: TextStyle(
                 color: Palette.text,
               ),
-              label: FutureBuilder(
-                  future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return const AdaptiveIcon(Icons.search);
-                    } else {
-                      return Container();
-                    }
-                  }),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+              prefixIcon: AdaptiveIcon(Icons.search),
               suffixIcon: IconButton(
+                icon: AdaptiveIcon(Icons.close),
                 onPressed: () {
                   widget.filterController.clear();
                   widget.onUpdated("");
-
                 },
-                icon: FutureBuilder(
-                    future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return const AdaptiveIcon(Icons.close);
-                      } else {
-                        return Container();
-                      }
-                    }),
               ),
+
+              // label: FutureBuilder(
+              //     future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.connectionState == ConnectionState.done) {
+              //         return const AdaptiveIcon(Icons.search);
+              //       } else {
+              //         return Container();
+              //       }
+              //     }),
+              // suffixIcon: IconButton(
+              //   onPressed: () {
+              //     widget.filterController.clear();
+              //     widget.onUpdated("");
+              //   },
+              //   icon: FutureBuilder(
+              //       future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
+              //       builder: (context, snapshot) {
+              //         if (snapshot.connectionState == ConnectionState.done) {
+              //           return const AdaptiveIcon(Icons.close);
+              //         } else {
+              //           return Container();
+              //         }
+              //       }),
+              // ),
             ),
 
             onChanged: (value) {
