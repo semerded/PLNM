@@ -1,11 +1,16 @@
+import 'package:keeper_of_projects/common/functions/filter/priority.dart';
 import 'package:keeper_of_projects/common/functions/filter/searchbar.dart';
 
-bool itemNotFiltered(Map data) {
-  bool isNotFiltered = false;
+bool itemFilteredOut(Map data) {
+  bool isFilteredOut = false;
 
-  if (filterSearchBar(data) && !isNotFiltered) {
-    isNotFiltered = true;
+  if (filterSearchBar(data) && !isFilteredOut) {
+    isFilteredOut = true;
   }
 
-  return isNotFiltered;
+  if (filterPriority(data) && !isFilteredOut) {
+    isFilteredOut = true;
+  }
+
+  return isFilteredOut;
 }

@@ -1,4 +1,5 @@
 String searchbarValue = "";
 bool searchBarActive = false;
-String? categoryFilter;
-String? typeFilter;
+List<bool> priorityFilter = [true, true, true, true, true];
+List<bool> categorieFilter = []; // TODO populate list
+

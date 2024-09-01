@@ -59,6 +59,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               suffixIcon: IconButton(
                 onPressed: () {
                   widget.filterController.clear();
+                  widget.onUpdated("");
+
                 },
                 icon: FutureBuilder(
                     future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),

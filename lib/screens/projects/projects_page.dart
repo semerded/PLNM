@@ -43,9 +43,9 @@ class _HomePageState extends State<HomePage> {
   final List<String> ddb_sortBy = ["Created (Latest)", "Created (Oldest)", "Priority (Highest)", "Priority (Lowest)", "Progress (Most)", "Progress (Least)", "Size (Biggest)", "Size (Smallest)"];
   final String ddb_categoryDefaultValue = "All";
   List<String> ddb_category = [];
+  final FocusNode _buttonFocusNode = FocusNode();
 
   final filterController = TextEditingController();
-
 
   final FocusNode searchBarFocusNode = FocusNode();
 
@@ -125,32 +125,42 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: Container(
-                        color: Palette.box,
-                        child: DropdownButton<String>(
-                          padding: const EdgeInsets.only(left: 7, right: 7),
-                          isExpanded: true,
-                          dropdownColor: Palette.topbox,
-                          elevation: 15,
-                          value: ddb_category_value,
-                          items: ddb_category.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: AdaptiveText(
-                                value,
-                                overflow: TextOverflow.fade,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            setState(() {
-                              ddb_category_value = value!;
-                            });
+                    child: MenuAnchor(
+                       
+                      style: MenuStyle(backgroundColor: WidgetStatePropertyAll(Palette.topbox)),
+                      childFocusNode: _buttonFocusNode,
+                      menuChildren: () {
+                        List<Widget> menuItems = [];
+                        menuItems.add(AdaptiveText("Priorities"));
+                        for (int i = 0; i < projectPriorities.length; i++) {
+                          menuItems.add(
+                            CheckboxMenuButton(
+                              closeOnActivate: false,
+                              value: priorityFilter[i],
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  priorityFilter[i] = !priorityFilter[i];
+                                });
+                              },
+                              child: AdaptiveText(projectPriorities.keys.toList()[i]),
+                            ),
+                          );
+                        }
+                        return menuItems;
+                      }(),
+                      builder: (BuildContext context, MenuController controller, Widget? child) {
+                        return TextButton(
+                          focusNode: _buttonFocusNode,
+                          onPressed: () {
+                            if (controller.isOpen) {
+                              controller.close();
+                            } else {
+                              controller.open();
+                            }
                           },
-                        ),
-                      ),
+                          child: const Text('Filter'),
+                        );
+                      },
                     ),
                   ),
                   Expanded(
