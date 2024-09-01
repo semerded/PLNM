@@ -18,19 +18,15 @@
 
 >>>> functionality
 
-@critical @today fix searchbar flickering
+@critical @today finish filter system (add categories, decorate filter button, add filtering based on size etc)
 
-@critical @today fix errors on ideas page and edit categories page
-
-@critical @today make filter system
+@high @today make todo list (page)
 
 @high @today create about page
 
 @high add placeholders for ddb buttons
 
 @low create archive page
-
-@low @today add a button to only show the project parts and hide the rest vice versa
 
 @low @today add a checklist to enable multiple categories (showing Multiple in bar) and add buttons to enable and disable all categories
 
