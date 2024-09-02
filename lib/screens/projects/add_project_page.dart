@@ -97,9 +97,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
 
             // add a description
             DescriptionTextField(
-              controller: descriptionController,
+              validTitle: validTitle,
               hintText: "Describe your project here",
-              helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
               onChanged: (value) {
                 setState(() {
                   newProject["description"] = value;

@@ -30,8 +30,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
     "completed": false,
   };
 
-  
-
   @override
   void initState() {
     super.initState();
@@ -66,9 +64,8 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
 
             // add a description
             DescriptionTextField(
-              controller: descriptionController,
+              validTitle: validTitle,
               hintText: "Describe your project part here",
-              helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
               onChanged: (value) {
                 setState(() {
                   newPart["description"] = value;
@@ -80,12 +77,12 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
               children: [
                 Expanded(
                   child: SelectPriority(
-                        value: ddb_priority_value,
-                        onUpdated: (value) {
-                          setState(() {
-                            newPart["priority"] = value;
-                          });
-                        }),
+                      value: ddb_priority_value,
+                      onUpdated: (value) {
+                        setState(() {
+                          newPart["priority"] = value;
+                        });
+                      }),
                 ),
                 Expanded(
                   child: ElevatedButton.icon(

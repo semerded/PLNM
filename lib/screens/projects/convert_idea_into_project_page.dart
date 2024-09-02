@@ -89,6 +89,7 @@ class _ConvertIdeaIntoProjectPageState extends State<ConvertIdeaIntoProjectPage>
               initialValue: projectDataFromIdea["title"],
             ),
             DescriptionTextField(
+              validTitle: validTitle,
               onChanged: (value) {
                 projectDataFromIdea["description"] = value;
               },
@@ -133,12 +134,12 @@ class _ConvertIdeaIntoProjectPageState extends State<ConvertIdeaIntoProjectPage>
                 ),
                 Expanded(
                   child: SelectPriority(
-                        value: projectDataFromIdea["priority"],
-                        onUpdated: (value) {
-                          setState(() {
-                            projectDataFromIdea["priority"] = value;
-                          });
-                        }),
+                      value: projectDataFromIdea["priority"],
+                      onUpdated: (value) {
+                        setState(() {
+                          projectDataFromIdea["priority"] = value;
+                        });
+                      }),
                 ),
               ],
             ),

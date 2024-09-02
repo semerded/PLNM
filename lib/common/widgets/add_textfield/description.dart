@@ -6,16 +6,14 @@ typedef OnChanged = void Function(String value);
 
 class DescriptionTextField extends StatefulWidget {
   final OnChanged onChanged;
-  final TextEditingController? controller;
+  final bool validTitle;
   final String hintText;
-  final String? helperText;
   final String? initialValue;
   const DescriptionTextField({
     super.key,
     required this.onChanged,
+    required this.validTitle,
     this.hintText = "A unique title for your project",
-    this.helperText,
-    this.controller,
     this.initialValue,
   });
 
@@ -24,21 +22,18 @@ class DescriptionTextField extends StatefulWidget {
 }
 
 class _DescriptionTextFieldState extends State<DescriptionTextField> {
-  String? initialValue;
+  String value = "";
   FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     if (widget.initialValue != null) {
-      if (widget.controller == null) {
-        initialValue = widget.initialValue;
-      } else {
-        widget.controller!.text = widget.initialValue!;
-      }
+      value = widget.initialValue!;
     }
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,8 +42,7 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
         onFocusChange: (_) => setState(() {}),
         child: TextFormField(
           focusNode: focusNode,
-          // initialValue: initialValue,
-          controller: widget.controller,
+          initialValue: value,
           decoration: InputDecoration(
             enabledBorder: enabledBorder(),
             focusedBorder: focusedBorder(),
@@ -56,12 +50,15 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
             hintStyle: TextStyle(color: Palette.text, fontStyle: FontStyle.italic),
             labelText: "Description",
             labelStyle: TextStyle(color: focusNode.hasFocus ? Palette.primary : Palette.text),
-            helperText: widget.helperText,
+            helperText: widget.validTitle && value.isEmpty ? "Try to add a description" : null,
             helperStyle: const TextStyle(color: Colors.red),
           ),
           style: TextStyle(color: Palette.text),
           cursorColor: Palette.primary,
-          onChanged: (value) => widget.onChanged(value),
+          onChanged: (value) {
+            widget.onChanged(value);
+            this.value = value;
+          },
         ),
       ),
     );

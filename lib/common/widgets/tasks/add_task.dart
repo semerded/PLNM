@@ -42,6 +42,7 @@ Future addTask(BuildContext context) {
                       hintText: "Add a title for your task",
                     ),
                     DescriptionTextField(
+                      validTitle: validTitle,
                       onChanged: (value) {
                         setState(
                           () {
@@ -49,8 +50,6 @@ Future addTask(BuildContext context) {
                           },
                         );
                       },
-                      helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
-                      controller: descriptionController,
                       hintText: "Add a description for your task",
                     ),
                     SelectPriority(

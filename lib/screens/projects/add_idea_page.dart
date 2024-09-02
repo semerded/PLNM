@@ -41,12 +41,11 @@ class _AddIdeaPageState extends State<AddIdeaPage> {
             hintText: "What is your idea",
           ),
           DescriptionTextField(
+            validTitle: validTitle,
             onChanged: (value) {
               newIdea["description"] = value;
             },
             hintText: "Describe your idea",
-            controller: descriptionController,
-            helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
           ),
         ],
       ),

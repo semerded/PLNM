@@ -80,11 +80,13 @@ class _EditProjectPageState extends State<EditProjectPage> {
               initialValue: updatedProjectData["title"],
             ),
             DescriptionTextField(
+              validTitle: validTitle,
               onChanged: (value) {
-                updatedProjectData["description"] = value;
+                setState(() {
+                  updatedProjectData["description"] = value;
+                });
               },
               initialValue: updatedProjectData["description"],
-              helperText: validTitle && descriptionController.text.isEmpty ? "Try to add a description" : null,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -123,12 +125,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                        value: updatedProjectData["priority"],
-                        onUpdated: (value) {
-                          setState(() {
-                            updatedProjectData["priority"] = value;
-                          });
-                        }),
+                      value: updatedProjectData["priority"],
+                      onUpdated: (value) {
+                        setState(() {
+                          updatedProjectData["priority"] = value;
+                        });
+                      }),
                 ),
               ],
             ),
