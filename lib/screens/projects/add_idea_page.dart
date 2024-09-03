@@ -43,7 +43,9 @@ class _AddIdeaPageState extends State<AddIdeaPage> {
           DescriptionTextField(
             validTitle: validTitle,
             onChanged: (value) {
-              newIdea["description"] = value;
+              setState(() {
+                newIdea["description"] = value;
+              });
             },
             hintText: "Describe your idea",
           ),

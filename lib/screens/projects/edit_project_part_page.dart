@@ -73,7 +73,9 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
             DescriptionTextField(
               validTitle: validTitle,
               onChanged: (value) {
-                updatedPart["description"] = value;
+                setState(() {
+                  updatedPart["description"] = value;
+                });
               },
               initialValue: updatedPart["description"],
             ),

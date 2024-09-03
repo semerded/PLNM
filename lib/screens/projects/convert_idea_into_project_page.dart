@@ -91,7 +91,9 @@ class _ConvertIdeaIntoProjectPageState extends State<ConvertIdeaIntoProjectPage>
             DescriptionTextField(
               validTitle: validTitle,
               onChanged: (value) {
-                projectDataFromIdea["description"] = value;
+                setState(() {
+                  projectDataFromIdea["description"] = value;
+                });
               },
               initialValue: projectDataFromIdea["description"],
             ),
