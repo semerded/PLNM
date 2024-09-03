@@ -27,20 +27,20 @@ class AppWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: HomePage(),
+        body: ProjectPage(),
       ),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProjectPage extends StatefulWidget {
+  const ProjectPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProjectPage> createState() => _ProjectPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProjectPageState extends State<ProjectPage> {
   SnackBar sb_connectionErr = SnackBar(content: AdaptiveText("A connection error has occurd"));
   final SnackBar sb_fileUploadErr = SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
   final SnackBar sb_fileDownloadErr = SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));

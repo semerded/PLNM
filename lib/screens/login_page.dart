@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             Navigator.push(
               context,
               MaterialPageRoute<bool>(
-                builder: (context) => const HomePage(),
+                builder: (context) => const ProjectPage(),
               ),
             );
           },
