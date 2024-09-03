@@ -63,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
             SettingsSwitchWithDescription(
-              title: "Funny Project Size Description",
+              title: "Alt Project Size Description",
               description: "Add some funny project size descriptions into the mix, this changes the default {small, medium, big, ...} into something more... funny ;). (this doesn't show when you create a new project)",
               initValue: settingsDataContent!["funnyProjectSize"],
               onChanged: (value) {
