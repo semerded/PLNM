@@ -48,6 +48,8 @@ const List<String> projectSizeDescriptionAlternative = [
 ];
 const double projectSizeDescriptionSubdivisionNumber = 99 / 8;
 
+int activePage = 4;
+
 class Palette {
   static const MaterialColor primary = Colors.orange;
   static const MaterialColor secondary = Colors.lightGreen;
