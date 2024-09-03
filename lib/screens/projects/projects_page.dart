@@ -2,8 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/filter/category.dart';
+import 'package:keeper_of_projects/common/functions/filter/filter_category_toggle.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
+import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
+import 'package:keeper_of_projects/common/functions/filter/widgets/menu_items_header.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
@@ -130,7 +135,17 @@ class _HomePageState extends State<HomePage> {
                       childFocusNode: _buttonFocusNode,
                       menuChildren: () {
                         List<Widget> menuItems = [];
-                        menuItems.add(AdaptiveText("Priorities"));
+                        menuItems.add(
+                          MenuItemsHeader(
+                            text: "Priorities",
+                            onClick: () {
+                              setState(() {
+                                filterCategoryToggle(priorityFilter);
+                              });
+                            },
+                            anyFilterEnabled: priorityFilter.every((priority) => !priority), //? reverse bool to only enable all when nothing is enabled, otherwise disable if any (not all) are enabled
+                          ),
+                        );
                         for (int i = 0; i < projectPriorities.length; i++) {
                           menuItems.add(
                             CheckboxMenuButton(
@@ -145,7 +160,18 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         }
-                        menuItems.add(AdaptiveText("Categories"));
+                        menuItems.add(
+                          MenuItemsHeader(
+                            text: "Categories",
+                            onClick: () {
+                              setState(() {
+                                bool updateTo = categoryFilter.values.every((value) => !value);
+                                categoryFilter.updateAll((category, value) => value = updateTo);
+                              });
+                            },
+                            anyFilterEnabled: categoryFilter.values.every((category) => !category),
+                          ),
+                        );
                         for (String category in categoryFilter.keys) {
                           menuItems.add(
                             CheckboxMenuButton(
@@ -163,7 +189,8 @@ class _HomePageState extends State<HomePage> {
                         return menuItems;
                       }(),
                       builder: (BuildContext context, MenuController controller, Widget? child) {
-                        return TextButton(
+                        return ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: Palette.box),
                           focusNode: _buttonFocusNode,
                           onPressed: () {
                             if (controller.isOpen) {
@@ -172,10 +199,21 @@ class _HomePageState extends State<HomePage> {
                               controller.open();
                             }
                           },
-                          child: const Text('Filter'),
+                          child: AdaptiveText('Filter'),
                         );
                       },
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        resetFilter();
+                        filterController.clear();
+                      });
+                    },
+                    style: IconButton.styleFrom(backgroundColor: Colors.red),
+                    tooltip: "Remove All Filters",
+                    icon: AdaptiveIcon(Icons.filter_alt_off),
                   ),
                   Expanded(
                     child: Padding(
