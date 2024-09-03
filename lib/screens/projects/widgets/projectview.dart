@@ -7,6 +7,7 @@ import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
+import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -64,10 +65,9 @@ class _ProjectViewState extends State<ProjectView> {
                   ),
                   ElevatedButton(
                     onPressed: () => setState(() {
-                      searchbarValue = "";
-                      searchBarActive = false;
-                      priorityFilter = [true, true, true, true, true];
+                      resetFilter();
                       widget.searchbarController.clear();
+                      widget.onUpdated();
                     }),
                     style: ElevatedButton.styleFrom(backgroundColor: Palette.primary),
                     child: const Text(

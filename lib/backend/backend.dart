@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/http_client.dart';
 import 'package:keeper_of_projects/backend/validate_drive_data.dart';
+import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 
@@ -26,6 +27,10 @@ Future<String> init() async {
 
   _media = await driveApi?.files.get(categoryFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
   categoryDataContent = List<String>.from(jsonDecode(await utf8.decoder.bind(_media.stream).join()));
+
+  for (String category in categoryDataContent!) {
+    categoryFilter[category] = true;
+  }
 
   // return the callback
   return callback;

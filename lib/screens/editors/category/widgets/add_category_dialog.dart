@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -55,6 +56,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
               onPressed: () {
                 if (minimumtRequirementsMet) {
                   categoryDataContent!.add(textEditingController.text);
+                  categoryFilter[textEditingController.text] = true;
                   categoryDataNeedSync = true;
                   Navigator.pop(context);
                 }

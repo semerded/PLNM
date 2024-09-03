@@ -145,6 +145,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         }
+                        menuItems.add(AdaptiveText("Categories"));
+                        for (String category in categoryFilter.keys) {
+                          menuItems.add(
+                            CheckboxMenuButton(
+                              closeOnActivate: false,
+                              value: categoryFilter[category],
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  categoryFilter[category] = !categoryFilter[category]!;
+                                });
+                              },
+                              child: AdaptiveText(category),
+                            ),
+                          );
+                        }
                         return menuItems;
                       }(),
                       builder: (BuildContext context, MenuController controller, Widget? child) {
