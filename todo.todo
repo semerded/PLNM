@@ -18,13 +18,15 @@
 
 >>>> functionality
 
-@critical @today finish filter system (add categories, decorate filter button, add filtering based on size etc)
+@critical @today create home page
 
 @high @today make todo list (page)
 
 @high @today create about page
 
 @high add placeholders for ddb buttons
+
+@high update functionality of [create category page] -> add confirm dialog when deleting and prevent duplicates
 
 @low create archive page
 
