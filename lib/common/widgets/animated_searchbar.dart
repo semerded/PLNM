@@ -27,75 +27,86 @@ class AnimatedSearchBar extends StatefulWidget {
 }
 
 class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
+  OutlineInputBorder _border() {
+    return OutlineInputBorder(
+      borderSide: BorderSide.none,
+      borderRadius: const BorderRadius.all(Radius.circular(20)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: widget.milliseconds),
-      height: widget.searchBarActive ? 60 : 0,
-      child: AnimatedOpacity(
-        opacity: widget.searchBarActive ? 1 : 0,
-        duration: Duration(milliseconds: widget.milliseconds ~/ 2),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: TextField(
-            style: TextStyle(color: Palette.text),
-            decoration: InputDecoration(
-              enabledBorder: enabledBorder(),
-              focusedBorder: focusedBorder(),
-              fillColor: Palette.topbox,
-              hintText: "Search For Projects",
-              hintStyle: TextStyle(
-                fontStyle: FontStyle.italic,
-                color: Palette.subtext,
-              ),
-              helperStyle: TextStyle(
-                color: Palette.text,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide.none,
-              ),
-              prefixIcon: AdaptiveIcon(Icons.search),
-              suffixIcon: IconButton(
-                icon: AdaptiveIcon(Icons.close),
-                onPressed: () {
-                  widget.filterController.clear();
-                  widget.onUpdated("");
-                },
+    return Padding(
+      padding: const EdgeInsets.only(left: 4, right: 4),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: widget.milliseconds),
+        height: widget.searchBarActive ? 60 : 0,
+        child: AnimatedOpacity(
+          opacity: widget.searchBarActive ? 1 : 0,
+          duration: Duration(milliseconds: widget.milliseconds ~/ 2),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: TextField(
+              style: TextStyle(color: Palette.text),
+              decoration: InputDecoration(
+                enabledBorder: _border(),
+                focusedBorder: _border(),
+                fillColor: Palette.topbox,
+                filled: true,
+                hintText: "Search For Projects",
+                hintStyle: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  color: Palette.subtext,
+                ),
+                helperStyle: TextStyle(
+                  color: Palette.text,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+                prefixIcon: AdaptiveIcon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: AdaptiveIcon(Icons.close),
+                  onPressed: () {
+                    widget.filterController.clear();
+                    widget.onUpdated("");
+                  },
+                ),
+
+                // label: FutureBuilder(
+                //     future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.connectionState == ConnectionState.done) {
+                //         return const AdaptiveIcon(Icons.search);
+                //       } else {
+                //         return Container();
+                //       }
+                //     }),
+                // suffixIcon: IconButton(
+                //   onPressed: () {
+                //     widget.filterController.clear();
+                //     widget.onUpdated("");
+                //   },
+                //   icon: FutureBuilder(
+                //       future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
+                //       builder: (context, snapshot) {
+                //         if (snapshot.connectionState == ConnectionState.done) {
+                //           return const AdaptiveIcon(Icons.close);
+                //         } else {
+                //           return Container();
+                //         }
+                //       }),
+                // ),
               ),
 
-              // label: FutureBuilder(
-              //     future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.connectionState == ConnectionState.done) {
-              //         return const AdaptiveIcon(Icons.search);
-              //       } else {
-              //         return Container();
-              //       }
-              //     }),
-              // suffixIcon: IconButton(
-              //   onPressed: () {
-              //     widget.filterController.clear();
-              //     widget.onUpdated("");
-              //   },
-              //   icon: FutureBuilder(
-              //       future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
-              //       builder: (context, snapshot) {
-              //         if (snapshot.connectionState == ConnectionState.done) {
-              //           return const AdaptiveIcon(Icons.close);
-              //         } else {
-              //           return Container();
-              //         }
-              //       }),
-              // ),
+              onChanged: (value) {
+                widget.onUpdated(value);
+              },
+              focusNode: widget.focusNode,
+              controller: widget.filterController,
+              autofocus: false, // prevent keyboard from opening when app is opened
             ),
-
-            onChanged: (value) {
-              widget.onUpdated(value);
-            },
-            focusNode: widget.focusNode,
-            controller: widget.filterController,
-            autofocus: false, // prevent keyboard from opening when app is opened
           ),
         ),
       ),
