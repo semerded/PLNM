@@ -7,6 +7,7 @@ import 'package:keeper_of_projects/common/functions/filter/filter_category_toggl
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/widgets/menu_items_header.dart';
+import 'package:keeper_of_projects/common/functions/main_page_pop_scope.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -76,8 +77,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
+    return MainPagePopScope(
       child: Scaffold(
           backgroundColor: Palette.bg,
           appBar: AppBar(
@@ -99,29 +99,19 @@ class _ProjectPageState extends State<ProjectPage> {
               },
             ),
             actions: [
-              currentUser == null
-                  ? FloatingActionButton(
-                      heroTag: null,
-                      elevation: 0,
-                      backgroundColor: Palette.primary,
-                      onPressed: () {
-                        handleSignIn();
-                      },
-                      child: const Icon(Icons.login),
-                    )
-                  : GooglePopUpMenu(
-                      onClose: (value) {
-                        if (value) {
-                          if (projectCategoriesNeedRebuild) {
-                            buildDDBcategory();
-                            projectCategoriesNeedRebuild = false;
-                          }
-                          setState(() {});
-                        }
-                      },
-                      showArchive: true,
-                      archiveRoute: const ArchivePage(),
-                    )
+              GooglePopUpMenu(
+                onClose: (value) {
+                  if (value) {
+                    if (projectCategoriesNeedRebuild) {
+                      buildDDBcategory();
+                      projectCategoriesNeedRebuild = false;
+                    }
+                    setState(() {});
+                  }
+                },
+                showArchive: true,
+                archiveRoute: const ArchivePage(),
+              )
             ],
           ),
           body: Column(
