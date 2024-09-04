@@ -13,11 +13,15 @@ class PreviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Palette.box,
-      child: ListTile(
-        title: AdaptiveText(title),
-        subtitle: bottomWidget,
+    return Padding(
+      padding: const EdgeInsets.all(4),
+      child: Card(
+        color: Palette.box,
+        margin: const EdgeInsets.all(0),
+        child: ListTile(
+          title: AdaptiveText(title),
+          subtitle: bottomWidget,
+        ),
       ),
     );
   }

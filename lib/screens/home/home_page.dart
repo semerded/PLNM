@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.all(8),
                   child: Row(children: [
                     AdaptiveText(
                       "Projects  ",
@@ -127,49 +127,59 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ]),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: PreviewTile(
-                        title: "test",
-                        bottomWidget: LinearPercentIndicator(),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: PreviewTile(
-                        title: "test",
-                        bottomWidget: LinearPercentIndicator(),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(
-                        height: 70,
-                        child: IconButton(
-                          style: IconButton.styleFrom(
-                            backgroundColor: Palette.box,
-                            // minimumSize: const Size.fromHeight(double.maxFinite),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (context) {
-                                  activePage = 4;
-                                  return const ProjectPage();
-                                },
-                              ),
-                            ).then((value) {
-                              setStawte(() {});
-                            });
-                          },
-                          icon: const AdaptiveIcon(Icons.arrow_forward_ios),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: PreviewTile(
+                          title: "test",
+                          bottomWidget: LinearPercentIndicator(),
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: 3,
+                        child: PreviewTile(
+                          title: "test",
+                          bottomWidget: LinearPercentIndicator(),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: SizedBox(
+                            height: 72, // TODO set fixed value
+                            child: IconButton(
+                              style: IconButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                backgroundColor: Palette.box,
+                                // minimumSize: const Size.fromHeight(double.maxFinite),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (context) {
+                                      activePage = 4;
+                                      return const ProjectPage();
+                                    },
+                                  ),
+                                ).then((value) {
+                                  setState(() {});
+                                });
+                              },
+                              icon: const AdaptiveIcon(Icons.arrow_forward_ios),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
