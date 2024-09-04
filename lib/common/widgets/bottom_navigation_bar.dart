@@ -32,15 +32,17 @@ class _CustomBottomNavitagionBarState extends State<CustomBottomNavitagionBar> {
       child: BottomNavigationBar(
         currentIndex: activePage,
         onTap: (int value) {
-          activePage = value;
-          Navigator.push(
-            context,
-            MaterialPageRoute<bool>(
-              builder: (context) => bottomNavigationBarListing[value],
-            ),
-          ).then((callback) {
-            if (callback != null && callback) {}
-          });
+          if (activePage != value) {
+            activePage = value;
+            Navigator.push(
+              context,
+              MaterialPageRoute<bool>(
+                builder: (context) => bottomNavigationBarListing[value],
+              ),
+            ).then((callback) {
+              if (callback != null && callback) {}
+            });
+          }
         },
         showUnselectedLabels: true,
         unselectedItemColor: Palette.text,
