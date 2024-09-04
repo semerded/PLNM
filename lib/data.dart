@@ -48,7 +48,7 @@ const List<String> projectSizeDescriptionAlternative = [
 ];
 const double projectSizeDescriptionSubdivisionNumber = 99 / 8;
 
-int activePage = 4;
+int activePage = 2; // home page
 
 class Palette {
   static const MaterialColor primary = Colors.orange;
