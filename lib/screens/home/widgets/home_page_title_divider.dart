@@ -44,7 +44,7 @@ class _HomePageTitleDividerState extends State<HomePageTitleDivider> {
             widget.title,
             fontSize: 24,
           ),
-          const TitleDivider(),
+          TitleDivider(),
           RichText(
             text: TextSpan(children: () {
               List<InlineSpan> textSpanChilden = [];
@@ -54,7 +54,7 @@ class _HomePageTitleDividerState extends State<HomePageTitleDivider> {
               return textSpanChilden;
             }()),
           ),
-          const TitleDivider()
+          TitleDivider()
         ],
       ),
     );
