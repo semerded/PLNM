@@ -46,7 +46,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                         },
                       );
                     },
-                    icon: const AdaptiveIcon(Icons.edit),
+                    icon: AdaptiveIcon(Icons.edit),
                   ),
                   IconButton(
                     onPressed: () {

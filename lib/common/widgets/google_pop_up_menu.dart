@@ -106,28 +106,28 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.settings,
           child: ListTile(
-            leading: const AdaptiveIcon(Icons.settings),
+            leading: AdaptiveIcon(Icons.settings),
             title: AdaptiveText('Settings'),
           ),
         ),
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.archive,
           child: ListTile(
-            leading: const AdaptiveIcon(Icons.archive),
+            leading: AdaptiveIcon(Icons.archive),
             title: AdaptiveText('Archive'),
           ),
         ),
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.about,
           child: ListTile(
-            leading: const AdaptiveIcon(Icons.info_outline),
+            leading: AdaptiveIcon(Icons.info_outline),
             title: AdaptiveText('About'),
           ),
         ),
         PopupMenuItem<_googleMenu>(
           value: _googleMenu.logout,
           child: ListTile(
-            leading: const AdaptiveIcon(Icons.logout),
+            leading: AdaptiveIcon(Icons.logout),
             title: AdaptiveText('Logout'),
           ),
         ),

@@ -252,7 +252,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                                 });
                               });
                             },
-                            icon: const AdaptiveIcon(Icons.edit),
+                            icon: AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(
                             onPressed: () {

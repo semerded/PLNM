@@ -13,7 +13,7 @@ class AdaptiveIcon extends StatelessWidget {
   final String? semanticLabel;
   final TextDirection? textDirection;
   final bool? applyTextScaling;
-  const AdaptiveIcon(
+  AdaptiveIcon(
     this.icon, {
     super.key,
     this.size,

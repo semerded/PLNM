@@ -56,7 +56,7 @@ class _ProjectViewState extends State<ProjectView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const AdaptiveIcon(Icons.filter_alt_off),
+                  AdaptiveIcon(Icons.filter_alt_off),
                   AdaptiveText(
                     "You Filtered Everything!",
                     textAlign: TextAlign.center,

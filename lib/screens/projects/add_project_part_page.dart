@@ -134,7 +134,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                                 }
                               });
                             },
-                            icon: const AdaptiveIcon(Icons.edit),
+                            icon: AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(
                             onPressed: () {
@@ -142,7 +142,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                                 newPart["tasks"].removeAt(index);
                               });
                             },
-                            icon: const AdaptiveIcon(Icons.delete),
+                            icon: AdaptiveIcon(Icons.delete),
                           ),
                         ],
                       ),

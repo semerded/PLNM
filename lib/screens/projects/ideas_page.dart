@@ -58,7 +58,7 @@ class _IdeasPageState extends State<IdeasPage> {
                           }
                         });
                       },
-                      icon: const AdaptiveIcon(Icons.lightbulb),
+                      icon: AdaptiveIcon(Icons.lightbulb),
                     ),
                     IconButton(
                       onPressed: () async {

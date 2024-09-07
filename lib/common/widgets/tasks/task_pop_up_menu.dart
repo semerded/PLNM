@@ -80,7 +80,7 @@ class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
             PopupMenuItem<TaskOptions>(
               value: TaskOptions.edit,
               child: ListTile(
-                leading: const AdaptiveIcon(Icons.edit),
+                leading: AdaptiveIcon(Icons.edit),
                 title: AdaptiveText("Edit"),
               ),
             ),
@@ -102,7 +102,7 @@ class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
             PopupMenuItem<TaskOptions>(
               value: TaskOptions.archive,
               child: ListTile(
-                leading: const AdaptiveIcon(Icons.archive),
+                leading: AdaptiveIcon(Icons.archive),
                 title: Text(
                   'Archive',
                   style: TextStyle(

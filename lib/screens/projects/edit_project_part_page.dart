@@ -139,7 +139,7 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
                                 }
                               });
                             },
-                            icon: const AdaptiveIcon(Icons.edit),
+                            icon: AdaptiveIcon(Icons.edit),
                           ),
                           IconButton(
                             onPressed: () {

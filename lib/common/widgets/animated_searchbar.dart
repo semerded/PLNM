@@ -78,7 +78,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 //     future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
                 //     builder: (context, snapshot) {
                 //       if (snapshot.connectionState == ConnectionState.done) {
-                //         return const AdaptiveIcon(Icons.search);
+                //         return AdaptiveIcon(Icons.search);
                 //       } else {
                 //         return Container();
                 //       }
@@ -92,7 +92,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 //       future: Future.delayed(Duration(milliseconds: widget.milliseconds ~/ 2)),
                 //       builder: (context, snapshot) {
                 //         if (snapshot.connectionState == ConnectionState.done) {
-                //           return const AdaptiveIcon(Icons.close);
+                //           return AdaptiveIcon(Icons.close);
                 //         } else {
                 //           return Container();
                 //         }
