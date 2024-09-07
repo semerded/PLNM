@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/widgets.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
@@ -5,6 +7,7 @@ import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/screens/home/widgets/home_page_title_divider.dart';
 import 'package:keeper_of_projects/screens/home/widgets/preview_tile.dart';
 import 'package:keeper_of_projects/screens/projects/project_archive_page.dart';
 import 'package:keeper_of_projects/screens/projects/projects_page.dart';
@@ -70,62 +73,18 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(children: [
-                    AdaptiveText(
-                      "Projects  ",
-                      fontSize: 24,
+                HomePageTitleDivider(
+                  title: "Projects",
+                  titleDividerInfo: [
+                    TitleDividerInfo(
+                      Icons.addchart,
+                      projectsContent.length,
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
-                        child: Divider(
-                          height: 2,
-                          thickness: 2,
-                          color: Palette.subtext,
-                        ),
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: AdaptiveIcon(
-                              Icons.add_chart,
-                              size: 14,
-                              color: Palette.subtext,
-                            ),
-                          ),
-                          TextSpan(
-                            style: TextStyle(color: Palette.subtext),
-                            text: projectsContent.length.toString(),
-                          ),
-                          WidgetSpan(
-                            child: AdaptiveIcon(
-                              Icons.lightbulb,
-                              size: 14,
-                              color: Palette.subtext,
-                            ),
-                          ),
-                          TextSpan(
-                            style: TextStyle(color: Palette.subtext),
-                            text: ideasContent.length.toString(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
-                        child: Divider(
-                          height: 2,
-                          thickness: 2,
-                          color: Palette.subtext,
-                        ),
-                      ),
-                    ),
-                  ]),
+                    TitleDividerInfo(
+                      Icons.lightbulb,
+                      ideasContent.length,
+                    )
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -173,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                                   setState(() {});
                                 });
                               },
-                              icon: const AdaptiveIcon(Icons.arrow_forward_ios),
+                              icon: AdaptiveIcon(Icons.arrow_forward_ios),
                             ),
                           ),
                         ),
