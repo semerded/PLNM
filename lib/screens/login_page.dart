@@ -8,7 +8,7 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/screens/about_page.dart';
-import 'package:keeper_of_projects/screens/projects/projects_page.dart';
+import 'package:keeper_of_projects/screens/home/home_page.dart';
 import 'package:keeper_of_projects/icons/drive_icon.dart';
 
 // ignore: camel_case_types
@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             Navigator.push(
               context,
               MaterialPageRoute<bool>(
-                builder: (context) => const ProjectPage(),
+                builder: (context) => const HomePage(),
               ),
             );
           },
