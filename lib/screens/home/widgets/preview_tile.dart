@@ -17,28 +17,19 @@ class PreviewTile extends StatefulWidget {
 }
 
 class _PreviewTileState extends State<PreviewTile> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(widget.completion);
-  }
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: Card(
-        color: Palette.box,
-        margin: const EdgeInsets.all(0),
-        child: ListTile(
-          title: AdaptiveText(widget.title),
-          trailing: CircularPercentIndicator(
-            percent: widget.completion,
-            radius: 20,
-            progressColor: Colors.green,
-            animation: true,
-          ),
+    return Card(
+      color: Palette.box,
+      margin: const EdgeInsets.all(0),
+      child: ListTile(
+        title: AdaptiveText(widget.title),
+        trailing: CircularPercentIndicator(
+          percent: widget.completion,
+          radius: 24,
+          center: AdaptiveText("${(widget.completion * 100).toInt()}%"),
+          progressColor: Colors.green,
+          animation: true,
         ),
       ),
     );

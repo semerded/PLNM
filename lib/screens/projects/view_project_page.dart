@@ -28,7 +28,6 @@ class ProjectViewPage extends StatefulWidget {
 class _ProjectViewPageState extends State<ProjectViewPage> {
   late double projectCompletion = calculateCompletion(widget.projectData["part"]);
   bool projectDetailsVisible = true;
-  double projectDetailsHeight = 0;
   PageCallback pageCallback = PageCallback.none;
 
   @override
