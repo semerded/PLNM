@@ -12,13 +12,13 @@
 
 >> frontend
 
-@critical @today place arrow box next to preview tiles
-
 @optional add animations when a task slider increases or decreases
 
 @optional add statistics to profile page
 
 >>>> functionality
+
+@critical @today overhaul save system and update system
 
 @critical @today fix that projects that are 100% completed show up on the home page preview tiles
 
