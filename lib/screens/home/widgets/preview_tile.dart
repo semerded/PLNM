@@ -23,14 +23,21 @@ class _PreviewTileState extends State<PreviewTile> {
       color: Palette.box,
       margin: const EdgeInsets.all(0),
       child: ListTile(
-        title: AdaptiveText(widget.title),
+        title: AdaptiveText(
+          widget.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
         trailing: CircularPercentIndicator(
           percent: widget.completion,
           radius: 24,
-          center: AdaptiveText("${(widget.completion * 100).toInt()}%"),
+          center: AdaptiveText(
+            "${(widget.completion * 100).toInt()}%",
+          ),
           progressColor: Colors.green,
           animation: true,
         ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
   }

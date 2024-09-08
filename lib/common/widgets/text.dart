@@ -10,6 +10,7 @@ class AdaptiveText extends StatelessWidget {
   TextAlign? textAlign;
   FontStyle? fontStyle;
   TextOverflow? overflow;
+  int? maxLines;
 
   AdaptiveText(
     this.data, {
@@ -18,7 +19,8 @@ class AdaptiveText extends StatelessWidget {
     this.fontWeight,
     this.textAlign,
     this.fontStyle,
-    this.overflow
+    this.overflow,
+    this.maxLines,
   });
 
   @override
@@ -34,6 +36,7 @@ class AdaptiveText extends StatelessWidget {
         fontStyle: fontStyle,
         overflow: overflow,
       ),
+      maxLines: maxLines,
     );
   }
 }
