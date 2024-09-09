@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/functions/filter/category.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_category_toggle.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
@@ -12,10 +11,9 @@ import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/screens/projects/add_project_page.dart';
 import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
-import 'package:keeper_of_projects/common/widgets/add_animated.dart';
+import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
 import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
 import 'package:keeper_of_projects/screens/projects/ideas_page.dart';
 import 'package:keeper_of_projects/screens/projects/project_archive_page.dart';
@@ -271,7 +269,7 @@ class _ProjectPageState extends State<ProjectPage> {
               ),
             ],
           ),
-          floatingActionButton: AddProject(
+          floatingActionButton: AddButtonAnimated(
             routTo: const AddProjectPage(),
             taskCreated: (value) {
               if (value) {

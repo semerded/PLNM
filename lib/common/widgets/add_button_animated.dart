@@ -4,16 +4,16 @@ import 'package:keeper_of_projects/data.dart';
 
 typedef TaskCreated = void Function(bool value);
 
-class AddProject extends StatefulWidget {
+class AddButtonAnimated extends StatefulWidget {
   final TaskCreated taskCreated;
   final Widget routTo;
-  const AddProject({required this.taskCreated, required this.routTo, super.key});
+  const AddButtonAnimated({required this.taskCreated, required this.routTo, super.key});
 
   @override
-  State<AddProject> createState() => _AddProjectState();
+  State<AddButtonAnimated> createState() => _AddButtonAnimatedState();
 }
 
-class _AddProjectState extends State<AddProject> with SingleTickerProviderStateMixin {
+class _AddButtonAnimatedState extends State<AddButtonAnimated> with SingleTickerProviderStateMixin {
   late final Animation<Offset> slideAnimation;
   late final Animation<double> scaleAnimation;
   late final Animation<double> fadeAnimation;
