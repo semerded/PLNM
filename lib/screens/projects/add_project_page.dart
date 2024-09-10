@@ -275,7 +275,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (taskValidated) {
-              newProject["timeCreated"] = DateTime.now().toString();
+              DateTime now = DateTime.now();
+              newProject["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
               newProject["size"] = newProject["size"].toInt();
 
               setState(() {

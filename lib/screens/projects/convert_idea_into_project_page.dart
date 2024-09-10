@@ -256,7 +256,8 @@ class _ConvertIdeaIntoProjectPageState extends State<ConvertIdeaIntoProjectPage>
           backgroundColor: Palette.primary,
           onPressed: () {
             if (projectValidated) {
-              projectDataFromIdea["timeCreated"] = DateTime.now().toString();
+              DateTime now = DateTime.now();
+              projectDataFromIdea["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
               projectDataFromIdea["size"] = projectDataFromIdea["size"].toInt();
               ideasContent.removeAt(widget.ideaIndex);
               Navigator.pop(context, projectDataFromIdea);
