@@ -81,7 +81,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   MaterialPageRoute<bool>(builder: (context) => const CategoryEditorPage()),
                 ).then((value) async {
                   if (categoryDataNeedSync) {
-                    await saveFile(categoryFileData!.id!, jsonEncode(categoryDataContent));
+                    await fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
                   }
                 });
               },

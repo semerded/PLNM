@@ -282,7 +282,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
               setState(() {
                 projectsDataContent!["projects"].add(newProject); //! add deepcopy if duplication happens
                 LoadingScreen.show(context, "Saving Task");
-                saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent)).then((value) {
+                fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent)).then((value) {
                   LoadingScreen.hide(context);
                   Navigator.of(context).pop(true);
                 });

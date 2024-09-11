@@ -4,12 +4,14 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class PreviewTile extends StatefulWidget {
+  final Widget navigateToOnClick;
   final String title;
   final double completion;
   const PreviewTile({
     super.key,
     required this.title,
     required this.completion,
+    required this.navigateToOnClick,
   });
 
   @override
@@ -38,6 +40,16 @@ class _PreviewTileState extends State<PreviewTile> {
           animation: true,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => widget.navigateToOnClick,
+            ),
+          ).then((callback) {
+            if (callback != null) {}
+          });
+        },
       ),
     );
   }

@@ -55,7 +55,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> {
         onPressed: () {
           if (validTitle) {
             projectsDataContent!["ideas"].add(newIdea);
-            saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
+            fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
           }
           Navigator.pop(context, true);
         },

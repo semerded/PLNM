@@ -2,9 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/widgets.dart';
-import 'package:googleapis/forms/v1.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/custom/child_size_notifier.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
@@ -15,8 +13,8 @@ import 'package:keeper_of_projects/screens/home/functions/search_most_progressed
 import 'package:keeper_of_projects/screens/home/widgets/home_page_title_divider.dart';
 import 'package:keeper_of_projects/screens/home/widgets/preview_tile.dart';
 import 'package:keeper_of_projects/screens/projects/projects_page.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:keeper_of_projects/screens/projects/view_project_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -112,12 +110,20 @@ class _HomePageState extends State<HomePage> {
                       child: PreviewTile(
                         title: mostProgressedProjects[0]["title"],
                         completion: calculateCompletion(mostProgressedProjects[0]["part"]),
+                        navigateToOnClick: ProjectViewPage(
+                          index: projectsContent.indexOf(mostProgressedProjects[0]),
+                          projectData: mostProgressedProjects[0],
+                        ),
                       ),
                     ),
                     StaggeredGridTile.count(
                       crossAxisCellCount: 4,
                       mainAxisCellCount: 1,
                       child: PreviewTile(
+                        navigateToOnClick: ProjectViewPage(
+                          index: projectsContent.indexOf(mostProgressedProjects[1]),
+                          projectData: mostProgressedProjects[1],
+                        ),
                         title: mostProgressedProjects[1]["title"],
                         completion: calculateCompletion(mostProgressedProjects[1]["part"]),
                       ),
@@ -148,16 +154,6 @@ class _HomePageState extends State<HomePage> {
                         icon: AdaptiveIcon(Icons.arrow_forward_ios),
                       ),
                     )
-                  ],
-                ),
-                Row(
-                  children: [
-                    // Expanded(
-                    //   child: LayoutBuilder(builder: (context, constraints) {
-                    //     print(constraints.maxHeight);
-                    //     return
-                    //   }),
-                    // ),
                   ],
                 ),
                 HomePageTitleDivider(

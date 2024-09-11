@@ -4,6 +4,10 @@ import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
+///
+/// this page is only entered when the local data is newer than the cloud data
+///
+
 const Duration darkmodeTransitionTime = Duration(milliseconds: 400);
 
 class ConflictPage extends StatefulWidget {
@@ -21,11 +25,6 @@ class ConflictPage extends StatefulWidget {
 
 class _ConflictPageState extends State<ConflictPage> {
   bool tempDarkmodeStatus = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +66,14 @@ class _ConflictPageState extends State<ConflictPage> {
                     type: ConflictType.local,
                     icon: Icons.computer,
                     date: widget.localDate,
-                    newer: false,
+                    newer: true,
                   ),
                   DataOptionCard(
                     name: "cloud",
                     type: ConflictType.cloud,
                     icon: Icons.cloud,
                     date: widget.cloudDate,
-                    newer: true,
+                    newer: false,
                   ),
                 ],
               ),
@@ -121,7 +120,7 @@ class _DataOptionCardState extends State<DataOptionCard> {
                 fontSize: 24,
               ),
               AdaptiveText(
-                "${widget.date} ${widget.newer ? "(newer)" : ""}",
+                "${widget.date} ${widget.newer ? "(newer)" : "(older)"}",
                 textAlign: TextAlign.center,
               ),
               AdaptiveIcon(
@@ -137,7 +136,10 @@ class _DataOptionCardState extends State<DataOptionCard> {
                   onPressed: () {
                     Navigator.pop(context, widget.type);
                   },
-                  child: Text("Keep ${widget.name} data", style: TextStyle(color: Colors.grey[800]),),
+                  child: Text(
+                    "Keep ${widget.name} data",
+                    style: TextStyle(color: Colors.grey[800]),
+                  ),
                 ),
               )
             ],

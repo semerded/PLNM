@@ -67,8 +67,8 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
               }
               widget.onClose(true);
               if (settingsDataNeedsSync) {
-                await saveFile(settingsFileData!.id!, jsonEncode(settingsDataContent)).then(
-                  (value) {
+                await fileSyncSystem.syncFile(settingsFileData!, jsonEncode(settingsDataContent)).then(
+                  (_) {
                     settingsDataNeedsSync = false;
                   },
                 );

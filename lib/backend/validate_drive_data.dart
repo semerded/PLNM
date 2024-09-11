@@ -4,7 +4,7 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:keeper_of_projects/backend/create_missing.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 
-Future<String> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
+Future<void> getOrRepairDriveFolders(drive.DriveApi driveApi) async {
   drive.File? parentAppFolder = await getFolder(parentFolderName, driveApi);
   if (parentAppFolder == null || parentAppFolder.name != parentFolderName) {
     // repair if non existing
@@ -16,10 +16,24 @@ Future<String> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
   if (appFolder == null || appFolder!.name != folderName) {
     appFolder = await createFolder(folderName, driveApi, parentAppFolder.id);
   }
+}
 
+Future<void> getOrRepairDriveSyncDataFile(drive.DriveApi driveApi) async {
+  syncFileData = await getFile(syncFileName, driveApi);
+  if (syncFileData == null || syncFileData!.name != syncFileName) {
+    syncFileData = await createFile(syncFileName, syncFileDefaultContent, driveApi, appFolder!.id);
+  }
+}
+
+Future<void> getOrRepairDriveFiles(drive.DriveApi driveApi) async {
   projectsFileData = await getFile(projectsFileName, driveApi);
   if (projectsFileData == null || projectsFileData!.name != projectsFileName) {
     projectsFileData = await createFile(projectsFileName, projectsFileDefaultContent, driveApi, appFolder!.id);
+  }
+
+  todoFileData = await getFile(todoFileName, driveApi);
+  if (todoFileData == null || todoFileData!.name != todoFileName) {
+    todoFileData = await createFile(todoFileName, todoFileDefaultContent, driveApi, appFolder!.id);
   }
 
   settingsFileData = await getFile(settingsFileName, driveApi);
@@ -31,8 +45,6 @@ Future<String> checkAndRepairDriveFiles(drive.DriveApi driveApi) async {
   if (categoryFileData == null || categoryFileData!.name != categoryFileName) {
     categoryFileData = await createFile(categoryFileName, categoryFileDefaultContent, driveApi, appFolder!.id);
   }
-
-  return "Files synced with Google Drive";
 }
 
 Future<drive.File?> getFile(String projectsFileName, drive.DriveApi driveApi, [String? parentFolderName]) async {
