@@ -31,8 +31,10 @@ class FileSyncSystem {
     if (_syncList.isNotEmpty) {
       for (final entry in _syncList.entries) {
         saveFile(entry.key.id!, jsonEncode(entry.value));
-        _syncList.remove(entry.key);
       }
+
+      _syncList = {};
+
       DateTime now = DateTime.now();
       saveFile(syncFileData!.id!, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
     }
