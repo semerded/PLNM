@@ -6,6 +6,8 @@ import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
+import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
+import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
@@ -66,7 +68,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       pageCallback = PageCallback.setState; // TODO
                       projectCompletion = calculateCompletion(widget.projectData["part"]);
                     });
-                    await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
+                    await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                   }
                 });
               },
@@ -132,22 +134,45 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    showInfoDialog(
-                                      context,
-                                      "Project Category: The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Palette.bg,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: BorderSide(color: Palette.text),
-                                    ),
-                                  ),
-                                  child: AdaptiveText("category: ${widget.projectData["category"]}"),
-                                ),
+                                child: checkCategoryValidity(widget.projectData["category"])
+                                    ? ElevatedButton(
+                                        onPressed: () {
+                                          showInfoDialog(
+                                            context,
+                                            "Project Category: The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Palette.bg,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18.0),
+                                            side: BorderSide(color: Palette.text),
+                                          ),
+                                        ),
+                                        child: AdaptiveText("category: ${widget.projectData["category"]}"),
+                                      )
+                                    : ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18.0),
+                                            side: BorderSide(color: Palette.text),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          if (await showConfirmDialog(context, "Add '${widget.projectData["category"]}' to categories?")) {
+                                            setState(() {
+                                              String category = widget.projectData["category"];
+                                              categoryDataContent!.add(category);
+                                              categoryFilter[category] = true;
+                                              categoryDataNeedSync = true;
+                                              fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
+                                              pageCallback = PageCallback.setState;
+                                            });
+                                          }
+                                        },
+                                        child: AdaptiveText("Unknown Category: ${widget.projectData["category"]}"),
+                                      ),
                               ),
                             )
                           ],
