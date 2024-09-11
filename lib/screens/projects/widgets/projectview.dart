@@ -5,6 +5,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
+import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
@@ -108,11 +109,23 @@ class _ProjectViewState extends State<ProjectView> {
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
                       ),
-                      subtitle: Text(
-                        project["description"],
-                        style: TextStyle(
-                          color: Palette.subtext,
-                          fontSize: 13,
+                      subtitle: RichText(
+                        text: TextSpan(
+                          children: [
+                            checkCategoryValidity(project["category"])
+                                ? const TextSpan()
+                                : const TextSpan(
+                                    text: "[!category not found!] ",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                            TextSpan(
+                              text: project["description"],
+                              style: TextStyle(
+                                color: Palette.subtext,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       onTap: () => setState(() {
@@ -130,7 +143,7 @@ class _ProjectViewState extends State<ProjectView> {
                               setState(() {});
                               widget.onUpdated();
                               if (callback == PageCallback.setStateAndSync) {
-                                await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
+                                await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                               }
                             }
                           }

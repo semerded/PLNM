@@ -1,0 +1,4 @@
+enum ConflictType {
+  local,
+  cloud,
+}
