@@ -73,7 +73,7 @@ Future getCloudFileData() async {
 }
 
 Future<void> syncCloudFileData() async {
-  await saveFile(projectsFileData!.id!, jsonEncode(categoryDataContent));
+  await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
   await saveFile(todoFileData!.id!, jsonEncode(todoDataContent));
   await saveFile(settingsFileData!.id!, jsonEncode(settingsDataContent));
   await saveFile(categoryFileData!.id!, jsonEncode(categoryDataContent));
