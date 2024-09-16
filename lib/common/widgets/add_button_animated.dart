@@ -7,7 +7,13 @@ typedef TaskCreated = void Function(bool value);
 class AddButtonAnimated extends StatefulWidget {
   final TaskCreated taskCreated;
   final Widget routTo;
-  const AddButtonAnimated({required this.taskCreated, required this.routTo, super.key});
+  final bool forceAnimation;
+  const AddButtonAnimated({
+    required this.taskCreated,
+    required this.routTo,
+    this.forceAnimation = false,
+    super.key,
+  });
 
   @override
   State<AddButtonAnimated> createState() => _AddButtonAnimatedState();
@@ -70,7 +76,7 @@ class _AddButtonAnimatedState extends State<AddButtonAnimated> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    if (projectsDataContent!["projects"].length == 0) {
+    if (projectsDataContent!["projects"].length == 0 || widget.forceAnimation) {
       animationController.repeat();
     } else {
       animationController.reset();

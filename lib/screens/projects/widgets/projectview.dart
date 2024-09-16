@@ -131,7 +131,7 @@ class _ProjectViewState extends State<ProjectView> {
                       onTap: () => setState(() {
                         Navigator.push(
                           context,
-                          MaterialPageRoute<PageCallback>(
+                          MaterialPageRoute<bool>(
                             builder: (context) => ProjectViewPage(
                               index: index,
                               projectData: project,
@@ -139,12 +139,9 @@ class _ProjectViewState extends State<ProjectView> {
                           ),
                         ).then((callback) async {
                           if (callback != null) {
-                            if (callback == PageCallback.setState || callback == PageCallback.setStateAndSync) {
+                            if (callback) {
                               setState(() {});
                               widget.onUpdated();
-                              if (callback == PageCallback.setStateAndSync) {
-                                await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
-                              }
                             }
                           }
                         });

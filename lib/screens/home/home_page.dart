@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/widgets.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
+import 'package:keeper_of_projects/common/functions/search_index_from_maplist_with_id.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
@@ -115,9 +116,17 @@ class _HomePageState extends State<HomePage> {
                               title: mostProgressedProjects[0]["title"],
                               completion: calculateCompletion(mostProgressedProjects[0]["part"]),
                               navigateToOnClick: ProjectViewPage(
-                                index: projectsContent.indexOf(mostProgressedProjects[0]),
+                                index: searchIndexFromMaplist(mostProgressedProjects[0], projectsContent),
                                 projectData: mostProgressedProjects[0],
                               ),
+                              navigateCallBack: (value) {
+                                if (value) {
+                                  setState(() {
+                                    projectsContent = projectsContent.toList();
+                                    mostProgressedProjects = searchMostProgressedProjects(2);
+                                  });
+                                }
+                              },
                             ),
                           ),
                         );
@@ -130,9 +139,17 @@ class _HomePageState extends State<HomePage> {
                             mainAxisCellCount: 1,
                             child: PreviewTile(
                               navigateToOnClick: ProjectViewPage(
-                                index: projectsContent.indexOf(mostProgressedProjects[1]),
+                                index: searchIndexFromMaplist(mostProgressedProjects[1], projectsContent),
                                 projectData: mostProgressedProjects[1],
                               ),
+                              navigateCallBack: (value) {
+                                if (value) {
+                                  setState(() {
+                                    projectsContent = projectsContent.toList();
+                                    mostProgressedProjects = searchMostProgressedProjects(2);
+                                  });
+                                }
+                              },
                               title: mostProgressedProjects[1]["title"],
                               completion: calculateCompletion(mostProgressedProjects[1]["part"]),
                             ),
@@ -145,25 +162,23 @@ class _HomePageState extends State<HomePage> {
                           StaggeredGridTile.count(
                             crossAxisCellCount: 4,
                             mainAxisCellCount: mostProgressedProjects.isEmpty ? 2 : 1,
-                            child: Expanded(
-                              child: Card(
-                                margin: const EdgeInsets.all(0),
-                                color: Palette.box,
-                                child: Center(
-                                  child: ListTile(
-                                    title: AdaptiveText("Add more projects!"),
-                                    trailing: AddButtonAnimated(
-                                        taskCreated: (value) {
-                                          if (value) {
-                                            setState(() {
-                                              projectsContent = projectsDataContent!["projects"];
-                                              mostProgressedProjects = searchMostProgressedProjects(2);
-                                              // update screen when task is created
-                                            });
-                                          }
-                                        },
-                                        routTo: const AddProjectPage()),
-                                  ),
+                            child: Card(
+                              margin: const EdgeInsets.all(0),
+                              color: Palette.box,
+                              child: Center(
+                                child: ListTile(
+                                  title: AdaptiveText("Add more projects!"),
+                                  trailing: AddButtonAnimated(
+                                      taskCreated: (value) {
+                                        if (value) {
+                                          setState(() {
+                                            projectsContent = projectsDataContent!["projects"].toList();
+                                            mostProgressedProjects = searchMostProgressedProjects(2);
+                                            // update screen when task is created
+                                          });
+                                        }
+                                      },
+                                      routTo: const AddProjectPage()),
                                 ),
                               ),
                             ),
