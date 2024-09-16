@@ -16,6 +16,7 @@ import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
 import 'package:keeper_of_projects/screens/projects/add_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/edit_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.dart';
+import 'package:uuid/uuid.dart';
 
 class AddProjectPage extends StatefulWidget {
   const AddProjectPage({super.key});
@@ -39,6 +40,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "priority": "none",
     "size": 0.0,
     "part": [],
+    "id": Uuid().v4(),
   }; // TODO switch "none" to null
 
   final String ddb_catgegoryDefaultText = "Select A Category";

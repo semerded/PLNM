@@ -30,14 +30,14 @@ class ProjectViewPage extends StatefulWidget {
 class _ProjectViewPageState extends State<ProjectViewPage> {
   late double projectCompletion = calculateCompletion(widget.projectData["part"]);
   bool projectDetailsVisible = true;
-  PageCallback pageCallback = PageCallback.none;
+  bool setStateOnPagePop = false;
 
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
-        Navigator.pop(context, pageCallback);
+        Navigator.pop(context, setStateOnPagePop);
         return Future<bool>.value(false);
       },
       child: Scaffold(
@@ -46,7 +46,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
           backgroundColor: Palette.primary,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context, pageCallback),
+            onPressed: () => Navigator.pop(context, setStateOnPagePop),
           ),
           title: Text(widget.projectData["title"]),
           actions: [
@@ -65,8 +65,8 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                     setState(() {
                       projectsContent[widget.index] = Map.from(callback);
                       widget.projectData = Map.from(callback);
-                      pageCallback = PageCallback.setState; // TODO
                       projectCompletion = calculateCompletion(widget.projectData["part"]);
+                      setStateOnPagePop = true;
                     });
                     await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                   }
@@ -74,7 +74,6 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
               },
               onArchive: () {},
               onCompleteAll: () {
-                pageCallback = PageCallback.setStateAndSync;
                 setState(() {
                   bool setValue = projectCompletion != 1.0;
                   for (Map part in widget.projectData["part"]) {
@@ -85,6 +84,8 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   }
                   projectCompletion = calculateCompletion(widget.projectData["part"]);
                 });
+                fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                setStateOnPagePop = true;
               },
               onDelete: () {
                 showConfirmDialog(context, 'Delete "${widget.projectData["title"]}" permanently? This can\'t be undone!').then((value) {
@@ -92,8 +93,9 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                     setState(() {
                       projectsContent.removeAt(widget.index);
                     });
-                    pageCallback = PageCallback.setStateAndSync;
-                    Navigator.pop(context, pageCallback);
+                    fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                    setStateOnPagePop = true;
+                    Navigator.pop(context, setStateOnPagePop);
                   }
                 });
               },
@@ -167,7 +169,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                                               categoryFilter[category] = true;
                                               categoryDataNeedSync = true;
                                               fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
-                                              pageCallback = PageCallback.setState;
+                                              setStateOnPagePop = true;
                                             });
                                           }
                                         },
@@ -298,7 +300,8 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         ).then(
                           (callback) {
                             if (callback != null && callback) {
-                              pageCallback = PageCallback.setStateAndSync;
+                              fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                              setStateOnPagePop = true;
                             }
                             setState(() {
                               partCompletion = calculateCompletion(part["tasks"]);
@@ -317,7 +320,8 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                                 setState(() {
                                   part["completed"] = !part["completed"];
                                   projectCompletion = calculateCompletion(widget.projectData["part"]);
-                                  pageCallback = PageCallback.setStateAndSync;
+                                  fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                                  setStateOnPagePop = true;
                                 });
                               },
                             )

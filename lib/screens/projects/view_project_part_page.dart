@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
@@ -26,7 +29,7 @@ class ProjectPartViewPage extends StatefulWidget {
 }
 
 class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
-  bool partWasUpdated = false;
+  bool setStateOnPagePop = false;
   late double partCompletion = calculateCompletion(widget.part["tasks"]);
 
   @override
@@ -34,7 +37,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
-        Navigator.pop(context, partWasUpdated);
+        Navigator.pop(context, setStateOnPagePop);
         return Future<bool>.value(false);
       },
       child: Scaffold(
@@ -63,23 +66,27 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                 ).then((callback) async {
                   if (callback != null) {
                     setState(() {
-                      partWasUpdated = true;
                       widget.projectData["part"][widget.index] = Map.from(callback);
                       widget.part = Map.from(callback);
                       partCompletion = calculateCompletion(widget.part["tasks"]);
+
+                      fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                      setStateOnPagePop = true;
                     });
                   }
                 });
               },
               onCompleteAll: () {
                 setState(() {
-                  partWasUpdated = true;
                   bool setValue = partCompletion != 1.0;
                   for (Map tasks in widget.part["tasks"]) {
                     tasks["completed"] = setValue;
                   }
 
                   partCompletion = calculateCompletion(widget.part["tasks"]);
+
+                  fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                  setStateOnPagePop = true;
                 });
               },
               onDelete: () {
@@ -88,8 +95,10 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                     setState(() {
                       widget.projectData["part"].removeAt(widget.index);
                     });
-                    partWasUpdated = true;
-                    Navigator.pop(context, partWasUpdated);
+
+                    fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                    setStateOnPagePop = true;
+                    Navigator.pop(context, setStateOnPagePop);
                   }
                 });
               },
@@ -198,7 +207,8 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                             task["completed"] = !task["completed"];
                             partCompletion = calculateCompletion(widget.part["tasks"]);
 
-                            partWasUpdated = true;
+                            fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                            setStateOnPagePop = true;
                           });
                         },
                       ),
