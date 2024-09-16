@@ -3,11 +3,11 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-typedef CallBack = void Function(bool value);
+typedef NavigateCallback = void Function(bool value);
 
 class PreviewTile extends StatefulWidget {
   final Widget navigateToOnClick;
-  final CallBack navigateCallBack;
+  final NavigateCallback navigateCallback;
   final String title;
   final double completion;
   const PreviewTile({
@@ -15,7 +15,7 @@ class PreviewTile extends StatefulWidget {
     required this.title,
     required this.completion,
     required this.navigateToOnClick,
-    required this.navigateCallBack,
+    required this.navigateCallback,
   });
 
   @override
@@ -53,7 +53,7 @@ class _PreviewTileState extends State<PreviewTile> {
               ),
             ).then((callback) {
               if (callback != null) {
-                widget.navigateCallBack(callback);
+                widget.navigateCallback(callback);
               }
             });
           },

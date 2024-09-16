@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/widgets.dart';
+import 'package:keeper_of_projects/backend/content/default_file_content.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/search_index_from_maplist_with_id.dart';
@@ -117,12 +118,11 @@ class _HomePageState extends State<HomePage> {
                               completion: calculateCompletion(mostProgressedProjects[0]["part"]),
                               navigateToOnClick: ProjectViewPage(
                                 index: searchIndexFromMaplist(mostProgressedProjects[0], projectsContent),
-                                projectData: mostProgressedProjects[0],
+                                projectData: projectsContent[searchIndexFromMaplist(mostProgressedProjects[0], projectsContent)],
                               ),
-                              navigateCallBack: (value) {
+                              navigateCallback: (value) {
                                 if (value) {
                                   setState(() {
-                                    projectsContent = projectsContent.toList();
                                     mostProgressedProjects = searchMostProgressedProjects(2);
                                   });
                                 }
@@ -140,12 +140,12 @@ class _HomePageState extends State<HomePage> {
                             child: PreviewTile(
                               navigateToOnClick: ProjectViewPage(
                                 index: searchIndexFromMaplist(mostProgressedProjects[1], projectsContent),
-                                projectData: mostProgressedProjects[1],
+                                projectData: projectsContent[searchIndexFromMaplist(mostProgressedProjects[1], projectsContent)],
                               ),
-                              navigateCallBack: (value) {
+                              navigateCallback: (value) {
                                 if (value) {
                                   setState(() {
-                                    projectsContent = projectsContent.toList();
+                                    projectsContent = projectsDataContent!["projects"].toList();
                                     mostProgressedProjects = searchMostProgressedProjects(2);
                                   });
                                 }
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                                       taskCreated: (value) {
                                         if (value) {
                                           setState(() {
-                                            projectsContent = projectsDataContent!["projects"].toList();
+                                            // projectsContent = projectsDataContent!["projects"].toList();
                                             mostProgressedProjects = searchMostProgressedProjects(2);
                                             // update screen when task is created
                                           });
