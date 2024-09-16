@@ -34,6 +34,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     mostProgressedProjects = searchMostProgressedProjects(2);
+    print(mostProgressedProjects);
+    print(projectsContent);
     super.initState();
   }
 
@@ -131,7 +133,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       }
-
                       if (mostProgressedProjects.length > 1) {
                         children.add(
                           StaggeredGridTile.count(
@@ -169,16 +170,18 @@ class _HomePageState extends State<HomePage> {
                                 child: ListTile(
                                   title: AdaptiveText("Add more projects!"),
                                   trailing: AddButtonAnimated(
-                                      taskCreated: (value) {
-                                        if (value) {
-                                          setState(() {
-                                            // projectsContent = projectsDataContent!["projects"].toList();
-                                            mostProgressedProjects = searchMostProgressedProjects(2);
-                                            // update screen when task is created
-                                          });
-                                        }
-                                      },
-                                      routTo: const AddProjectPage()),
+                                    taskCreated: (value) {
+                                      if (value) {
+                                        setState(() {
+                                          // projectsContent = projectsDataContent!["projects"].toList();
+                                          mostProgressedProjects = searchMostProgressedProjects(2);
+                                          // update screen when task is created
+                                        });
+                                      }
+                                    },
+                                    routTo: const AddProjectPage(),
+                                    animateWhen: mostProgressedProjects.length < 2, // todo
+                                  ),
                                 ),
                               ),
                             ),

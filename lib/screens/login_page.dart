@@ -88,6 +88,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         syncSettings();
         fileSyncSystem.startSyncSystem();
         rotationLogoController.dispose();
+
+        projectsContent = projectsDataContent!["projects"];
+        ideasContent = projectsDataContent!["ideas"];
+        todoContent = todoDataContent!["todo"];
+
         Navigator.push(
           context,
           MaterialPageRoute<bool>(

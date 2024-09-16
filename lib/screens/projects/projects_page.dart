@@ -69,8 +69,6 @@ class _ProjectPageState extends State<ProjectPage> {
 
     ddb_sortBy_value = ddb_sortBy.first;
     buildDDBcategory();
-    projectsContent = projectsDataContent!["projects"];
-    ideasContent = projectsDataContent!["ideas"];
   }
 
   @override
@@ -279,6 +277,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 });
               }
             },
+            animateWhen: projectsDataContent!["projects"].length == 0,
           ),
           // ignore: prefer_const_constructors
           bottomNavigationBar: CustomBottomNavitagionBar() //? ignore const so the color can be updated with setstate
