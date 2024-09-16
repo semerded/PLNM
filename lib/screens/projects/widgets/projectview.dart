@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/backend/google_api/save_file.dart';
-import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -137,7 +132,7 @@ class _ProjectViewState extends State<ProjectView> {
                               projectData: project,
                             ),
                           ),
-                        ).then((callback) async {
+                        ).then((callback) {
                           if (callback != null) {
                             if (callback) {
                               setState(() {});
