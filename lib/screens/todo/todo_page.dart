@@ -56,8 +56,6 @@ class _TodoPageState extends State<TodoPage> {
 
     ddb_sortBy_value = ddb_sortBy.first;
     buildDDBcategory();
-    projectsContent = projectsDataContent!["projects"];
-    ideasContent = projectsDataContent!["ideas"];
   }
 
   @override
@@ -67,7 +65,7 @@ class _TodoPageState extends State<TodoPage> {
           backgroundColor: Palette.bg,
           appBar: AppBar(
             backgroundColor: Palette.primary,
-            title: Text("You have ${projectsContent.length} thing${projectsContent.length == 1 ? "" : "s"} todo"), //? add extra s if task is not equal to 1 to make it plural
+            title: Text("You have ${todoContent.length} thing${todoContent.length == 1 ? "" : "s"} todo"), //? add extra s if task is not equal to 1 to make it plural
             leading: IconButton(
               icon: const Icon(Icons.lightbulb_outline),
               onPressed: () {
@@ -242,7 +240,6 @@ class _TodoPageState extends State<TodoPage> {
                 filterController: filterController,
                 searchBarActive: searchBarActive,
                 focusNode: searchBarFocusNode,
-                // onUpdated: (value) {}, // TODO
                 onUpdated: (value) => setState(() {
                   searchbarValue = value;
                 }),
@@ -250,7 +247,7 @@ class _TodoPageState extends State<TodoPage> {
               Expanded(
                 child: ProjectView(
                   searchbarController: filterController,
-                  content: projectsContent,
+                  content: todoContent,
                   onUpdated: () => setState(() {}),
                 ),
               ),
@@ -261,11 +258,12 @@ class _TodoPageState extends State<TodoPage> {
             taskCreated: (value) {
               if (value) {
                 setState(() {
-                  projectsContent = projectsDataContent!["projects"];
+                  todoContent = todoDataContent!["todo"];
                   // update screen when task is created
                 });
               }
             },
+            animateWhen: todoDataContent!["todo"].length == 0,
           ),
           // ignore: prefer_const_constructors
           bottomNavigationBar: CustomBottomNavitagionBar() //? ignore const so the color can be updated with setstate
