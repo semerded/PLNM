@@ -18,9 +18,7 @@
 
 >>>> functionality
 
-@critical @today give every project an id to link them to the home page
-
-@critical @today fix that projects that are 100% completed show up on the home page preview tiles
+@critical @today fix multiple heros on home page (add new arg for add button)
 
 @high @today make todo list (page)
 
