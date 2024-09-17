@@ -7,6 +7,8 @@ double calculateCompletion(List<dynamic> taskslist) {
       completed++;
     }
   }
-  
-  return completed / length;
+  if (length != 0) {
+    return completed / length;
+  }
+  return 0;
 }
