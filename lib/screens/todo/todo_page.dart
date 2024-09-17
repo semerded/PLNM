@@ -68,7 +68,7 @@ class _TodoPageState extends State<TodoPage> {
           appBar: AppBar(
             backgroundColor: Palette.primary,
             title: Text("You have ${todoContent.length} thing${todoContent.length == 1 ? "" : "s"} todo"), //? add extra s if task is not equal to 1 to make it plural
-
+            automaticallyImplyLeading: false,
             actions: [
               GooglePopUpMenu(
                 onClose: (value) {
