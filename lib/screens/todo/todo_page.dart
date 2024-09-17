@@ -18,6 +18,8 @@ import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
 import 'package:keeper_of_projects/screens/projects/ideas_page.dart';
 import 'package:keeper_of_projects/screens/projects/project_archive_page.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/projectview.dart';
+import 'package:keeper_of_projects/screens/todo/add_todo_page.dart';
+import 'package:keeper_of_projects/screens/todo/widgets/todoview.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -245,7 +247,7 @@ class _TodoPageState extends State<TodoPage> {
                 }),
               ),
               Expanded(
-                child: ProjectView(
+                child: TodoView(
                   searchbarController: filterController,
                   content: todoContent,
                   onUpdated: () => setState(() {}),
@@ -254,7 +256,7 @@ class _TodoPageState extends State<TodoPage> {
             ],
           ),
           floatingActionButton: AddButtonAnimated(
-            routTo: const AddProjectPage(),
+            routTo: const AddTodoPage(),
             taskCreated: (value) {
               if (value) {
                 setState(() {

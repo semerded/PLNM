@@ -2,26 +2,25 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/view_project_page.dart';
+import 'package:keeper_of_projects/screens/todo/todo_view_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:keeper_of_projects/common/custom/custom_one_border_painter.dart';
 
 typedef OnUpdated = void Function();
 
-class ProjectView extends StatefulWidget {
+class TodoView extends StatefulWidget {
   final List content;
   final OnUpdated onUpdated;
   final TextEditingController searchbarController;
-  const ProjectView({
+  const TodoView({
     super.key,
     required this.content,
     required this.onUpdated,
@@ -29,16 +28,16 @@ class ProjectView extends StatefulWidget {
   });
 
   @override
-  State<ProjectView> createState() => _ProjectViewState();
+  State<TodoView> createState() => _TodoViewState();
 }
 
-class _ProjectViewState extends State<ProjectView> {
+class _TodoViewState extends State<TodoView> {
   @override
   Widget build(BuildContext context) {
     return widget.content.isEmpty
         ? Center(
             child: AdaptiveText(
-              "No projects found\nCreate new ideas / projects\nor recover projects from the archive",
+              "No todos found\nCreate new todos\nor recover todos from the archive",
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
               fontSize: 20,
@@ -46,9 +45,9 @@ class _ProjectViewState extends State<ProjectView> {
           )
         : () {
             List<Map> filteredList = [];
-            for (Map project in widget.content) {
-              if (!itemFilteredOut(project)) {
-                filteredList.add(project);
+            for (Map todo in widget.content) {
+              if (!itemFilteredOut(todo)) {
+                filteredList.add(todo);
               }
             }
             if (filteredList.isEmpty) {
@@ -81,68 +80,53 @@ class _ProjectViewState extends State<ProjectView> {
             return ListView.builder(
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
-                Map project = filteredList[index];
-                double projectCompletion = calculateCompletion(project["part"]);
+                Map todo = filteredList[index];
+                double todoCompletion = calculateCompletion(todo["task"]);
                 return Card(
                   shape: Border(
                     left: BorderSide(
                       width: 10,
-                      color: projectPriorities[project["priority"]],
+                      color: projectPriorities[todo["priority"]],
                     ),
                   ),
                   color: Palette.box,
                   elevation: 2,
-                  child: CustomPaint(
-                    painter: settingsDataContent!["showProjectSize"]
-                        ? OneSideProgressBorderPainter(
-                            color: Palette.primary,
-                            progress: project["size"] == null ? 0 : project["size"] / 100,
-                            strokeWidth: 3.0,
-                            side: borderSide.bottom,
-                          )
-                        : null,
-                    child: ListTile(
-                      textColor: Palette.text,
-                      title: AdaptiveText(
-                        project["title"],
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
+                  child: ListTile(
+                    textColor: Palette.text,
+                    title: AdaptiveText(
+                      todo["title"],
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                    subtitle: Text(
+                      todo["description"],
+                      style: TextStyle(
+                        color: Palette.subtext,
+                        fontSize: 13,
                       ),
-                      subtitle: Text(
-                        project["description"],
-                        style: TextStyle(
-                          color: Palette.subtext,
-                          fontSize: 13,
-                        ),
-                      ),
-                      onTap: () => setState(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<PageCallback>(
-                            builder: (context) => ProjectViewPage(
-                              index: index,
-                              projectData: project,
-                            ),
+                    ),
+                    onTap: () => setState(() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                          builder: (context) => TodoViewPage(
+                            index: index,
+                            todoData: todo,
                           ),
-                        ).then((callback) async {
-                          if (callback != null) {
-                            if (callback == PageCallback.setState || callback == PageCallback.setStateAndSync) {
-                              setState(() {});
-                              widget.onUpdated();
-                              if (callback == PageCallback.setStateAndSync) {
-                                await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
-                              }
-                            }
-                          }
-                        });
-                      }),
-                      trailing: CircularPercentIndicator(
-                        radius: 25,
-                        animation: true,
-                        percent: projectCompletion,
-                        progressColor: Colors.green,
-                        center: AdaptiveText("${(projectCompletion * 100).toInt()}%"),
-                      ),
+                        ),
+                      ).then((callback) {
+                        if (callback != null && callback) {
+                          setState(() {});
+                          widget.onUpdated();
+                        }
+                      });
+                    }),
+                    trailing: CircularPercentIndicator(
+                      radius: 25,
+                      animation: true,
+                      percent: todoCompletion,
+                      progressColor: Colors.green,
+                      center: AdaptiveText("${(todoCompletion * 100).toInt()}%"),
                     ),
                   ),
                 );
