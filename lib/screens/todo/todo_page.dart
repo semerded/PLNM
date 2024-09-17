@@ -68,21 +68,7 @@ class _TodoPageState extends State<TodoPage> {
           appBar: AppBar(
             backgroundColor: Palette.primary,
             title: Text("You have ${todoContent.length} thing${todoContent.length == 1 ? "" : "s"} todo"), //? add extra s if task is not equal to 1 to make it plural
-            leading: IconButton(
-              icon: const Icon(Icons.lightbulb_outline),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<bool>(
-                    builder: (context) => const IdeasPage(),
-                  ),
-                ).then((callback) {
-                  if (callback != null && callback) {
-                    setState(() {});
-                  }
-                });
-              },
-            ),
+
             actions: [
               GooglePopUpMenu(
                 onClose: (value) {
