@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
         projectsContent = projectsDataContent!["projects"];
         ideasContent = projectsDataContent!["ideas"];
-        todoContent = todoDataContent!["todo"];
+        taskContent = taskDataContent!["task"];
 
         Navigator.push(
           context,

@@ -29,7 +29,7 @@ Future<String?> localRead(String fileName) async {
 
 Future<void> getLocalFileData() async {
   projectsDataContent = await readOrRepairLocalFile(projectsFileName, projectsFileDefaultContent);
-  todoDataContent = await readOrRepairLocalFile(todoFileName, todoFileDefaultContent);
+  taskDataContent = await readOrRepairLocalFile(taskFileName, taskFileDefaultContent);
   settingsDataContent = await readOrRepairLocalFile(settingsFileName, settingsFileDefaultContent);
   categoryDataContent = List<String>.from(await readOrRepairLocalFile(categoryFileName, categoryFileDefaultContent));
   for (String category in categoryDataContent!) {
@@ -39,7 +39,7 @@ Future<void> getLocalFileData() async {
 
 Future<void> syncLocalFileData() async {
   await localWrite(projectsFileName, jsonEncode(projectsDataContent));
-  await localWrite(todoFileName, jsonEncode(todoDataContent));
+  await localWrite(taskFileName, jsonEncode(taskDataContent));
   await localWrite(settingsFileName, jsonEncode(settingsDataContent));
   await localWrite(categoryFileName, jsonEncode(categoryDataContent));
   DateTime now = DateTime.now();
@@ -48,7 +48,7 @@ Future<void> syncLocalFileData() async {
 
 Future<void> onlyRepairLocalFiles() async {
   await readOrRepairLocalFile(projectsFileName, projectsFileDefaultContent);
-  await readOrRepairLocalFile(todoFileName, todoFileDefaultContent);
+  await readOrRepairLocalFile(taskFileName, taskFileDefaultContent);
   await readOrRepairLocalFile(settingsFileName, settingsFileDefaultContent);
   await readOrRepairLocalFile(categoryFileName, categoryFileDefaultContent);
 }

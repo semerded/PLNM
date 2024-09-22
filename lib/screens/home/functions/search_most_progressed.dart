@@ -16,10 +16,10 @@ List searchMostProgressedProjects(int amount) {
 }
 
 List searchMostProgressedTasks(int amount) {
-  List sortedProjects = json.decode(json.encode(todoDataContent!["todo"]));
-  sortedProjects.sort((a, b) => (calculateCompletion(a["task"]) * 100).toInt().compareTo((calculateCompletion(b["task"]) * 100).toInt()));
+  List sortedProjects = json.decode(json.encode(taskDataContent!["task"]));
+  sortedProjects.sort((a, b) => (calculateCompletion(a["subTask"]) * 100).toInt().compareTo((calculateCompletion(b["subTask"]) * 100).toInt()));
 
-  sortedProjects.removeWhere((a) => (calculateCompletion(a["task"]) * 100).toInt() == 100);
+  sortedProjects.removeWhere((a) => (calculateCompletion(a["subTask"]) * 100).toInt() == 100);
 
   if (amount < sortedProjects.length) {
     sortedProjects.sublist(sortedProjects.length - amount, sortedProjects.length);

@@ -56,9 +56,9 @@ Future getCloudFileData() async {
   drive.Media _media = await driveApi?.files.get(projectsFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
   projectsDataContent = jsonSafeDecode(await utf8.decoder.bind(_media.stream).join());
 
-  // fetch the content from the todoFileData file
-  _media = await driveApi?.files.get(todoFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
-  todoDataContent = jsonSafeDecode(await utf8.decoder.bind(_media.stream).join());
+  // fetch the content from the taskFileData file
+  _media = await driveApi?.files.get(taskFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+  taskDataContent = jsonSafeDecode(await utf8.decoder.bind(_media.stream).join());
 
   // fetch the content from the settingsFileData file
   _media = await driveApi?.files.get(settingsFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
@@ -74,7 +74,7 @@ Future getCloudFileData() async {
 
 Future<void> syncCloudFileData() async {
   await saveFile(projectsFileData!.id!, jsonEncode(projectsDataContent));
-  await saveFile(todoFileData!.id!, jsonEncode(todoDataContent));
+  await saveFile(taskFileData!.id!, jsonEncode(taskDataContent));
   await saveFile(settingsFileData!.id!, jsonEncode(settingsDataContent));
   await saveFile(categoryFileData!.id!, jsonEncode(categoryDataContent));
   DateTime now = DateTime.now();

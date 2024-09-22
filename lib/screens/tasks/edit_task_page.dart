@@ -12,19 +12,19 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:deepcopy/deepcopy.dart';
 
-class EditTodoPage extends StatefulWidget {
-  final Map todoData;
-  const EditTodoPage({
+class EditTaskPage extends StatefulWidget {
+  final Map taskData;
+  const EditTaskPage({
     super.key,
-    required this.todoData,
+    required this.taskData,
   });
 
   @override
-  State<EditTodoPage> createState() => _EditTodoPageState();
+  State<EditTaskPage> createState() => _EditTaskPageState();
 }
 
-class _EditTodoPageState extends State<EditTodoPage> {
-  Map updatedtodoData = {};
+class _EditTaskPageState extends State<EditTaskPage> {
+  Map updatedtaskData = {};
   late bool taskValidated;
   bool validTitle = false;
   final TextEditingController descriptionController = TextEditingController();
@@ -33,13 +33,13 @@ class _EditTodoPageState extends State<EditTodoPage> {
   void initState() {
     super.initState();
 
-    updatedtodoData = Map.from(widget.todoData.deepcopy());
-    validTitle = updatedtodoData["title"].length >= 2;
+    updatedtaskData = Map.from(widget.taskData.deepcopy());
+    validTitle = updatedtaskData["title"].length >= 2;
     validate();
   }
 
   void validate() {
-    taskValidated = validTitle && updatedtodoData["task"].length >= 1;
+    taskValidated = validTitle && updatedtaskData["subTask"].length >= 1;
   }
 
   @override
@@ -47,7 +47,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        if (await showConfirmDialog(context, "Undo changes made to this todo?")) {
+        if (await showConfirmDialog(context, "Undo changes made to this task?")) {
           Navigator.pop(context, null);
         }
         return Future<bool>.value(false);
@@ -56,11 +56,11 @@ class _EditTodoPageState extends State<EditTodoPage> {
         backgroundColor: Palette.bg,
         appBar: AppBar(
           backgroundColor: Palette.primary,
-          title: Text("Editing: ${widget.todoData["title"]}"),
+          title: Text("Editing: ${widget.taskData["title"]}"),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () async {
-              if (await showConfirmDialog(context, "Undo changes made to this todo?")) {
+              if (await showConfirmDialog(context, "Undo changes made to this task?")) {
                 Navigator.pop(context, null);
               }
             },
@@ -71,21 +71,21 @@ class _EditTodoPageState extends State<EditTodoPage> {
             TitleTextField(
               onChanged: (value) {
                 setState(() {
-                  updatedtodoData["title"] = value;
+                  updatedtaskData["title"] = value;
                   validTitle = value.length >= 2;
                   validate();
                 });
               },
-              initialValue: updatedtodoData["title"],
+              initialValue: updatedtaskData["title"],
             ),
             DescriptionTextField(
               validTitle: validTitle,
               onChanged: (value) {
                 setState(() {
-                  updatedtodoData["description"] = value;
+                  updatedtaskData["description"] = value;
                 });
               },
-              initialValue: updatedtodoData["description"],
+              initialValue: updatedtaskData["description"],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,7 +100,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         isExpanded: true,
                         elevation: 15,
                         dropdownColor: Palette.topbox,
-                        value: updatedtodoData["category"], // check if exist
+                        value: updatedtaskData["category"], // check if exist
                         items: categoryDataContent?.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
                             value: value,
@@ -115,7 +115,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         }).toList(),
                         onChanged: (String? value) {
                           setState(() {
-                            updatedtodoData["category"] = value;
+                            updatedtaskData["category"] = value;
                           });
                         },
                       ),
@@ -124,10 +124,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                      value: updatedtodoData["priority"],
+                      value: updatedtaskData["priority"],
                       onUpdated: (value) {
                         setState(() {
-                          updatedtodoData["priority"] = value;
+                          updatedtaskData["priority"] = value;
                         });
                       }),
                 ),
@@ -139,7 +139,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   (newTask) {
                     if (newTask != null) {
                       setState(() {
-                        updatedtodoData["task"].add(newTask);
+                        updatedtaskData["subTask"].add(newTask);
                       });
                       validate();
                     }
@@ -157,15 +157,15 @@ class _EditTodoPageState extends State<EditTodoPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: updatedtodoData["task"].length,
+                itemCount: updatedtaskData["subTask"].length,
                 itemBuilder: (context, index) {
-                  Map task = updatedtodoData["task"][index];
+                  Map subTask = updatedtaskData["subTask"][index];
                   return Card(
                     color: Palette.topbox,
                     child: ListTile(
-                      title: AdaptiveText(task["title"]),
+                      title: AdaptiveText(subTask["title"]),
                       subtitle: Text(
-                        task["description"],
+                        subTask["description"],
                         style: TextStyle(color: Palette.subtext),
                       ),
                       trailing: Row(
@@ -173,10 +173,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              editTask(context, updatedtodoData).then((editedTask) {
-                                if (!const DeepCollectionEquality().equals(task, editedTask)) {
+                              editTask(context, updatedtaskData).then((editedTask) {
+                                if (editedTask != null && !const DeepCollectionEquality().equals(subTask, editedTask)) {
                                   setState(() {
-                                    updatedtodoData["task"][index] = Map.from(editedTask);
+                                    updatedtaskData["subTask"][index] = Map.from(editedTask);
                                   });
                                 }
                               });
@@ -185,10 +185,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              showConfirmDialog(context, 'Delete "${task["title"]}" permanently? This can\'t be undone!').then((value) {
+                              showConfirmDialog(context, 'Delete "${subTask["title"]}" permanently? This can\'t be undone!').then((value) {
                                 setState(() {
                                   if (value) {
-                                    updatedtodoData["task"].removeAt(index);
+                                    updatedtaskData["subTask"].removeAt(index);
                                     validate();
                                   }
                                 });
@@ -212,8 +212,8 @@ class _EditTodoPageState extends State<EditTodoPage> {
           backgroundColor: taskValidated ? Colors.green : Colors.red,
           onPressed: () {
             if (taskValidated) {
-              updatedtodoData["size"] = updatedtodoData["size"].toInt();
-              Navigator.pop(context, updatedtodoData);
+              updatedtaskData["size"] = updatedtaskData["size"].toInt();
+              Navigator.pop(context, updatedtaskData);
             }
           },
           child: const Icon(Icons.save),

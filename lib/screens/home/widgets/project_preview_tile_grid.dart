@@ -91,7 +91,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                           widget.projectNavigationCallback(value);
                         },
                         routTo: const AddProjectPage(),
-                        animateWhen: widget.mostProgressedProjects.length < 2, // todo
+                        animateWhen: widget.mostProgressedProjects.length < 2, // task
                       ),
                     ),
                   ),

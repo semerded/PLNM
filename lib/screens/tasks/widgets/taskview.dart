@@ -1,26 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/enum/page_callback.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/projects/view_project_page.dart';
-import 'package:keeper_of_projects/screens/todo/todo_view_page.dart';
+import 'package:keeper_of_projects/screens/tasks/task_view_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:keeper_of_projects/common/custom/custom_one_border_painter.dart';
 
 typedef OnUpdated = void Function();
 
-class TodoView extends StatefulWidget {
+class TaskView extends StatefulWidget {
   final List content;
   final OnUpdated onUpdated;
   final TextEditingController searchbarController;
-  const TodoView({
+  const TaskView({
     super.key,
     required this.content,
     required this.onUpdated,
@@ -28,16 +22,16 @@ class TodoView extends StatefulWidget {
   });
 
   @override
-  State<TodoView> createState() => _TodoViewState();
+  State<TaskView> createState() => _TaskViewState();
 }
 
-class _TodoViewState extends State<TodoView> {
+class _TaskViewState extends State<TaskView> {
   @override
   Widget build(BuildContext context) {
     return widget.content.isEmpty
         ? Center(
             child: AdaptiveText(
-              "No todos found\nCreate new todos\nor recover todos from the archive",
+              "No tasks found\nCreate new tasks\nor recover tasks from the archive",
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
               fontSize: 20,
@@ -45,9 +39,9 @@ class _TodoViewState extends State<TodoView> {
           )
         : () {
             List<Map> filteredList = [];
-            for (Map todo in widget.content) {
-              if (!itemFilteredOut(todo)) {
-                filteredList.add(todo);
+            for (Map task in widget.content) {
+              if (!itemFilteredOut(task)) {
+                filteredList.add(task);
               }
             }
             if (filteredList.isEmpty) {
@@ -80,13 +74,13 @@ class _TodoViewState extends State<TodoView> {
             return ListView.builder(
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
-                Map todo = filteredList[index];
-                double todoCompletion = calculateCompletion(todo["task"]);
+                Map task = filteredList[index];
+                double taskCompletion = calculateCompletion(task["subTask"]);
                 return Card(
                   shape: Border(
                     left: BorderSide(
                       width: 10,
-                      color: projectPriorities[todo["priority"]],
+                      color: projectPriorities[task["priority"]],
                     ),
                   ),
                   color: Palette.box,
@@ -94,12 +88,12 @@ class _TodoViewState extends State<TodoView> {
                   child: ListTile(
                     textColor: Palette.text,
                     title: AdaptiveText(
-                      todo["title"],
+                      task["title"],
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     ),
                     subtitle: Text(
-                      todo["description"],
+                      task["description"],
                       style: TextStyle(
                         color: Palette.subtext,
                         fontSize: 13,
@@ -109,9 +103,9 @@ class _TodoViewState extends State<TodoView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute<bool>(
-                          builder: (context) => TodoViewPage(
+                          builder: (context) => TaskViewPage(
                             index: index,
-                            todoData: todo,
+                            taskData: task,
                           ),
                         ),
                       ).then((callback) {
@@ -124,9 +118,9 @@ class _TodoViewState extends State<TodoView> {
                     trailing: CircularPercentIndicator(
                       radius: 25,
                       animation: true,
-                      percent: todoCompletion,
+                      percent: taskCompletion,
                       progressColor: Colors.green,
-                      center: AdaptiveText("${(todoCompletion * 100).toInt()}%"),
+                      center: AdaptiveText("${(taskCompletion * 100).toInt()}%"),
                     ),
                   ),
                 );

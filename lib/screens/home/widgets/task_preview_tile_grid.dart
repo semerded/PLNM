@@ -7,26 +7,26 @@ import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/home/widgets/preview_tile.dart';
-import 'package:keeper_of_projects/screens/todo/add_todo_page.dart';
-import 'package:keeper_of_projects/screens/todo/todo_page.dart';
-import 'package:keeper_of_projects/screens/todo/todo_view_page.dart';
+import 'package:keeper_of_projects/screens/tasks/add_task_page.dart';
+import 'package:keeper_of_projects/screens/tasks/task_page.dart';
+import 'package:keeper_of_projects/screens/tasks/task_view_page.dart';
 
-typedef TodoNavigationCallback = void Function(bool value);
+typedef TaskNavigationCallback = void Function(bool value);
 
-class TodoPreviewTileGrid extends StatefulWidget {
-  final List mostProgressedTodo;
-  final TodoNavigationCallback todoNavigationCallback;
-  const TodoPreviewTileGrid({
+class TaskPreviewTileGrid extends StatefulWidget {
+  final List mostProgressedTask;
+  final TaskNavigationCallback taskNavigationCallback;
+  const TaskPreviewTileGrid({
     super.key,
-    required this.mostProgressedTodo,
-    required this.todoNavigationCallback,
+    required this.mostProgressedTask,
+    required this.taskNavigationCallback,
   });
 
   @override
-  State<TodoPreviewTileGrid> createState() => _TodoPreviewTileGridState();
+  State<TaskPreviewTileGrid> createState() => _TaskPreviewTileGridState();
 }
 
-class _TodoPreviewTileGridState extends State<TodoPreviewTileGrid> {
+class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
   @override
   Widget build(BuildContext context) {
     return StaggeredGrid.count(
@@ -35,50 +35,50 @@ class _TodoPreviewTileGridState extends State<TodoPreviewTileGrid> {
         crossAxisSpacing: 4,
         children: () {
           List<Widget> children = [];
-          if (widget.mostProgressedTodo.isNotEmpty) {
+          if (widget.mostProgressedTask.isNotEmpty) {
             children.add(
               StaggeredGridTile.count(
                 crossAxisCellCount: 4,
                 mainAxisCellCount: 1,
                 child: PreviewTile(
-                  title: widget.mostProgressedTodo[0]["title"],
-                  completion: calculateCompletion(widget.mostProgressedTodo[0]["task"]),
-                  navigateToOnClick: TodoViewPage(
-                    index: searchIndexFromMaplist(widget.mostProgressedTodo[0], todoContent),
-                    todoData: todoContent[searchIndexFromMaplist(widget.mostProgressedTodo[0], todoContent)],
+                  title: widget.mostProgressedTask[0]["title"],
+                  completion: calculateCompletion(widget.mostProgressedTask[0]["subTask"]),
+                  navigateToOnClick: TaskViewPage(
+                    index: searchIndexFromMaplist(widget.mostProgressedTask[0], taskContent),
+                    taskData: taskContent[searchIndexFromMaplist(widget.mostProgressedTask[0], taskContent)],
                   ),
                   navigateCallback: (value) {
-                    widget.todoNavigationCallback(value);
+                    widget.taskNavigationCallback(value);
                   },
                 ),
               ),
             );
           }
-          if (widget.mostProgressedTodo.length > 1) {
+          if (widget.mostProgressedTask.length > 1) {
             children.add(
               StaggeredGridTile.count(
                 crossAxisCellCount: 4,
                 mainAxisCellCount: 1,
                 child: PreviewTile(
-                  navigateToOnClick: TodoViewPage(
-                    index: searchIndexFromMaplist(widget.mostProgressedTodo[1], todoContent),
-                    todoData: todoContent[searchIndexFromMaplist(widget.mostProgressedTodo[1], todoContent)],
+                  navigateToOnClick: TaskViewPage(
+                    index: searchIndexFromMaplist(widget.mostProgressedTask[1], taskContent),
+                    taskData: taskContent[searchIndexFromMaplist(widget.mostProgressedTask[1], taskContent)],
                   ),
                   navigateCallback: (value) {
-                    widget.todoNavigationCallback(value);
+                    widget.taskNavigationCallback(value);
                   },
-                  title: widget.mostProgressedTodo[1]["title"],
-                  completion: calculateCompletion(widget.mostProgressedTodo[1]["task"]),
+                  title: widget.mostProgressedTask[1]["title"],
+                  completion: calculateCompletion(widget.mostProgressedTask[1]["subTask"]),
                 ),
               ),
             );
           }
 
-          if (widget.mostProgressedTodo.length < 2) {
+          if (widget.mostProgressedTask.length < 2) {
             children.add(
               StaggeredGridTile.count(
                 crossAxisCellCount: 4,
-                mainAxisCellCount: widget.mostProgressedTodo.isEmpty ? 2 : 1,
+                mainAxisCellCount: widget.mostProgressedTask.isEmpty ? 2 : 1,
                 child: Card(
                   margin: const EdgeInsets.all(0),
                   color: Palette.box,
@@ -87,10 +87,10 @@ class _TodoPreviewTileGridState extends State<TodoPreviewTileGrid> {
                       title: AdaptiveText("Add more tasks!"),
                       trailing: AddButtonAnimated(
                         taskCreated: (value) {
-                          widget.todoNavigationCallback(value);
+                          widget.taskNavigationCallback(value);
                         },
-                        routTo: const AddTodoPage(),
-                        animateWhen: widget.mostProgressedTodo.length < 2, // todo
+                        routTo: const AddTaskPage(),
+                        animateWhen: widget.mostProgressedTask.length < 2, // task
                       ),
                     ),
                   ),
@@ -116,7 +116,7 @@ class _TodoPreviewTileGridState extends State<TodoPreviewTileGrid> {
                     MaterialPageRoute<void>(
                       builder: (context) {
                         activePage = 3;
-                        return const TodoPage();
+                        return const TaskPage();
                       },
                     ),
                   ).then((value) {

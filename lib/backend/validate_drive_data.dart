@@ -31,9 +31,9 @@ Future<void> getOrRepairDriveFiles(drive.DriveApi driveApi) async {
     projectsFileData = await createFile(projectsFileName, projectsFileDefaultContent, driveApi, appFolder!.id);
   }
 
-  todoFileData = await getFile(todoFileName, driveApi);
-  if (todoFileData == null || todoFileData!.name != todoFileName) {
-    todoFileData = await createFile(todoFileName, todoFileDefaultContent, driveApi, appFolder!.id);
+  taskFileData = await getFile(taskFileName, driveApi);
+  if (taskFileData == null || taskFileData!.name != taskFileName) {
+    taskFileData = await createFile(taskFileName, taskFileDefaultContent, driveApi, appFolder!.id);
   }
 
   settingsFileData = await getFile(settingsFileName, driveApi);

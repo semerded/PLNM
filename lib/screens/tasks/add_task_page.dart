@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
@@ -14,19 +13,17 @@ import 'package:keeper_of_projects/common/widgets/tasks/add_task.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
-import 'package:keeper_of_projects/screens/projects/add_project_part_page.dart';
 import 'package:keeper_of_projects/screens/projects/edit_project_part_page.dart';
-import 'package:keeper_of_projects/screens/projects/widgets/project_size_slider.dart';
 import 'package:uuid/uuid.dart';
 
-class AddTodoPage extends StatefulWidget {
-  const AddTodoPage({super.key});
+class AddTaskPage extends StatefulWidget {
+  const AddTaskPage({super.key});
 
   @override
-  State<AddTodoPage> createState() => _AddTodoPageState();
+  State<AddTaskPage> createState() => _AddTaskPageState();
 }
 
-class _AddTodoPageState extends State<AddTodoPage> {
+class _AddTaskPageState extends State<AddTaskPage> {
   bool taskValidated = false;
   bool validTitle = false;
   bool validCategory = false;
@@ -34,13 +31,13 @@ class _AddTodoPageState extends State<AddTodoPage> {
   late String ddb_priority_value;
   late String ddb_category_value;
 
-  Map newTodo = {
+  Map newTask = {
     "title": null,
     "description": "",
     "category": null,
     "priority": "none",
     "size": 0.0,
-    "task": [],
+    "subTask": [],
     "id": Uuid().v4(),
   }; // TODO switch "none" to null
 
@@ -65,7 +62,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (await showConfirmDialog(context, "Cancel making this todo")) {
+        if (await showConfirmDialog(context, "Cancel making this task")) {
           Navigator.pop(context);
         }
         return Future.value(false);
@@ -73,12 +70,12 @@ class _AddTodoPageState extends State<AddTodoPage> {
       child: Scaffold(
         backgroundColor: Palette.bg,
         appBar: AppBar(
-          title: const Text("Create a new todo"),
+          title: const Text("Create a new task"),
           backgroundColor: Palette.primary,
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () async {
-              if (await showConfirmDialog(context, "Undo creating this todo?")) {
+              if (await showConfirmDialog(context, "Undo creating this task?")) {
                 Navigator.pop(context);
               }
             },
@@ -92,7 +89,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
               onChanged: (value) {
                 setState(() {
                   validTitle = value.length >= 2;
-                  newTodo["title"] = value;
+                  newTask["title"] = value;
                   validate();
                 });
               },
@@ -104,7 +101,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
               hintText: "Describe the fine details",
               onChanged: (value) {
                 setState(() {
-                  newTodo["description"] = value;
+                  newTask["description"] = value;
                   validate();
                 });
               },
@@ -138,7 +135,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                         }).toList(),
                         onChanged: (String? value) {
                           setState(() {
-                            newTodo["category"] = ddb_category_value = value!;
+                            newTask["category"] = ddb_category_value = value!;
                             validCategory = value != ddb_catgegoryDefaultText;
                             validate();
                           });
@@ -153,7 +150,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                       onUpdated: (value) {
                         setState(() {
                           print(value);
-                          newTodo["priority"] = value;
+                          newTask["priority"] = value;
                           validate();
                         });
                       }),
@@ -164,14 +161,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
               onPressed: () async {
                 Map newTask = await addTask(context);
                 setState(() {
-                  newTodo["task"].add(newTask);
+                  newTask["subTask"].add(newTask);
                   validate();
                 });
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Palette.topbox,
               ),
-              label: AdaptiveText("Add A Task"),
+              label: AdaptiveText("Add A Sub Task"),
               icon: const Icon(
                 Icons.add,
                 color: Palette.primary,
@@ -179,23 +176,23 @@ class _AddTodoPageState extends State<AddTodoPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: newTodo["task"].length,
+                itemCount: newTask["subTask"].length,
                 itemBuilder: (context, index) {
-                  Map task = newTodo["task"][index];
+                  Map subTask = newTask["subTask"][index];
                   return Card(
                     color: Palette.topbox,
                     child: ListTile(
-                      title: AdaptiveText(task["title"]),
+                      title: AdaptiveText(subTask["title"]),
                       subtitle: RichText(
                         text: TextSpan(
                           style: TextStyle(color: Palette.subtext),
-                          text: "${task["tasks"].length} • ",
+                          text: "${subTask["subTask"].length} • ",
                           children: [
                             TextSpan(
-                              text: "${task["description"] != "" ? task["description"] : "no description"}",
+                              text: "${subTask["description"] != "" ? subTask["description"] : "no description"}",
                               style: TextStyle(
                                 color: Palette.subtext,
-                                fontStyle: task["description"] != "" ? FontStyle.normal : FontStyle.italic,
+                                fontStyle: subTask["description"] != "" ? FontStyle.normal : FontStyle.italic,
                               ),
                             )
                           ],
@@ -210,12 +207,12 @@ class _AddTodoPageState extends State<AddTodoPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute<Map>(
-                                    builder: (context) => EditProjectPartPage(partData: newTodo["task"][index]),
+                                    builder: (context) => EditProjectPartPage(partData: newTask["subTask"][index]),
                                   ),
                                 ).then((value) {
                                   if (value != null) {
                                     setState(() {
-                                      newTodo["task"][index] = value;
+                                      newTask["subTask"][index] = value;
                                     });
                                   }
                                 });
@@ -225,7 +222,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              newTodo["task"].removeAt(index);
+                              newTask["subTask"].removeAt(index);
                             },
                             icon: const Icon(
                               Icons.delete_forever,
@@ -245,13 +242,13 @@ class _AddTodoPageState extends State<AddTodoPage> {
           onPressed: () {
             if (taskValidated) {
               DateTime now = DateTime.now();
-              newTodo["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
-              newTodo["size"] = newTodo["size"].toInt();
+              newTask["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
+              newTask["size"] = newTask["size"].toInt();
 
               setState(() {
-                todoDataContent!["todo"].add(newTodo); //! add deepcopy if duplication happens
-                LoadingScreen.show(context, "Saving Todo");
-                fileSyncSystem.syncFile(todoFileData!, jsonEncode(todoDataContent)).then((value) {
+                taskDataContent!["task"].add(newTask); //! add deepcopy if duplication happens
+                LoadingScreen.show(context, "Saving Task");
+                fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent)).then((value) {
                   LoadingScreen.hide(context);
                   Navigator.of(context).pop(true);
                 });

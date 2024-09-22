@@ -11,24 +11,21 @@ import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/projects/add_project_page.dart';
 import 'package:keeper_of_projects/common/widgets/google_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
 import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
-import 'package:keeper_of_projects/screens/projects/ideas_page.dart';
 import 'package:keeper_of_projects/screens/projects/project_archive_page.dart';
-import 'package:keeper_of_projects/screens/projects/widgets/projectview.dart';
-import 'package:keeper_of_projects/screens/todo/add_todo_page.dart';
-import 'package:keeper_of_projects/screens/todo/widgets/todoview.dart';
+import 'package:keeper_of_projects/screens/tasks/add_task_page.dart';
+import 'package:keeper_of_projects/screens/tasks/widgets/taskview.dart';
 
-class TodoPage extends StatefulWidget {
-  const TodoPage({super.key});
+class TaskPage extends StatefulWidget {
+  const TaskPage({super.key});
 
   @override
-  State<TodoPage> createState() => _TodoPageState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
-class _TodoPageState extends State<TodoPage> {
+class _TaskPageState extends State<TaskPage> {
   SnackBar sb_connectionErr = SnackBar(content: AdaptiveText("A connection error has occurd"));
   final SnackBar sb_fileUploadErr = SnackBar(content: AdaptiveText("File coulnd't be uploaded, try again later"));
   final SnackBar sb_fileDownloadErr = SnackBar(content: AdaptiveText("File couldn't be downloaded, try again later"));
@@ -67,7 +64,7 @@ class _TodoPageState extends State<TodoPage> {
           backgroundColor: Palette.bg,
           appBar: AppBar(
             backgroundColor: Palette.primary,
-            title: Text("You have ${todoContent.length} thing${todoContent.length == 1 ? "" : "s"} todo"), //? add extra s if task is not equal to 1 to make it plural
+            title: Text("You have ${taskContent.length} thing${taskContent.length == 1 ? "" : "s"} task"), //? add extra s if task is not equal to 1 to make it plural
             automaticallyImplyLeading: false,
             actions: [
               GooglePopUpMenu(
@@ -233,25 +230,25 @@ class _TodoPageState extends State<TodoPage> {
                 }),
               ),
               Expanded(
-                child: TodoView(
+                child: TaskView(
                   searchbarController: filterController,
-                  content: todoContent,
+                  content: taskContent,
                   onUpdated: () => setState(() {}),
                 ),
               ),
             ],
           ),
           floatingActionButton: AddButtonAnimated(
-            routTo: const AddTodoPage(),
+            routTo: const AddTaskPage(),
             taskCreated: (value) {
               if (value) {
                 setState(() {
-                  todoContent = todoDataContent!["todo"];
+                  taskContent = taskDataContent!["task"];
                   // update screen when task is created
                 });
               }
             },
-            animateWhen: todoDataContent!["todo"].length == 0,
+            animateWhen: taskDataContent!["task"].length == 0,
           ),
           // ignore: prefer_const_constructors
           bottomNavigationBar: CustomBottomNavitagionBar() //? ignore const so the color can be updated with setstate

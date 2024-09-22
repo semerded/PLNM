@@ -12,19 +12,19 @@ import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/projects/widgets/project_button_info_dialog.dart';
-import 'package:keeper_of_projects/screens/todo/edit_todo_page.dart';
+import 'package:keeper_of_projects/screens/tasks/edit_task_page.dart';
 
-class TodoViewPage extends StatefulWidget {
-  Map todoData;
+class TaskViewPage extends StatefulWidget {
+  Map taskData;
   final int index;
-  TodoViewPage({required this.todoData, required this.index, super.key});
+  TaskViewPage({required this.taskData, required this.index, super.key});
 
   @override
-  State<TodoViewPage> createState() => _TodoViewPageState();
+  State<TaskViewPage> createState() => _TaskViewPageState();
 }
 
-class _TodoViewPageState extends State<TodoViewPage> {
-  late double todoCompletion = calculateCompletion(widget.todoData["task"]);
+class _TaskViewPageState extends State<TaskViewPage> {
+  late double taskCompletion = calculateCompletion(widget.taskData["subTask"]);
   bool projectDetailsVisible = true;
   bool setStateOnPagePop = false;
 
@@ -44,7 +44,7 @@ class _TodoViewPageState extends State<TodoViewPage> {
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, setStateOnPagePop),
           ),
-          title: Text(widget.todoData["title"]),
+          title: Text(widget.taskData["title"]),
           actions: [
             TaskPopUpMenu(
               enabledTasks: const [TaskOptions.archive, TaskOptions.completeAll, TaskOptions.delete, TaskOptions.edit],
@@ -52,50 +52,47 @@ class _TodoViewPageState extends State<TodoViewPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<Map>(
-                    builder: (context) => EditTodoPage(
-                      todoData: widget.todoData,
+                    builder: (context) => EditTaskPage(
+                      taskData: widget.taskData,
                     ),
                   ),
                 ).then((callback) async {
                   if (callback != null) {
                     setState(() {
-                      todoContent[widget.index] = Map.from(callback);
-                      widget.todoData = Map.from(callback);
-                      todoCompletion = calculateCompletion(widget.todoData["task"]);
+                      taskContent[widget.index] = Map.from(callback);
+                      widget.taskData = Map.from(callback);
+                      taskCompletion = calculateCompletion(widget.taskData["subTask"]);
                       setStateOnPagePop = true;
                     });
-                    await fileSyncSystem.syncFile(todoFileData!, jsonEncode(todoDataContent));
+                    await fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
                   }
                 });
               },
               onArchive: () {},
               onCompleteAll: () {
                 setState(() {
-                  bool setValue = todoCompletion != 1.0;
-                  for (Map task in widget.todoData["task"]) {
-                    task["completed"] = setValue;
-                    for (Map tasks in task["tasks"]) {
-                      tasks["completed"] = setValue;
-                    }
+                  bool setValue = taskCompletion != 1.0;
+                  for (Map subTask in widget.taskData["subTask"]) {
+                    subTask["completed"] = setValue;
                   }
-                  todoCompletion = calculateCompletion(widget.todoData["task"]);
+                  taskCompletion = calculateCompletion(widget.taskData["subTask"]);
                 });
-                fileSyncSystem.syncFile(todoFileData!, jsonEncode(todoDataContent));
+                fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
                 setStateOnPagePop = true;
               },
               onDelete: () {
-                showConfirmDialog(context, 'Delete "${widget.todoData["title"]}" permanently? This can\'t be undone!').then((value) {
+                showConfirmDialog(context, 'Delete "${widget.taskData["title"]}" permanently? This can\'t be undone!').then((value) {
                   if (value) {
                     setState(() {
-                      todoContent.removeAt(widget.index);
+                      taskContent.removeAt(widget.index);
                     });
-                    fileSyncSystem.syncFile(todoFileData!, jsonEncode(todoDataContent));
+                    fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
                     setStateOnPagePop = true;
                     Navigator.pop(context, setStateOnPagePop);
                   }
                 });
               },
-              completeAllState: todoCompletion == 1.0,
+              completeAllState: taskCompletion == 1.0,
               archiveState: false,
             ),
           ],
@@ -117,12 +114,12 @@ class _TodoViewPageState extends State<TodoViewPage> {
                                   onPressed: () {
                                     showInfoDialog(
                                       context,
-                                      "Todo Prioirty: todos have different priorities. A todo has a general priority while its project tasks can have different priorities that are not linked to the general priority.",
+                                      "Task Prioirty: tasks have different priorities. A task has a general priority while its project tasks can have different priorities that are not linked to the general priority.",
                                     );
                                   },
-                                  style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.todoData["priority"]]),
+                                  style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.taskData["priority"]]),
                                   child: Text(
-                                    "priority: ${widget.todoData["priority"]}",
+                                    "priority: ${widget.taskData["priority"]}",
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -132,7 +129,7 @@ class _TodoViewPageState extends State<TodoViewPage> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                                child: checkCategoryValidity(widget.todoData["category"])
+                                child: checkCategoryValidity(widget.taskData["category"])
                                     ? ElevatedButton(
                                         onPressed: () {
                                           showInfoDialog(
@@ -147,7 +144,7 @@ class _TodoViewPageState extends State<TodoViewPage> {
                                             side: BorderSide(color: Palette.text),
                                           ),
                                         ),
-                                        child: AdaptiveText("category: ${widget.todoData["category"]}"),
+                                        child: AdaptiveText("category: ${widget.taskData["category"]}"),
                                       )
                                     : ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -158,9 +155,9 @@ class _TodoViewPageState extends State<TodoViewPage> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          if (await showConfirmDialog(context, "Add '${widget.todoData["category"]}' to categories?")) {
+                                          if (await showConfirmDialog(context, "Add '${widget.taskData["category"]}' to categories?")) {
                                             setState(() {
-                                              String category = widget.todoData["category"];
+                                              String category = widget.taskData["category"];
                                               categoryDataContent!.add(category);
                                               categoryFilter[category] = true;
                                               categoryDataNeedSync = true;
@@ -169,7 +166,7 @@ class _TodoViewPageState extends State<TodoViewPage> {
                                             });
                                           }
                                         },
-                                        child: AdaptiveText("Unknown Category: ${widget.todoData["category"]}"),
+                                        child: AdaptiveText("Unknown Category: ${widget.taskData["category"]}"),
                                       ),
                               ),
                             )
@@ -189,7 +186,7 @@ class _TodoViewPageState extends State<TodoViewPage> {
                                           "Project completion, This shows how much of the project tasks have been completed.",
                                         );
                                       },
-                                      progress: todoCompletion,
+                                      progress: taskCompletion,
                                       progressColor: Colors.green,
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Palette.bg,
@@ -198,7 +195,7 @@ class _TodoViewPageState extends State<TodoViewPage> {
                                           side: BorderSide(color: Palette.text),
                                         ),
                                       ),
-                                      child: AdaptiveText("completion: ${(todoCompletion * 100).toInt()}"),
+                                      child: AdaptiveText("completion: ${(taskCompletion * 100).toInt()}"),
                                     );
                                   }()),
                             )
@@ -207,8 +204,8 @@ class _TodoViewPageState extends State<TodoViewPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: AdaptiveText(
-                            widget.todoData["description"] == "" ? "No Description" : widget.todoData["description"],
-                            fontStyle: widget.todoData["description"] == "" ? FontStyle.italic : null,
+                            widget.taskData["description"] == "" ? "No Description" : widget.taskData["description"],
+                            fontStyle: widget.taskData["description"] == "" ? FontStyle.italic : null,
                           ),
                         ),
                       ],
@@ -217,26 +214,26 @@ class _TodoViewPageState extends State<TodoViewPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.todoData["task"].length,
+                itemCount: widget.taskData["subTask"].length,
                 itemBuilder: (context, index) {
-                  Map task = widget.todoData["task"][index];
+                  Map subTask = widget.taskData["subTask"][index];
                   return Card(
                     color: Palette.topbox,
                     child: ListTile(
-                      title: AdaptiveText(task["title"]),
-                      subtitle: AdaptiveText(task["description"]),
+                      title: AdaptiveText(subTask["title"]),
+                      subtitle: AdaptiveText(subTask["description"]),
                       shape: Border(
                         left: BorderSide(
                           width: 10,
-                          color: projectPriorities[task["priority"]],
+                          color: projectPriorities[subTask["priority"]],
                         ),
                       ),
                       trailing: IconButton(
-                        icon: AdaptiveIcon(task["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                        icon: AdaptiveIcon(subTask["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
                         onPressed: () {
                           setState(() {
-                            task["completed"] = !task["completed"];
-                            todoCompletion = calculateCompletion(widget.todoData["task"]);
+                            subTask["completed"] = !subTask["completed"];
+                            taskCompletion = calculateCompletion(widget.taskData["subTask"]);
 
                             fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                             setStateOnPagePop = true;

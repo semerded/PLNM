@@ -10,7 +10,7 @@ import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/screens/home/functions/search_most_progressed.dart';
 import 'package:keeper_of_projects/screens/home/widgets/home_page_title_divider.dart';
 import 'package:keeper_of_projects/screens/home/widgets/project_preview_tile_grid.dart';
-import 'package:keeper_of_projects/screens/home/widgets/todo_preview_tile_grid.dart';
+import 'package:keeper_of_projects/screens/home/widgets/task_preview_tile_grid.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,12 +21,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late List mostProgressedProjects;
-  late List mostProgressedTodos;
+  late List mostProgressedTasks;
   @override
   void initState() {
     // TODO: implement initState
     mostProgressedProjects = searchMostProgressedProjects(2);
-    mostProgressedTodos = searchMostProgressedTasks(2);
+    mostProgressedTasks = searchMostProgressedTasks(2);
 
     super.initState();
   }
@@ -108,18 +108,18 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 HomePageTitleDivider(
-                  title: "Todo",
+                  title: "Task",
                   titleDividerInfo: [
-                    TitleDividerInfo(Icons.task, todoContent.length),
+                    TitleDividerInfo(Icons.task, taskContent.length),
                   ],
                 ),
-                TodoPreviewTileGrid(
-                  mostProgressedTodo: mostProgressedTodos,
-                  todoNavigationCallback: (value) {
+                TaskPreviewTileGrid(
+                  mostProgressedTask: mostProgressedTasks,
+                  taskNavigationCallback: (value) {
                     if (value) {
                       setState(() {
-                        todoContent = todoDataContent!["todo"].toList();
-                        mostProgressedTodos = searchMostProgressedTasks(2);
+                        taskContent = taskDataContent!["task"].toList();
+                        mostProgressedTasks = searchMostProgressedTasks(2);
                       });
                     }
                   },

@@ -20,7 +20,7 @@ Map<String, dynamic> projectPriorities = {
   "critical": Colors.purple,
 };
 List projectsContent = [];
-List todoContent = [];
+List taskContent = [];
 List ideasContent = [];
 
 const List<String> projectSizeDescription = [

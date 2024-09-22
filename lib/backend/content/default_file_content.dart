@@ -8,8 +8,8 @@ const String syncData = 'noSyncYet';
 //^ projects data
 const String projectsData = '{"ideas": [], "projects": [], "archive": []}';
 
-//^ todo data
-const String todoData = '{"todo": [], "archive": []}';
+//^ task data
+const String taskData = '{"task": [], "archive": []}';
 
 //^ settings
 const String settings = '{"darkmode": false, "colorscheme": "orange", "showProjectSize": true, "funnyProjectSize": false, "searchInDesc": false}';

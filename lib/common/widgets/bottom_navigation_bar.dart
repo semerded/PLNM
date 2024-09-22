@@ -4,7 +4,7 @@ import 'package:keeper_of_projects/screens/home/home_page.dart';
 import 'package:keeper_of_projects/screens/notes/notes_page.dart';
 import 'package:keeper_of_projects/screens/projects/projects_page.dart';
 import 'package:keeper_of_projects/screens/routines/routines_page.dart';
-import 'package:keeper_of_projects/screens/todo/todo_page.dart';
+import 'package:keeper_of_projects/screens/tasks/task_page.dart';
 
 class CustomBottomNavitagionBar extends StatefulWidget {
   const CustomBottomNavitagionBar({super.key});
@@ -18,7 +18,7 @@ class _CustomBottomNavitagionBarState extends State<CustomBottomNavitagionBar> {
     const NotesPage(),
     const RoutinesPage(),
     const HomePage(),
-    const TodoPage(),
+    const TaskPage(),
     const ProjectPage(),
   ];
 
@@ -63,7 +63,7 @@ class _CustomBottomNavitagionBarState extends State<CustomBottomNavitagionBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.task),
-            label: 'Todo',
+            label: 'Tasks',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_chart),
