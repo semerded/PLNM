@@ -173,7 +173,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              editTask(context, updatedtaskData).then((editedTask) {
+                              editTask(context, updatedtaskData["subTask"][index]).then((editedTask) {
                                 if (editedTask != null && !const DeepCollectionEquality().equals(subTask, editedTask)) {
                                   setState(() {
                                     updatedtaskData["subTask"][index] = Map.from(editedTask);
