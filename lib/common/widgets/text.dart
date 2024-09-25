@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:keeper_of_projects/data.dart';
 
-// ignore: must_be_immutable
 class AdaptiveText extends StatelessWidget {
   final dynamic data;
-  double? fontSize;
-  FontWeight? fontWeight;
-  TextAlign? textAlign;
-  FontStyle? fontStyle;
-  TextOverflow? overflow;
-  int? maxLines;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final TextAlign? textAlign;
+  final FontStyle? fontStyle;
+  final TextOverflow? overflow;
+  final int? maxLines;
 
-  AdaptiveText(
+  const AdaptiveText(
     this.data, {
     super.key,
     this.fontSize,
