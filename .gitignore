@@ -46,3 +46,4 @@ app.*.map.json
 firebase_options.dart
 firebase.json
 google-services.json
+desktop_client_creds.dart
