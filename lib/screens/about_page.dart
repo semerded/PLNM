@@ -13,12 +13,22 @@ class AboutPage extends StatelessWidget {
         backgroundColor: Palette.primary,
         title: Text("About ..."), // TODO change to app name
       ),
-      body: Padding(
+      body: const Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            AdaptiveTitleText("Why Google Drive?"),
-            AdaptiveText("This app uses Google Drive to make cloud storage accessible for everyone. "),
+            AdaptiveTitleText("... name"),
+            AdaptiveText("Developed by Sem Van Broekhoven, 2023 - 2024"),
+            AdaptiveDivider(),
+            AdaptiveText(
+              """This program uses Google Drive as cloud storage, 
+              this means that the data is in the hands of the user instead of in a database managed by me. 
+              I have no access to any of your private data nor the right to access it. The app will create a new folder called 'com.semerded', 
+              from then on it will only work within this folder.""",
+            ),
+            AdaptiveDivider(),
+            AdaptiveText("The code is opensource and available at: "),
+            AdaptiveText(""""""),
           ],
         ),
       ),
@@ -27,7 +37,7 @@ class AboutPage extends StatelessWidget {
 }
 
 class AdaptiveTitleText extends AdaptiveText {
-  AdaptiveTitleText(
+  const AdaptiveTitleText(
     super.data, {
     super.key,
     super.fontSize = 32,
@@ -45,6 +55,17 @@ class AdaptiveTitleText extends AdaptiveText {
       fontStyle: fontStyle,
       fontWeight: fontWeight,
       textAlign: textAlign,
+    );
+  }
+}
+
+class AdaptiveDivider extends StatelessWidget {
+  const AdaptiveDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Divider(
+      color: Palette.text,
     );
   }
 }
