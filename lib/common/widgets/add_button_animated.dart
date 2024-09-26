@@ -8,10 +8,12 @@ class AddButtonAnimated extends StatefulWidget {
   final TaskCreated taskCreated;
   final Widget routTo;
   final bool animateWhen;
+  final String? heroTag;
   const AddButtonAnimated({
     required this.taskCreated,
     required this.routTo,
     required this.animateWhen,
+    this.heroTag,
     super.key,
   });
 
@@ -87,6 +89,7 @@ class _AddButtonAnimatedState extends State<AddButtonAnimated> with SingleTicker
       child: FloatingActionButton(
         elevation: 5,
         backgroundColor: Palette.primary,
+        heroTag: widget.heroTag,
         onPressed: () {
           Navigator.push(
             context,
