@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/main_page_pop_scope.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
 import 'package:keeper_of_projects/common/widgets/bottom_navigation_bar.dart';
@@ -30,11 +31,12 @@ class _NotesPageState extends State<NotesPage> {
             SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: 231,
+                mainAxisExtent: 231, // fixed values
               ),
               delegate: SliverChildBuilderDelegate(
-                childCount: 30,
+                childCount: notesDataContent!.length,
                 (context, index) {
+                  Map note = notesDataContent![index];
                   return Column(
                     children: [
                       SizedBox(
@@ -44,7 +46,7 @@ class _NotesPageState extends State<NotesPage> {
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(8),
                             title: AdaptiveText(
-                              "hello" * index,
+                              note["content"],
                               maxLines: 7,
                               overflow: TextOverflow.fade,
                             ),
@@ -52,11 +54,11 @@ class _NotesPageState extends State<NotesPage> {
                         ),
                       ),
                       AdaptiveText(
-                        "Title",
+                        note["title"],
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
-                      AdaptiveText("date")
+                      AdaptiveText(note["date"])
                     ],
                   );
                 },

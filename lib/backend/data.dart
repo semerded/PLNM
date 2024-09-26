@@ -34,7 +34,7 @@ Map? settingsDataContent;
 drive.File? categoryFileData;
 List<String>? categoryDataContent;
 drive.File? notesFileData;
-List<String>? notesDataContent;
+List? notesDataContent;
 
 //^ local file data
 String? local_syncFileContent;
