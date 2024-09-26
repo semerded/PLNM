@@ -16,3 +16,6 @@ const String settings = '{"darkmode": false, "colorscheme": "orange", "showProje
 
 //^ category
 const String categoryData = '["app", "finish", "zolder"]';
+
+//^ notes
+const String notes = '[]';

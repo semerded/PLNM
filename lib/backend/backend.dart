@@ -38,8 +38,7 @@ Future<bool> checkForConflict() async {
 
   DateTime localTime = DateTime.parse(local_syncFileContent!);
   DateTime cloudTime = DateTime.parse(syncDataContent!);
-  print(localTime);
-  print(cloudTime);
+
   if (localTime.compareTo(cloudTime) > 0) {
     // 10 second of clearance
     Duration difference = localTime.difference(cloudTime);
@@ -67,6 +66,9 @@ Future getCloudFileData() async {
   _media = await driveApi?.files.get(categoryFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
   categoryDataContent = List<String>.from(jsonSafeDecode(await utf8.decoder.bind(_media.stream).join()));
 
+  _media = await driveApi?.files.get(notesFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
+  notesDataContent = List<String>.from(jsonSafeDecode(await utf8.decoder.bind(_media.stream).join()));
+
   for (String category in categoryDataContent!) {
     categoryFilter[category] = true;
   }
@@ -77,6 +79,7 @@ Future<void> syncCloudFileData() async {
   await saveFile(taskFileData!.id!, jsonEncode(taskDataContent));
   await saveFile(settingsFileData!.id!, jsonEncode(settingsDataContent));
   await saveFile(categoryFileData!.id!, jsonEncode(categoryDataContent));
+  await saveFile(notesFileData!.id!, jsonEncode(notesDataContent));
   DateTime now = DateTime.now();
   await saveFile(syncFileData!.id!, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
 }

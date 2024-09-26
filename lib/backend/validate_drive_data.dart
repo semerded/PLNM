@@ -45,6 +45,11 @@ Future<void> getOrRepairDriveFiles(drive.DriveApi driveApi) async {
   if (categoryFileData == null || categoryFileData!.name != categoryFileName) {
     categoryFileData = await createFile(categoryFileName, categoryFileDefaultContent, driveApi, appFolder!.id);
   }
+
+  notesFileData = await getFile(notesFileName, driveApi);
+  if (notesFileData == null || notesFileData!.name != notesFileName) {
+    notesFileData = await createFile(projectsFileName, notesFileDefaultContent, driveApi);
+  }
 }
 
 Future<drive.File?> getFile(String projectsFileName, drive.DriveApi driveApi, [String? parentFolderName]) async {

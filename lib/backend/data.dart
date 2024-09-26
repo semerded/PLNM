@@ -16,6 +16,8 @@ const String taskFileDefaultContent = defaultContent.taskData;
 const String settingsFileName = "settings-data.json";
 const String settingsFileDefaultContent = defaultContent.settings;
 const String categoryFileName = "category-data.json";
+const String notesFileName = "notes-data.json";
+const String notesFileDefaultContent = defaultContent.notes;
 const String categoryFileDefaultContent = defaultContent.categoryData;
 const String parentFolderName = "com.semerded";
 const String folderName = "keeper-of-projects";
@@ -31,6 +33,8 @@ drive.File? settingsFileData;
 Map? settingsDataContent;
 drive.File? categoryFileData;
 List<String>? categoryDataContent;
+drive.File? notesFileData;
+List<String>? notesDataContent;
 
 //^ local file data
 String? local_syncFileContent;
