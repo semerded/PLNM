@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/google_api/desktop_account_link.dart';
+import 'package:keeper_of_projects/backend/google_api/desktop_login.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/backend/local_file_handler.dart';
 import 'package:keeper_of_projects/common/enum/conflict_type.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
@@ -37,7 +38,52 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     }
   }
 
-  void mobileAuth() {
+  Future<void> getData() async {
+    await backend.init();
+    await backend.checkForConflict().then((conflict) async {
+      if (conflict) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute<ConflictType>(
+            builder: (context) => ConflictPage(
+              localDate: local_syncFileContent!,
+              cloudDate: syncDataContent!,
+            ),
+          ),
+        ).then((conflictSolution) async {
+          if (conflictSolution == ConflictType.local) {
+            await getLocalFileData();
+            backend.syncCloudFileData();
+          } else {
+            await backend.getCloudFileData();
+            syncLocalFileData();
+            DateTime now = DateTime.now();
+            saveFile(syncFileData!.id!, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
+          }
+        });
+      } else {
+        await backend.getCloudFileData();
+        await onlyRepairLocalFiles();
+        syncLocalFileData();
+      }
+    });
+    syncSettings();
+    fileSyncSystem.startSyncSystem();
+    rotationLogoController.dispose();
+
+    projectsContent = projectsDataContent!["projects"];
+    ideasContent = projectsDataContent!["ideas"];
+    taskContent = taskDataContent!["task"];
+
+    Navigator.push(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (context) => const HomePage(),
+      ),
+    );
+  }
+
+  Future<void> mobileAuth() async {
     googleSignIn.signInSilently();
 
     googleSignIn.isSignedIn().then(
@@ -56,51 +102,21 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             loggedIn = loginStatus.loggedIn;
           }
         });
-
-        await backend.init();
-        await backend.checkForConflict().then((conflict) async {
-          if (conflict) {
-            await Navigator.push(
-              context,
-              MaterialPageRoute<ConflictType>(
-                builder: (context) => ConflictPage(
-                  localDate: local_syncFileContent!,
-                  cloudDate: syncDataContent!,
-                ),
-              ),
-            ).then((conflictSolution) async {
-              if (conflictSolution == ConflictType.local) {
-                await getLocalFileData();
-                backend.syncCloudFileData();
-              } else {
-                await backend.getCloudFileData();
-                syncLocalFileData();
-                DateTime now = DateTime.now();
-                saveFile(syncFileData!.id!, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
-              }
-            });
-          } else {
-            await backend.getCloudFileData();
-            await onlyRepairLocalFiles();
-            syncLocalFileData();
-          }
-        });
-        syncSettings();
-        fileSyncSystem.startSyncSystem();
-        rotationLogoController.dispose();
-
-        projectsContent = projectsDataContent!["projects"];
-        ideasContent = projectsDataContent!["ideas"];
-        taskContent = taskDataContent!["task"];
-
-        Navigator.push(
-          context,
-          MaterialPageRoute<bool>(
-            builder: (context) => const HomePage(),
-          ),
-        );
       },
     );
+    await getData();
+  }
+
+  void desktopAuth() {
+    DesktopOAuthManager().login().then((user) async {
+      setState(() {
+        currentUser = GoogleSignInAccountAdapter(DesktopGoogleSignInAccount.fromJson(user[0], user[1]));
+        if (currentUser != null) {
+          loggedIn = loginStatus.loggedIn;
+        }
+      });
+      await getData();
+    });
   }
 
   @override
@@ -133,6 +149,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     // sign in with google
     if (Platform.isAndroid || Platform.isIOS) {
       mobileAuth();
+    } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+      desktopAuth();
     }
   }
 

@@ -22,7 +22,7 @@ Future<String?> localRead(String fileName) async {
     final file = await localPath(fileName);
     return await file.readAsString();
   } catch (e) {
-    print("local file $fileName not found");
+    print("local file $fileName not found, ${e}");
     return null;
   }
 }

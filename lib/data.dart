@@ -8,7 +8,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
   ],
 );
 
-GoogleSignInAccount? currentUser;
+dynamic currentUser;
 
 const String projectCategoryUnknown = "Unknown Category";
 bool projectCategoriesNeedRebuild = false;
