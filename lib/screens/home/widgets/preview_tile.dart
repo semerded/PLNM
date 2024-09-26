@@ -9,11 +9,13 @@ class PreviewTile extends StatefulWidget {
   final Widget navigateToOnClick;
   final NavigateCallback navigateCallback;
   final String title;
+  final String priority;
   final double completion;
   const PreviewTile({
     super.key,
     required this.title,
     required this.completion,
+    required this.priority,
     required this.navigateToOnClick,
     required this.navigateCallback,
   });
@@ -26,6 +28,10 @@ class _PreviewTileState extends State<PreviewTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: projectPriorities[widget.priority], width: 2.0),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       color: Palette.box,
       margin: const EdgeInsets.all(0),
       child: Center(

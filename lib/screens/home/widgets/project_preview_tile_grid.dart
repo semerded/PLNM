@@ -44,6 +44,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                 child: PreviewTile(
                   title: widget.mostProgressedProjects[0]["title"],
                   completion: calculateCompletion(widget.mostProgressedProjects[0]["part"]),
+                  priority: widget.mostProgressedProjects[0]["priority"],
                   navigateToOnClick: ProjectViewPage(
                     index: searchIndexFromMaplist(widget.mostProgressedProjects[0], projectsContent),
                     projectData: projectsContent[searchIndexFromMaplist(widget.mostProgressedProjects[0], projectsContent)],
@@ -61,10 +62,8 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                 crossAxisCellCount: 4,
                 mainAxisCellCount: 1,
                 child: PreviewTile(
-                  navigateToOnClick: ProjectViewPage(
-                    index: searchIndexFromMaplist(widget.mostProgressedProjects[1], projectsContent),
-                    projectData: projectsContent[searchIndexFromMaplist(widget.mostProgressedProjects[1], projectsContent)],
-                  ),
+                  navigateToOnClick: ProjectViewPage(index: searchIndexFromMaplist(widget.mostProgressedProjects[1], projectsContent), projectData: projectsContent[searchIndexFromMaplist(widget.mostProgressedProjects[1], projectsContent)]),
+                  priority: widget.mostProgressedProjects[1]["priority"],
                   navigateCallback: (value) {
                     widget.projectNavigationCallback(value);
                   },
@@ -87,6 +86,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                     child: ListTile(
                       title: AdaptiveText("Add more projects!"),
                       trailing: AddButtonAnimated(
+                        heroTag: "project_",
                         taskCreated: (value) {
                           widget.projectNavigationCallback(value);
                         },

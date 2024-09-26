@@ -43,6 +43,7 @@ class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
                 child: PreviewTile(
                   title: widget.mostProgressedTask[0]["title"],
                   completion: calculateCompletion(widget.mostProgressedTask[0]["subTask"]),
+                  priority: widget.mostProgressedTask[0]["priority"],
                   navigateToOnClick: TaskViewPage(
                     index: searchIndexFromMaplist(widget.mostProgressedTask[0], taskContent),
                     taskData: taskContent[searchIndexFromMaplist(widget.mostProgressedTask[0], taskContent)],
@@ -69,6 +70,7 @@ class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
                   },
                   title: widget.mostProgressedTask[1]["title"],
                   completion: calculateCompletion(widget.mostProgressedTask[1]["subTask"]),
+                  priority: widget.mostProgressedTask[1]["priority"],
                 ),
               ),
             );
@@ -86,6 +88,7 @@ class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
                     child: ListTile(
                       title: AdaptiveText("Add more tasks!"),
                       trailing: AddButtonAnimated(
+                        heroTag: "task_",
                         taskCreated: (value) {
                           widget.taskNavigationCallback(value);
                         },
