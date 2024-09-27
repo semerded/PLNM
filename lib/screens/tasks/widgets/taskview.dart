@@ -71,7 +71,8 @@ class _TaskViewState extends State<TaskView> {
                 ],
               );
             }
-            return ListView.builder(
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 400, childAspectRatio: 4),
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 Map task = filteredList[index];
@@ -116,7 +117,7 @@ class _TaskViewState extends State<TaskView> {
                       });
                     }),
                     trailing: CircularPercentIndicator(
-                      radius: 25,
+                      radius: 24,
                       animation: true,
                       percent: taskCompletion,
                       progressColor: Colors.green,

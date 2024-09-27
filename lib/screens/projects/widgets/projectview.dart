@@ -74,7 +74,8 @@ class _ProjectViewState extends State<ProjectView> {
                 ],
               );
             }
-            return ListView.builder(
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 400, childAspectRatio: 4),
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 Map project = filteredList[index];
@@ -142,7 +143,7 @@ class _ProjectViewState extends State<ProjectView> {
                         });
                       }),
                       trailing: CircularPercentIndicator(
-                        radius: 25,
+                        radius: 24,
                         animation: true,
                         percent: projectCompletion,
                         progressColor: Colors.green,
