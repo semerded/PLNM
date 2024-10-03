@@ -18,7 +18,7 @@ const String tokenEndpoint = "https://oauth2.googleapis.com/token";
 const String clientId = hidden_creds.clientID;
 const String clientSecret = hidden_creds.clientSecret;
 
-class DesktopLoginManager {
+class DesktopLoginPageManager {
   HttpServer? redirectServer;
   oauth2.Client? client;
 
@@ -46,7 +46,7 @@ class DesktopLoginManager {
   }
 }
 
-class DesktopOAuthManager extends DesktopLoginManager {
+class DesktopOAuthManager extends DesktopLoginPageManager {
   DesktopOAuthManager() : super();
 
   Future<oauth2.Client> googleLoginRedirect() async {
