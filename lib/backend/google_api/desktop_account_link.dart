@@ -32,7 +32,6 @@ class DesktopGoogleSignInAccount {
     return 'GoogleSignInAccount: $displayName, $email';
   }
 
-  @override
   Future<Map<String, String>> get authHeaders async {
     return {
       'Authorization': 'Bearer ${oauthClient.credentials.accessToken}',
@@ -46,7 +45,7 @@ class GoogleSignInAccountAdapter implements GoogleIdentity {
   GoogleSignInAccountAdapter(this.account);
 
   @override
-  String get displayName => account.displayName ?? '';
+  String get displayName => account.displayName;
 
   @override
   String get email => account.email;
@@ -55,12 +54,11 @@ class GoogleSignInAccountAdapter implements GoogleIdentity {
   String get id => account.id;
 
   @override
-  String get photoUrl => account.photoUrl ?? '';
+  String get photoUrl => account.photoUrl;
 
   @override
   // TODO: implement serverAuthCode
   String? get serverAuthCode => throw UnimplementedError();
 
-  @override
   Future<Map<String, String>> get authHeaders => account.authHeaders;
 }

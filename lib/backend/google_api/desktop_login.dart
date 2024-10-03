@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'dart:async';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/google_api/desktop_client_creds.dart' as hidden_creds;
 import 'package:keeper_of_projects/backend/google_api/desktop_token_storage.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
