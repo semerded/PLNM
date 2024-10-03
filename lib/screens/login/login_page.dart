@@ -16,6 +16,7 @@ import 'package:keeper_of_projects/screens/about_page.dart';
 import 'package:keeper_of_projects/screens/conflict_page.dart';
 import 'package:keeper_of_projects/screens/home/home_page.dart';
 import 'package:keeper_of_projects/icons/drive_icon.dart';
+import 'package:keeper_of_projects/screens/login/animation/rotate_drive_logo.dart';
 
 // ignore: camel_case_types
 enum loginStatus { unset, loggedIn, notLoggedIn }
@@ -29,8 +30,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   loginStatus loggedIn = loginStatus.unset;
-  late final AnimationController rotationLogoController;
-  late final Animation<double> rotationAnimation;
+  late final RotateDriveLogo rotateDriveLogo;
 
   void syncSettings() {
     if (settingsDataContent!["darkmode"]) {
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     });
     syncSettings();
     fileSyncSystem.startSyncSystem();
-    rotationLogoController.dispose();
+    rotateDriveLogo.dispose();
 
     projectsContent = projectsDataContent!["projects"];
     ideasContent = projectsDataContent!["ideas"];
@@ -124,27 +124,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     super.initState();
 
     // create animations
-    rotationLogoController = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat();
-    rotationAnimation = TweenSequence<double>(
-      [
-        TweenSequenceItem<double>(
-            tween: Tween<double>(
-              begin: 0,
-              end: 1,
-            ).chain(
-              CurveTween(curve: Curves.easeInOut),
-            ),
-            weight: 2),
-        TweenSequenceItem<double>(
-            tween: Tween<double>(
-              begin: 0,
-              end: 0,
-            ).chain(
-              CurveTween(curve: Curves.linear),
-            ),
-            weight: 2),
-      ],
-    ).animate(rotationLogoController);
+    rotateDriveLogo = RotateDriveLogo(this);
 
     // sign in with google
     if (Platform.isAndroid || Platform.isIOS) {
@@ -175,7 +155,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   Container(
                     width: 5,
                   ),
-                  RotationTransition(turns: rotationAnimation, child: const DriveIcon()),
+                  RotationTransition(turns: rotateDriveLogo.animation, child: const DriveIcon()),
                 ],
               ),
               AdaptiveText(
