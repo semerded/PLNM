@@ -27,7 +27,7 @@ class ProjectViewPage extends StatefulWidget {
 }
 
 class _ProjectViewPageState extends State<ProjectViewPage> {
-  late double projectCompletion = calculateProjectCompletion(widget.projectData["part"]);
+  late double projectCompletion = calculateCompletion(widget.projectData["part"]);
   bool projectDetailsVisible = true;
   bool setStateOnPagePop = false;
 
@@ -64,7 +64,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                     setState(() {
                       projectsContent[widget.index] = Map.from(callback);
                       widget.projectData = Map.from(callback);
-                      projectCompletion = calculateProjectCompletion(widget.projectData["part"]);
+                      projectCompletion = calculateCompletion(widget.projectData["part"]);
                       setStateOnPagePop = true;
                     });
                     await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
@@ -81,7 +81,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       tasks["completed"] = setValue;
                     }
                   }
-                  projectCompletion = calculateProjectCompletion(widget.projectData["part"]);
+                  projectCompletion = calculateCompletion(widget.projectData["part"]);
                 });
                 fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                 setStateOnPagePop = true;
@@ -260,7 +260,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                 itemCount: widget.projectData["part"].length,
                 itemBuilder: (context, index) {
                   Map part = widget.projectData["part"][index];
-                  double partCompletion = calculateProjectCompletion(part["tasks"]);
+                  double partCompletion = calculateCompletion(part["tasks"]);
                   return Card(
                     color: Palette.topbox,
                     child: ListTile(
@@ -303,11 +303,11 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                               setStateOnPagePop = true;
                             }
                             setState(() {
-                              partCompletion = calculateProjectCompletion(part["tasks"]);
+                              partCompletion = calculateCompletion(part["tasks"]);
                               if (!partCompletion.isNaN) {
                                 part["completed"] = partCompletion == 1.0;
                               }
-                              projectCompletion = calculateProjectCompletion(widget.projectData["part"]);
+                              projectCompletion = calculateCompletion(widget.projectData["part"]);
                             });
                           },
                         );
@@ -318,7 +318,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                               onPressed: () {
                                 setState(() {
                                   part["completed"] = !part["completed"];
-                                  projectCompletion = calculateProjectCompletion(widget.projectData["part"]);
+                                  projectCompletion = calculateCompletion(widget.projectData["part"]);
                                   fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                                   setStateOnPagePop = true;
                                 });

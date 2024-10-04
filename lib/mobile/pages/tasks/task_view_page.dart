@@ -24,7 +24,7 @@ class TaskViewPage extends StatefulWidget {
 }
 
 class _TaskViewPageState extends State<TaskViewPage> {
-  late double taskCompletion = calculateTaskCompletion(widget.taskData["subTask"]);
+  late double taskCompletion = calculateCompletion(widget.taskData["subTask"]);
   bool projectDetailsVisible = true;
   bool setStateOnPagePop = false;
 
@@ -61,7 +61,7 @@ class _TaskViewPageState extends State<TaskViewPage> {
                     setState(() {
                       taskContent[widget.index] = Map.from(callback);
                       widget.taskData = Map.from(callback);
-                      taskCompletion = calculateTaskCompletion(widget.taskData["subTask"]);
+                      taskCompletion = calculateCompletion(widget.taskData["subTask"]);
                       setStateOnPagePop = true;
                     });
                     await fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
@@ -75,7 +75,7 @@ class _TaskViewPageState extends State<TaskViewPage> {
                   for (Map subTask in widget.taskData["subTask"]) {
                     subTask["completed"] = setValue;
                   }
-                  taskCompletion = calculateTaskCompletion(widget.taskData["subTask"]);
+                  taskCompletion = calculateCompletion(widget.taskData["subTask"]);
                 });
                 fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
                 setStateOnPagePop = true;
@@ -233,9 +233,9 @@ class _TaskViewPageState extends State<TaskViewPage> {
                         onPressed: () {
                           setState(() {
                             subTask["completed"] = !subTask["completed"];
-                            taskCompletion = calculateTaskCompletion(widget.taskData["subTask"]);
+                            taskCompletion = calculateCompletion(widget.taskData["subTask"]);
 
-                            fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                            fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
                             setStateOnPagePop = true;
                           });
                         },

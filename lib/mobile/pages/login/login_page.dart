@@ -97,10 +97,10 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
           if (currentUser != null) {
             loggedIn = loginStatus.loggedIn;
           }
+          getData();
         });
       },
     );
-    await getData();
   }
 
   @override

@@ -1,4 +1,4 @@
-double calculateProjectCompletion(List<dynamic> taskslist) {
+double calculateCompletion(List<dynamic> taskslist) {
   int length = 0;
   int completed = 0;
   for (dynamic value in taskslist) {
@@ -7,21 +7,8 @@ double calculateProjectCompletion(List<dynamic> taskslist) {
       completed++;
     }
   }
-  return completed / length;
-}
-
-double calculateTaskCompletion(List<dynamic> tasklist) {
-  int length = 0;
-  int completed = 0;
-  for (dynamic value in tasklist) {
-    length++;
-    if (value["completed"]) {
-      completed++;
-    }
-  }
-  if (length != 0) {
+  if (taskslist.isNotEmpty) {
     return completed / length;
   }
-
-  return -1;
+  return 0;
 }

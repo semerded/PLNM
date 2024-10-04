@@ -79,7 +79,7 @@ class _ProjectViewState extends State<ProjectView> {
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 Map project = filteredList[index];
-                double projectCompletion = calculateProjectCompletion(project["part"]);
+                double projectCompletion = calculateCompletion(project["part"]);
                 return Card(
                   shape: Border(
                     left: BorderSide(

@@ -75,11 +75,12 @@ class _TaskViewState extends State<TaskView> {
               );
             }
             return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 400, childAspectRatio: 4),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 400, childAspectRatio: 4),
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 Map task = filteredList[index];
-                double taskCompletion = calculateTaskCompletion(task["subTask"]);
+                double taskCompletion = calculateCompletion(task["subTask"]);
+                bool singleTask = task["subTask"].length == 0;
                 return Card(
                   shape: Border(
                     left: BorderSide(
@@ -115,17 +116,19 @@ class _TaskViewState extends State<TaskView> {
                       ).then((callback) {
                         if (callback != null && callback) {
                           setState(() {});
+                          taskCompletion = calculateCompletion(widget.content[index]["subTask"]);
+
                           widget.onUpdated();
                         }
                       });
                     }),
-                    trailing: taskCompletion == -1
+                    trailing: singleTask
                         ? IconButton(
                             icon: AdaptiveIcon(task["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
                             onPressed: () {
                               setState(() {
                                 task["completed"] = !task["completed"];
-                                taskCompletion = calculateTaskCompletion(widget.content[index]["subTask"]);
+                                taskCompletion = calculateCompletion(widget.content[index]["subTask"]);
 
                                 fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                                 widget.onUpdated();

@@ -30,7 +30,7 @@ class ProjectPartViewPage extends StatefulWidget {
 
 class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
   bool setStateOnPagePop = false;
-  late double partCompletion = calculateProjectCompletion(widget.part["tasks"]);
+  late double partCompletion = calculateCompletion(widget.part["tasks"]);
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                     setState(() {
                       widget.projectData["part"][widget.index] = Map.from(callback);
                       widget.part = Map.from(callback);
-                      partCompletion = calculateProjectCompletion(widget.part["tasks"]);
+                      partCompletion = calculateCompletion(widget.part["tasks"]);
 
                       fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                       setStateOnPagePop = true;
@@ -83,7 +83,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                     tasks["completed"] = setValue;
                   }
 
-                  partCompletion = calculateProjectCompletion(widget.part["tasks"]);
+                  partCompletion = calculateCompletion(widget.part["tasks"]);
 
                   fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                   setStateOnPagePop = true;
@@ -95,7 +95,6 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                     setState(() {
                       widget.projectData["part"].removeAt(widget.index);
                     });
-
                     fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                     setStateOnPagePop = true;
                     Navigator.pop(context, setStateOnPagePop);
@@ -110,7 +109,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
           children: [
             Row(
               children: [
-                //^ priority visualtisation
+                //^ priority visualization
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
@@ -118,7 +117,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                       onPressed: () {
                         showInfoDialog(
                           context,
-                          "Part prioirty: parts have different priorities. A part has a general priority while its part parts can have different priorities that are not linked to the general priority.",
+                          "Part priority: parts have different priorities. A part has a general priority while its part parts can have different priorities that are not linked to the general priority.",
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -135,7 +134,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                     ),
                   ),
                 ),
-                //^ completion visualisation
+                //^ completion visualization
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -205,7 +204,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                         onPressed: () {
                           setState(() {
                             task["completed"] = !task["completed"];
-                            partCompletion = calculateProjectCompletion(widget.part["tasks"]);
+                            partCompletion = calculateCompletion(widget.part["tasks"]);
 
                             fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                             setStateOnPagePop = true;

@@ -8,7 +8,7 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/home/widgets/project_preview_tile.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/add_project_page.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/projects_page.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/project_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/view_project_page.dart';
 
 typedef ProjectNavigationCallback = void Function(bool value);
@@ -42,7 +42,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                 mainAxisCellCount: 1,
                 child: ProjectPreviewTile(
                   title: widget.mostProgressedProjects[0]["title"],
-                  completion: calculateProjectCompletion(widget.mostProgressedProjects[0]["part"]),
+                  completion: calculateCompletion(widget.mostProgressedProjects[0]["part"]),
                   priority: widget.mostProgressedProjects[0]["priority"],
                   navigateToOnClick: ProjectViewPage(
                     index: searchIndexFromMaplist(widget.mostProgressedProjects[0], projectsContent),
@@ -67,7 +67,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                     widget.projectNavigationCallback(value);
                   },
                   title: widget.mostProgressedProjects[1]["title"],
-                  completion: calculateProjectCompletion(widget.mostProgressedProjects[1]["part"]),
+                  completion: calculateCompletion(widget.mostProgressedProjects[1]["part"]),
                 ),
               ),
             );
