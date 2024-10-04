@@ -174,30 +174,47 @@ class _TaskViewPageState extends State<TaskViewPage> {
                         ),
                         Row(
                           children: [
-                            //^ completion visualisation
+                            //^ completion visualization
                             Expanded(
                               child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: () {
-                                    return ProgressElevatedButton(
-                                      onPressed: () {
-                                        showInfoDialog(
-                                          context,
-                                          "Project completion, This shows how much of the project tasks have been completed.",
-                                        );
-                                      },
-                                      progress: taskCompletion,
-                                      progressColor: Colors.green,
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Palette.bg,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(18.0),
-                                          side: BorderSide(color: Palette.text),
+                                padding: const EdgeInsets.all(8.0),
+                                child: widget.taskData["subTask"].length == 0
+                                    ? ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            widget.taskData["completed"] = !widget.taskData["completed"];
+                                            setStateOnPagePop = true;
+                                            fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
+                                          });
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: widget.taskData["completed"] ? Colors.green : Palette.bg,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18.0),
+                                            side: BorderSide(color: Palette.text),
+                                          ),
                                         ),
+                                        child: AdaptiveText("complete${widget.taskData["completed"] ? "d" : ""}"),
+                                      )
+                                    : ProgressElevatedButton(
+                                        onPressed: () {
+                                          showInfoDialog(
+                                            context,
+                                            "Project completion, This shows how much of the project tasks have been completed.",
+                                          );
+                                        },
+                                        progress: taskCompletion,
+                                        progressColor: Colors.green,
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Palette.bg,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18.0),
+                                            side: BorderSide(color: Palette.text),
+                                          ),
+                                        ),
+                                        child: AdaptiveText("completion: ${(taskCompletion * 100).toInt()}"),
                                       ),
-                                      child: AdaptiveText("completion: ${(taskCompletion * 100).toInt()}"),
-                                    );
-                                  }()),
+                              ),
                             )
                           ],
                         ),
