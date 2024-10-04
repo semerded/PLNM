@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/home/home_page.dart';
-import 'package:keeper_of_projects/screens/notes/notes_page.dart';
-import 'package:keeper_of_projects/screens/projects/projects_page.dart';
-import 'package:keeper_of_projects/screens/routines/routines_page.dart';
-import 'package:keeper_of_projects/screens/tasks/task_page.dart';
+import 'package:keeper_of_projects/desktop/pages/home/home_page.dart';
+import 'package:keeper_of_projects/desktop/pages/notes/notes_page.dart';
+import 'package:keeper_of_projects/desktop/pages/projects/project_page.dart';
+import 'package:keeper_of_projects/desktop/pages/routines/routines_page.dart';
+import 'package:keeper_of_projects/desktop/pages/tasks/task_page.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({super.key});

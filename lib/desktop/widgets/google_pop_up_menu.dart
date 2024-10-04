@@ -3,16 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/backend/google_api/save_file.dart';
+import 'package:keeper_of_projects/common/pages/about_page.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/desktop/pages/login/login_page.dart';
-import 'package:keeper_of_projects/screens/about_page.dart';
-import 'package:keeper_of_projects/screens/login/login_page.dart';
-import 'package:keeper_of_projects/screens/profile_page.dart';
-import 'package:keeper_of_projects/screens/settings/settings_page.dart';
+import 'package:keeper_of_projects/desktop/pages/profile_page.dart';
+import 'package:keeper_of_projects/desktop/pages/settings/settings_page.dart';
 
 // ignore: camel_case_types
 enum _googleMenu { name, archive, settings, about, logout }

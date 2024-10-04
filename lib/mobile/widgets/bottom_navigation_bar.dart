@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/home/home_page.dart';
 import 'package:keeper_of_projects/mobile/pages/notes/notes_page.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/projects_page.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/project_page.dart';
 import 'package:keeper_of_projects/mobile/pages/routines/routines_page.dart';
 import 'package:keeper_of_projects/mobile/pages/tasks/task_page.dart';
 
