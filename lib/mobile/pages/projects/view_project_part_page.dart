@@ -143,6 +143,8 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                             onPressed: () {
                               setState(() {
                                 widget.part["completed"] = !widget.part["completed"];
+                                setStateOnPagePop = true;
+                                fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                               });
                             },
                             style: ElevatedButton.styleFrom(
