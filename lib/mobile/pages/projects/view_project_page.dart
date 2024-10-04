@@ -111,7 +111,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   ? Column(
                       children: [
                         Row(
-                          //^ priority visualtisation
+                          //^ priority visualization
                           children: [
                             Expanded(
                               child: Padding(

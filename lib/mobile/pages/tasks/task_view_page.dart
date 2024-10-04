@@ -105,7 +105,7 @@ class _TaskViewPageState extends State<TaskViewPage> {
                   ? Column(
                       children: [
                         Row(
-                          //^ priority visualtisation
+                          //^ priority visualization
                           children: [
                             Expanded(
                               child: Padding(
@@ -125,7 +125,7 @@ class _TaskViewPageState extends State<TaskViewPage> {
                                 ),
                               ),
                             ),
-                            //^ category visualisation
+                            //^ category visualization
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
