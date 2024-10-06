@@ -124,7 +124,10 @@ class _TaskViewState extends State<TaskView> {
                     }),
                     trailing: singleTask
                         ? IconButton(
-                            icon: AdaptiveIcon(task["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                            icon: AdaptiveIcon(
+                              task["completed"] ? Icons.check_box : Icons.check_box_outline_blank,
+                              size: 36,
+                            ),
                             onPressed: () {
                               setState(() {
                                 task["completed"] = !task["completed"];

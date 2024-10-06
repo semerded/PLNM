@@ -314,7 +314,10 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                       },
                       trailing: part["tasks"].length == 0
                           ? IconButton(
-                              icon: AdaptiveIcon(part["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                              icon: AdaptiveIcon(
+                                part["completed"] ? Icons.check_box : Icons.check_box_outline_blank,
+                                size: 36,
+                              ),
                               onPressed: () {
                                 setState(() {
                                   part["completed"] = !part["completed"];

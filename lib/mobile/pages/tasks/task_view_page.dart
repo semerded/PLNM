@@ -246,7 +246,10 @@ class _TaskViewPageState extends State<TaskViewPage> {
                         ),
                       ),
                       trailing: IconButton(
-                        icon: AdaptiveIcon(subTask["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
+                        icon: AdaptiveIcon(
+                          subTask["completed"] ? Icons.check_box : Icons.check_box_outline_blank,
+                          size: 36,
+                        ),
                         onPressed: () {
                           setState(() {
                             subTask["completed"] = !subTask["completed"];

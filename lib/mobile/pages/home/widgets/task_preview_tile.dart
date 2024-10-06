@@ -7,7 +7,6 @@ import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:uuid/uuid.dart';
 
 typedef NavigateCallback = void Function(bool value);
 
@@ -17,7 +16,7 @@ class PreviewTile extends StatefulWidget {
   final String title;
   final String priority;
   final double completion;
-  final Uuid id;
+  final String id;
   final List contentPool;
   const PreviewTile({
     super.key,
@@ -28,7 +27,6 @@ class PreviewTile extends StatefulWidget {
     required this.navigateCallback,
     required this.id,
     required this.contentPool,
-
   });
 
   @override
@@ -52,32 +50,33 @@ class _PreviewTileState extends State<PreviewTile> {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          trailing: widget.completion == -1 ? 
+          trailing: widget.contentPool[searchIndexFromId(widget.id, widget.contentPool)]["subTask"].length == 0
+              ? () {
+                  Map content = widget.contentPool[searchIndexFromId(widget.id, widget.contentPool)];
+                  return IconButton(
+                    icon: AdaptiveIcon(
+                      content["completed"] ? Icons.check_box : Icons.check_box_outline_blank,
+                      size: 36,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        content["completed"] = !content["completed"];
 
-          () {
-            Map content = widget.contentPool[searchIndexFromId(widget.id, widget.contentPool)];
-            return  IconButton(
-                        icon: AdaptiveIcon(content["completed"] ? Icons.check_box : Icons.check_box_outline_blank),
-                        onPressed: () {
-                          setState(() {
-                            content["completed"] = !content["completed"];
-
-                            fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
-                            setStateOnPagePop = true;
-                          });
-                        },
-                      ),
-          } ()
-         
-          : CircularPercentIndicator(
-            percent: widget.completion,
-            radius: 24,
-            center: AdaptiveText(
-              "${(widget.completion * 100).toInt()}%",
-            ),
-            progressColor: Colors.green,
-            animation: true,
-          ),
+                        fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
+                        widget.navigateCallback(true);
+                      });
+                    },
+                  );
+                }()
+              : CircularPercentIndicator(
+                  percent: widget.completion,
+                  radius: 24,
+                  center: AdaptiveText(
+                    "${(widget.completion * 100).toInt()}%",
+                  ),
+                  progressColor: Colors.green,
+                  animation: true,
+                ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
           onTap: () {
             Navigator.push(

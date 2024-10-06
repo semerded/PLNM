@@ -6,10 +6,10 @@ import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/screens/home/widgets/preview_tile.dart';
-import 'package:keeper_of_projects/screens/tasks/add_task_page.dart';
-import 'package:keeper_of_projects/screens/tasks/task_page.dart';
-import 'package:keeper_of_projects/screens/tasks/task_view_page.dart';
+import 'package:keeper_of_projects/mobile/pages/tasks/task_page.dart';
+import 'package:keeper_of_projects/mobile/pages/home/widgets/task_preview_tile.dart';
+import 'package:keeper_of_projects/mobile/pages/tasks/add_task_page.dart';
+import 'package:keeper_of_projects/mobile/pages/tasks/task_view_page.dart';
 
 typedef TaskNavigationCallback = void Function(bool value);
 
@@ -41,10 +41,10 @@ class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
                 crossAxisCellCount: 4,
                 mainAxisCellCount: 1,
                 child: PreviewTile(
-                  contentPool: [],
+                  contentPool: taskContent,
                   id: widget.mostProgressedTask[0]["id"],
                   title: widget.mostProgressedTask[0]["title"],
-                  completion: calculateTaskCompletion(widget.mostProgressedTask[0]["subTask"]),
+                  completion: calculateCompletion(widget.mostProgressedTask[0]["subTask"]),
                   priority: widget.mostProgressedTask[0]["priority"],
                   navigateToOnClick: TaskViewPage(
                     index: searchIndexFromMaplist(widget.mostProgressedTask[0], taskContent),
@@ -63,6 +63,8 @@ class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
                 crossAxisCellCount: 4,
                 mainAxisCellCount: 1,
                 child: PreviewTile(
+                  contentPool: taskContent,
+                  id: widget.mostProgressedTask[1]["id"],
                   navigateToOnClick: TaskViewPage(
                     index: searchIndexFromMaplist(widget.mostProgressedTask[1], taskContent),
                     taskData: taskContent[searchIndexFromMaplist(widget.mostProgressedTask[1], taskContent)],
@@ -71,7 +73,7 @@ class _TaskPreviewTileGridState extends State<TaskPreviewTileGrid> {
                     widget.taskNavigationCallback(value);
                   },
                   title: widget.mostProgressedTask[1]["title"],
-                  completion: calculateTaskCompletion(widget.mostProgressedTask[1]["subTask"]),
+                  completion: calculateCompletion(widget.mostProgressedTask[1]["subTask"]),
                   priority: widget.mostProgressedTask[1]["priority"],
                 ),
               ),
