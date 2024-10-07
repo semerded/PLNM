@@ -16,7 +16,7 @@ import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/desktop/pages/login/animation/rotate_drive_logo.dart';
-import 'package:keeper_of_projects/mobile/pages/home/home_page.dart';
+import 'package:keeper_of_projects/desktop/pages/home/home_page.dart';
 
 // ignore: camel_case_types
 enum loginStatus { unset, loggedIn, notLoggedIn }

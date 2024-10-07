@@ -30,7 +30,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         primaryColor: Colors.red,
       ),
       child: BottomNavigationBar(
-        currentIndex: activePage,
+        currentIndex: activePage!,
         onTap: (int value) {
           if (activePage != value) {
             activePage = value;
