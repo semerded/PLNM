@@ -23,10 +23,8 @@ class AppWrapper extends StatelessWidget {
       home: Scaffold(
         body: () {
           if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) {
-            activePage = 2;
             return const MobileLoginPage();
           }
-          activePage = 0;
           return const DesktopLoginPage();
         }(),
       ),

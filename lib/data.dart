@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'dart:io';
 
 final GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: [
@@ -51,7 +52,7 @@ const List<String> projectSizeDescriptionAlternative = [
 ];
 const double projectSizeDescriptionSubdivisionNumber = 99 / 8;
 
-int? activePage;
+int activePage = (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) ? 2 : 0;
 
 class Palette {
   static const MaterialColor primary = Colors.orange;
