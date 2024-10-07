@@ -45,7 +45,7 @@ class _BigProjectViewState extends State<BigProjectView> {
                   searchBarActive: searchBarActive,
                   focusNode: widget.searchBarFocusNode,
                   onUpdated: (value) => setState(() {
-                    searchbarValue = value;
+                    searchBarValue = value;
                   }),
                 ),
                 ListView.builder(

@@ -226,7 +226,7 @@ class _TaskPageState extends State<TaskPage> {
                 searchBarActive: searchBarActive,
                 focusNode: searchBarFocusNode,
                 onUpdated: (value) => setState(() {
-                  searchbarValue = value;
+                  searchBarValue = value;
                 }),
               ),
               Expanded(

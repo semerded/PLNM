@@ -255,7 +255,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 focusNode: searchBarFocusNode,
                 // onUpdated: (value) {}, // TODO
                 onUpdated: (value) => setState(() {
-                  searchbarValue = value;
+                  searchBarValue = value;
                 }),
               ),
               Expanded(

@@ -83,7 +83,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         searchBarActive: searchBarActive,
                         focusNode: searchBarFocusNode,
                         onUpdated: (value) => setState(() {
-                          searchbarValue = value;
+                          searchBarValue = value;
                         }),
                       ),
                       SmallProjectView(
