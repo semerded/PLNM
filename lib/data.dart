@@ -12,6 +12,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 dynamic currentUser;
 
 const double bigProjectThreshold = 750.0;
+int activeProject_BigProjectView = 0;
 
 const String projectCategoryUnknown = "Unknown Category";
 bool projectCategoriesNeedRebuild = false;

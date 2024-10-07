@@ -22,6 +22,7 @@ class TaskPopUpMenu extends StatefulWidget {
   final OnSelect? onDelete;
   final bool? completeAllState;
   final bool? archiveState;
+  final Widget icon;
 
   TaskPopUpMenu({
     super.key,
@@ -32,6 +33,7 @@ class TaskPopUpMenu extends StatefulWidget {
     this.onDelete,
     this.completeAllState,
     this.archiveState,
+    this.icon = const Icon(Icons.more_vert),
   }) {
     if (enabledTasks.contains(TaskOptions.archive)) {
       assert(onArchive != null && archiveState != null);
@@ -56,7 +58,7 @@ class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
   Widget build(BuildContext context) {
     return PopupMenuButton<TaskOptions>(
       color: Palette.topbox,
-      icon: const Icon(Icons.more_vert),
+      icon: widget.icon,
       popUpAnimationStyle: AnimationStyle(),
       onSelected: (TaskOptions item) {
         if (item == TaskOptions.archive) {

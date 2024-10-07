@@ -22,8 +22,6 @@ class _ProjectPageState extends State<ProjectPage> {
   final String ddb_categoryDefaultValue = "All";
   List<String> ddb_category = [];
 
-  int activeProject_BigProjectView = 0;
-
   final filterController = TextEditingController();
 
   final FocusNode searchBarFocusNode = FocusNode();
