@@ -22,6 +22,8 @@ class _ProjectPageState extends State<ProjectPage> {
   final String ddb_categoryDefaultValue = "All";
   List<String> ddb_category = [];
 
+  int activeProject_BigProjectView = 0;
+
   final filterController = TextEditingController();
 
   final FocusNode searchBarFocusNode = FocusNode();
@@ -68,7 +70,6 @@ class _ProjectPageState extends State<ProjectPage> {
                     ),
                   );
                   if (MediaQuery.sizeOf(context).width < bigProjectThreshold) {
-                    print(searchBarActive);
                     children.addAll([
                       FilterSearchBar(
                         filterController: filterController,
@@ -92,7 +93,15 @@ class _ProjectPageState extends State<ProjectPage> {
                       )
                     ]);
                   } else {
-                    children.add(BigProjectView());
+                    children.add(
+                      BigProjectView(
+                        filterController: filterController,
+                        searchBarFocusNode: searchBarFocusNode,
+                        onUpdated: () {
+                          setState(() {});
+                        },
+                      ),
+                    );
                   }
                   return children;
                 }(),
