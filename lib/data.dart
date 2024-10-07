@@ -10,6 +10,8 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 
 dynamic currentUser;
 
+const double bigProjectThreshold = 750.0;
+
 const String projectCategoryUnknown = "Unknown Category";
 bool projectCategoriesNeedRebuild = false;
 Map<String, dynamic> projectPriorities = {

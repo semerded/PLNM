@@ -51,13 +51,25 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
             label: const AdaptiveText('Routines'),
           ),
           NavigationRailDestination(
-            icon: AdaptiveIcon(Icons.task_outlined),
-            selectedIcon: AdaptiveIcon(Icons.task),
+            icon: Badge(
+              label: Text(taskContent.length.toString()),
+              child: AdaptiveIcon(Icons.task_outlined),
+            ),
+            selectedIcon: Badge(
+              label: Text(taskContent.length.toString()),
+              child: AdaptiveIcon(Icons.task),
+            ),
             label: const AdaptiveText('Tasks'),
           ),
           NavigationRailDestination(
-            icon: AdaptiveIcon(Icons.table_chart_outlined),
-            selectedIcon: AdaptiveIcon(Icons.table_chart),
+            icon: Badge(
+              label: Text(projectsContent.length.toString()),
+              child: AdaptiveIcon(Icons.table_chart_outlined),
+            ),
+            selectedIcon: Badge(
+              label: Text(projectsContent.length.toString()),
+              child: AdaptiveIcon(Icons.table_chart),
+            ),
             label: const AdaptiveText('Projects'),
           ),
         ],
@@ -68,14 +80,14 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
             setState(() {
               activePage = index;
             });
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute<bool>(
-            //     builder: (context) => navigationRailListing[index],
-            //   ),
-            // ).then((callback) {
-            //   if (callback != null && callback) {}
-            // });
+            Navigator.push(
+              context,
+              MaterialPageRoute<bool>(
+                builder: (context) => navigationRailListing[index],
+              ),
+            ).then((callback) {
+              if (callback != null && callback) {}
+            });
           }
         },
       ),
