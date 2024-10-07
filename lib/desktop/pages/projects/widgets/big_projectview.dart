@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
-import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
+import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/filter_search_bar.dart';
@@ -45,7 +45,7 @@ class _BigProjectViewState extends State<BigProjectView> {
                   searchBarActive: searchBarActive,
                   focusNode: widget.searchBarFocusNode,
                   onUpdated: (value) => setState(() {
-                    searchbarValue = value;
+                    searchBarValue = value;
                   }),
                 ),
                 ListView.builder(

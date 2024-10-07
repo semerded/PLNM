@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
-import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
+import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/big_projectview.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/filter_search_bar.dart';
@@ -83,11 +83,11 @@ class _ProjectPageState extends State<ProjectPage> {
                         searchBarActive: searchBarActive,
                         focusNode: searchBarFocusNode,
                         onUpdated: (value) => setState(() {
-                          searchbarValue = value;
+                          searchBarValue = value;
                         }),
                       ),
                       SmallProjectView(
-                        searchbarController: filterController,
+                        searchBarController: filterController,
                         content: projectsContent,
                         onUpdated: () => setState(() {}),
                       )

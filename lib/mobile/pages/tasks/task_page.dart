@@ -11,7 +11,7 @@ import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
-import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
+import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/project_archive_page.dart';
 import 'package:keeper_of_projects/mobile/pages/tasks/add_task_page.dart';
 import 'package:keeper_of_projects/mobile/pages/tasks/widgets/taskview.dart';
@@ -226,12 +226,12 @@ class _TaskPageState extends State<TaskPage> {
                 searchBarActive: searchBarActive,
                 focusNode: searchBarFocusNode,
                 onUpdated: (value) => setState(() {
-                  searchbarValue = value;
+                  searchBarValue = value;
                 }),
               ),
               Expanded(
                 child: TaskView(
-                  searchbarController: filterController,
+                  searchBarController: filterController,
                   content: taskContent,
                   onUpdated: () => setState(() {}),
                 ),

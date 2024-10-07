@@ -4,10 +4,10 @@ import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 bool filterSearchBar(Map data) {
   bool filteredOut = false;
 
-  if (!data["title"].contains(searchbarValue)) {
+  if (!data["title"].contains(searchBarValue)) {
     filteredOut = true;
   }
-  if (settingsDataContent!["searchInDesc"] && data["description"].contains(searchbarValue)) {
+  if (settingsDataContent!["searchInDesc"] && data["description"].contains(searchBarValue)) {
     filteredOut = true;
   }
   return filteredOut;

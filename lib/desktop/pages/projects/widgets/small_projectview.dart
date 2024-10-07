@@ -4,7 +4,7 @@ import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
-import 'package:keeper_of_projects/common/functions/filter/searchbar.dart';
+import 'package:keeper_of_projects/common/functions/filter/searchBar.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -18,12 +18,12 @@ typedef OnUpdated = void Function();
 class SmallProjectView extends StatefulWidget {
   final List content;
   final OnUpdated onUpdated;
-  final TextEditingController searchbarController;
+  final TextEditingController searchBarController;
   const SmallProjectView({
     super.key,
     required this.content,
     required this.onUpdated,
-    required this.searchbarController,
+    required this.searchBarController,
   });
 
   @override
@@ -64,7 +64,7 @@ class _SmallProjectViewState extends State<SmallProjectView> {
                   ElevatedButton(
                     onPressed: () => setState(() {
                       resetFilter();
-                      widget.searchbarController.clear();
+                      widget.searchBarController.clear();
                       widget.onUpdated();
                     }),
                     style: ElevatedButton.styleFrom(backgroundColor: Palette.primary),

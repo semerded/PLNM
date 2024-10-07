@@ -16,12 +16,12 @@ typedef OnUpdated = void Function();
 class ProjectView extends StatefulWidget {
   final List content;
   final OnUpdated onUpdated;
-  final TextEditingController searchbarController;
+  final TextEditingController searchBarController;
   const ProjectView({
     super.key,
     required this.content,
     required this.onUpdated,
-    required this.searchbarController,
+    required this.searchBarController,
   });
 
   @override
@@ -62,7 +62,7 @@ class _ProjectViewState extends State<ProjectView> {
                   ElevatedButton(
                     onPressed: () => setState(() {
                       resetFilter();
-                      widget.searchbarController.clear();
+                      widget.searchBarController.clear();
                       widget.onUpdated();
                     }),
                     style: ElevatedButton.styleFrom(backgroundColor: Palette.primary),

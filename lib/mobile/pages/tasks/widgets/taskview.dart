@@ -16,12 +16,12 @@ typedef OnUpdated = void Function();
 class TaskView extends StatefulWidget {
   final List content;
   final OnUpdated onUpdated;
-  final TextEditingController searchbarController;
+  final TextEditingController searchBarController;
   const TaskView({
     super.key,
     required this.content,
     required this.onUpdated,
-    required this.searchbarController,
+    required this.searchBarController,
   });
 
   @override
@@ -62,7 +62,7 @@ class _TaskViewState extends State<TaskView> {
                   ElevatedButton(
                     onPressed: () => setState(() {
                       resetFilter();
-                      widget.searchbarController.clear();
+                      widget.searchBarController.clear();
                       widget.onUpdated();
                     }),
                     style: ElevatedButton.styleFrom(backgroundColor: Palette.primary),
