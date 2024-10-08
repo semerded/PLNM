@@ -70,39 +70,42 @@ class _BigProjectViewState extends State<BigProjectView> {
                   itemCount: projectsContent.length,
                   itemBuilder: (context, index) {
                     Map project = projectsContent[index];
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Set border radius on Card
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      color: activeProject_BigProjectView == index ? Palette.box : Palette.topbox,
-                      child: Container(
-                        decoration: activeProject_BigProjectView == index
-                            ? BoxDecoration(
-                                border: Border.all(color: Palette.primary, width: 3),
-                                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                              )
-                            : BoxDecoration(
-                                border: Border(
-                                  left: BorderSide(
-                                    width: 10,
-                                    color: projectPriorities[project["priority"]],
+                    return Transform.translate(
+                      offset: Offset(activeProject_BigProjectView == index ? 10 : 0, 0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // Set border radius on Card
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        color: activeProject_BigProjectView == index ? Palette.box : Palette.topbox,
+                        child: Container(
+                          decoration: activeProject_BigProjectView == index
+                              ? BoxDecoration(
+                                  border: Border.all(color: Palette.primary, width: 2),
+                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                )
+                              : BoxDecoration(
+                                  border: Border(
+                                    left: BorderSide(
+                                      width: 10,
+                                      color: projectPriorities[project["priority"]],
+                                    ),
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    bottomLeft: Radius.circular(8),
                                   ),
                                 ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  bottomLeft: Radius.circular(8),
-                                ),
-                              ),
-                        child: ListTile(
-                          title: AdaptiveText(project["title"]),
-                          onTap: () {
-                            setState(() {
-                              activeProject_BigProjectView = index;
-                              currentActiveProject = projectsContent[index];
-                              currentPartIndex = 0;
-                            });
-                          },
+                          child: ListTile(
+                            title: AdaptiveText(project["title"]),
+                            onTap: () {
+                              setState(() {
+                                activeProject_BigProjectView = index;
+                                currentActiveProject = projectsContent[index];
+                                currentPartIndex = 0;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     );

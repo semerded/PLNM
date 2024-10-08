@@ -45,38 +45,41 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
                 Map part = widget.projectData["part"][index];
                 double partCompletion = calculateCompletion(part["tasks"]);
 
-                return Card(
-                  shape: index == widget.currentPartIndex
-                      ? RoundedRectangleBorder(
-                          side: const BorderSide(color: Palette.secondary, width: 2.0),
-                          borderRadius: BorderRadius.circular(8.0),
-                        )
-                      : null,
-                  color: Palette.box,
-                  child: ListTile(
-                    title: AdaptiveText(part["title"]),
-                    subtitle: Text(
-                      part["description"],
-                      style: TextStyle(color: Palette.subtext),
-                    ),
-                    trailing: CircularPercentIndicator(
-                      radius: 24,
-                      animation: true,
-                      progressColor: Colors.green,
-                      center: Text(
-                        "${(partCompletion * 100).toInt()}%",
+                return Transform.translate(
+                  offset: Offset(index == widget.currentPartIndex ? 10 : 0, 0),
+                  child: Card(
+                    shape: index == widget.currentPartIndex
+                        ? RoundedRectangleBorder(
+                            side: const BorderSide(color: Palette.secondary, width: 2.0),
+                            borderRadius: BorderRadius.circular(8.0),
+                          )
+                        : null,
+                    color: Palette.box,
+                    child: ListTile(
+                      title: AdaptiveText(part["title"]),
+                      subtitle: Text(
+                        part["description"],
                         style: TextStyle(color: Palette.subtext),
                       ),
-                      percent: () {
-                        return partCompletion.toDouble() / 100;
-                      }(),
+                      trailing: CircularPercentIndicator(
+                        radius: 24,
+                        animation: true,
+                        progressColor: Colors.green,
+                        center: Text(
+                          "${(partCompletion * 100).toInt()}%",
+                          style: TextStyle(color: Palette.subtext),
+                        ),
+                        percent: () {
+                          return partCompletion.toDouble() / 100;
+                        }(),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          widget.onIndexChange(index);
+                          currentActivePart = widget.projectData["part"][index];
+                        });
+                      },
                     ),
-                    onTap: () {
-                      setState(() {
-                        widget.onIndexChange(index);
-                        currentActivePart = widget.projectData["part"][index];
-                      });
-                    },
                   ),
                 );
               },
