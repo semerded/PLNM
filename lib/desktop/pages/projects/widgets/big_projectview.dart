@@ -71,19 +71,17 @@ class _BigProjectViewState extends State<BigProjectView> {
                   itemBuilder: (context, index) {
                     Map project = projectsContent[index];
                     return Transform.translate(
-                      offset: Offset(activeProject_BigProjectView == index ? 10 : 0, 0),
+                      offset: Offset(activeProject_BigProjectView == index ? 18 : 0, 0),
                       child: Card(
+                        elevation: 5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8), // Set border radius on Card
                         ),
                         clipBehavior: Clip.antiAlias,
-                        color: activeProject_BigProjectView == index ? Palette.box : Palette.topbox,
+                        color: activeProject_BigProjectView == index ? Palette.box2 : Palette.box1,
                         child: Container(
                           decoration: activeProject_BigProjectView == index
-                              ? BoxDecoration(
-                                  border: Border.all(color: Palette.primary, width: 2),
-                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                )
+                              ? null
                               : BoxDecoration(
                                   border: Border(
                                     left: BorderSide(
@@ -116,11 +114,8 @@ class _BigProjectViewState extends State<BigProjectView> {
           ),
           Expanded(
             child: Card(
-              color: Palette.topbox,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Palette.primary, width: 2.0),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
+              elevation: 0,
+              color: Palette.box2,
               child: Column(
                 children: [
                   Padding(
