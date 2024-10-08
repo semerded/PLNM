@@ -33,7 +33,7 @@ class _PreviewTileState extends State<ProjectPreviewTile> {
         side: BorderSide(color: projectPriorities[widget.priority], width: 2.0),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      color: Palette.box,
+      color: Palette.box1,
       margin: const EdgeInsets.all(0),
       child: Center(
         child: ListTile(

@@ -32,7 +32,7 @@ class _IdeasPageState extends State<IdeasPage> {
           itemBuilder: (context, index) {
             Map idea = ideasContent[index];
             return Card(
-              color: Palette.box,
+              color: Palette.box1,
               child: ListTile(
                 title: AdaptiveText(idea["title"]),
                 subtitle: AdaptiveText(idea["description"]),

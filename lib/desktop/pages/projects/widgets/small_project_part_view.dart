@@ -26,7 +26,7 @@ class _SmallProjectPartViewState extends State<SmallProjectPartView> {
         double partCompletion = calculateCompletion(part["tasks"]);
 
         return Card(
-          color: Palette.box,
+          color: Palette.box1,
           child: ListTile(
             title: AdaptiveText(part["title"]),
             subtitle: Text(

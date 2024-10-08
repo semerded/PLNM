@@ -32,7 +32,7 @@ class _MenuItemsHeaderState extends State<MenuItemsHeader> {
             child: AdaptiveText(widget.text),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Palette.box),
+            style: ElevatedButton.styleFrom(backgroundColor: Palette.box1),
             onPressed: () {
               widget.onClick();
             },

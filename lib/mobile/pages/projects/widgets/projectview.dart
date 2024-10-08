@@ -87,7 +87,7 @@ class _ProjectViewState extends State<ProjectView> {
                       color: projectPriorities[project["priority"]],
                     ),
                   ),
-                  color: Palette.box,
+                  color: Palette.box1,
                   elevation: 2,
                   child: CustomPaint(
                     painter: settingsDataContent!["showProjectSize"]

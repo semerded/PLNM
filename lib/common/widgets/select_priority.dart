@@ -31,12 +31,12 @@ class _SelectPriorityState extends State<SelectPriority> {
     return Padding(
       padding: const EdgeInsets.all(4),
       child: Container(
-        color: Palette.box,
+        color: Palette.box1,
         child: DropdownButton<String>(
           padding: const EdgeInsets.only(left: 7, right: 7),
           elevation: 15,
           isExpanded: true,
-          dropdownColor: Palette.topbox,
+          dropdownColor: Palette.box3,
           value: value,
           items: projectPriorities.keys.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem(

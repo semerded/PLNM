@@ -98,7 +98,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Palette.topbox,
+                      backgroundColor: Palette.box3,
                     ),
                     label: AdaptiveText("Add Task"),
                     icon: const Icon(
@@ -115,7 +115,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
                 itemBuilder: (context, index) {
                   Map task = newPart["tasks"][index];
                   return Card(
-                    color: Palette.topbox,
+                    color: Palette.box3,
                     child: ListTile(
                       title: AdaptiveText(task["title"]),
                       subtitle: AdaptiveText(task["description"]),

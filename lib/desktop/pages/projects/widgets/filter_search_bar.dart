@@ -42,7 +42,7 @@ class _FilterSearchBarState extends State<FilterSearchBar> {
       children: [
         Expanded(
           child: MenuAnchor(
-            style: MenuStyle(backgroundColor: WidgetStatePropertyAll(Palette.topbox)),
+            style: MenuStyle(backgroundColor: WidgetStatePropertyAll(Palette.box3)),
             childFocusNode: _buttonFocusNode,
             menuChildren: () {
               List<Widget> menuItems = [];
@@ -101,7 +101,7 @@ class _FilterSearchBarState extends State<FilterSearchBar> {
             }(),
             builder: (BuildContext context, MenuController controller, Widget? child) {
               return ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Palette.box),
+                style: ElevatedButton.styleFrom(backgroundColor: Palette.box1),
                 focusNode: _buttonFocusNode,
                 onPressed: () {
                   if (controller.isOpen) {
@@ -130,12 +130,12 @@ class _FilterSearchBarState extends State<FilterSearchBar> {
           child: Padding(
             padding: const EdgeInsets.all(4),
             child: Container(
-              color: Palette.box,
+              color: Palette.box1,
               child: DropdownButton<String>(
                 padding: const EdgeInsets.only(left: 7, right: 7),
                 elevation: 15,
                 isExpanded: true,
-                dropdownColor: Palette.topbox,
+                dropdownColor: Palette.box3,
                 value: ddb_sortBy_value,
                 items: ddb_sortBy.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem(
@@ -157,9 +157,9 @@ class _FilterSearchBarState extends State<FilterSearchBar> {
         ),
         CircleAvatar(
           radius: 20,
-          backgroundColor: searchBarActive ? Palette.primary : Palette.box,
+          backgroundColor: searchBarActive ? Palette.primary : Palette.box1,
           child: IconButton(
-            color: searchBarActive ? Palette.box : Palette.primary,
+            color: searchBarActive ? Palette.box1 : Palette.primary,
             onPressed: () {
               setState(() {
                 searchBarActive = !searchBarActive;

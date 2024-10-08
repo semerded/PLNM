@@ -80,7 +80,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                 mainAxisCellCount: widget.mostProgressedProjects.isEmpty ? 2 : 1,
                 child: Card(
                   margin: const EdgeInsets.all(0),
-                  color: Palette.box,
+                  color: Palette.box1,
                   child: Center(
                     child: ListTile(
                       title: AdaptiveText("Add more projects!"),
@@ -108,7 +108,7 @@ class _ProjectPreviewTileGridState extends State<ProjectPreviewTileGrid> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  backgroundColor: Palette.box,
+                  backgroundColor: Palette.box1,
                 ),
                 onPressed: () {
                   Navigator.push(

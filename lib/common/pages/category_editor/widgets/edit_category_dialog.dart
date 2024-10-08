@@ -20,7 +20,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          backgroundColor: Palette.topbox,
+          backgroundColor: Palette.box3,
           contentPadding: const EdgeInsets.all(16),
           content: Row(
             children: [

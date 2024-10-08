@@ -7,7 +7,7 @@ void showInfoDialog(BuildContext context, String info) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: Palette.box,
+        backgroundColor: Palette.box1,
         title: AdaptiveText(info),
         actions: [
           TextButton(

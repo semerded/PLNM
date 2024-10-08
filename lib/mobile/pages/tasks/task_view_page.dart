@@ -235,7 +235,7 @@ class _TaskViewPageState extends State<TaskViewPage> {
                 itemBuilder: (context, index) {
                   Map subTask = widget.taskData["subTask"][index];
                   return Card(
-                    color: Palette.topbox,
+                    color: Palette.box3,
                     child: ListTile(
                       title: AdaptiveText(subTask["title"]),
                       subtitle: AdaptiveText(subTask["description"]),

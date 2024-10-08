@@ -31,7 +31,7 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8))),
       child: NavigationRail(
-        backgroundColor: Palette.topbox,
+        backgroundColor: Palette.box3,
         labelType: NavigationRailLabelType.all,
         indicatorColor: Palette.primary,
         destinations: <NavigationRailDestination>[

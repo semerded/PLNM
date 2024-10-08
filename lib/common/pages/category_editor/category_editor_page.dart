@@ -28,7 +28,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
         itemBuilder: (context, index) {
           return Card(
             elevation: 5,
-            color: Palette.box,
+            color: Palette.box1,
             child: ListTile(
               title: AdaptiveText(categoryDataContent![index]),
               trailing: Row(

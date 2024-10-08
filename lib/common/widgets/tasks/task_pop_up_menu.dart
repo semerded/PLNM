@@ -57,7 +57,7 @@ class _TaskPopUpMenuState extends State<TaskPopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<TaskOptions>(
-      color: Palette.topbox,
+      color: Palette.box3,
       icon: widget.icon,
       popUpAnimationStyle: AnimationStyle(),
       onSelected: (TaskOptions item) {

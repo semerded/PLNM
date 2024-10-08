@@ -7,7 +7,7 @@ Future<bool> showConfirmDialog(BuildContext context, String title) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: Palette.topbox,
+        backgroundColor: Palette.box3,
         title: AdaptiveText(title),
         actions: [
           TextButton(

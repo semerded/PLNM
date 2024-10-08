@@ -90,7 +90,7 @@ class _SmallProjectViewState extends State<SmallProjectView> {
                       color: projectPriorities[project["priority"]],
                     ),
                   ),
-                  color: Palette.box,
+                  color: Palette.box1,
                   elevation: 2,
                   child: CustomPaint(
                     painter: settingsDataContent!["showProjectSize"]

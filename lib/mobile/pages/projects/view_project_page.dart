@@ -262,7 +262,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   Map part = widget.projectData["part"][index];
                   double partCompletion = calculateCompletion(part["tasks"]);
                   return Card(
-                    color: Palette.topbox,
+                    color: Palette.box3,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
                       subtitle: RichText(

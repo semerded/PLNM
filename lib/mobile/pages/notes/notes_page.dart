@@ -41,7 +41,7 @@ class _NotesPageState extends State<NotesPage> {
                       SizedBox(
                         height: 185,
                         child: Card(
-                          color: Palette.box,
+                          color: Palette.box1,
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(8),
                             title: AdaptiveText(

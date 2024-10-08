@@ -51,7 +51,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               decoration: InputDecoration(
                 enabledBorder: _border(),
                 focusedBorder: _border(),
-                fillColor: Palette.topbox,
+                fillColor: Palette.box3,
                 filled: true,
                 hintText: "Search For Projects",
                 hintStyle: TextStyle(

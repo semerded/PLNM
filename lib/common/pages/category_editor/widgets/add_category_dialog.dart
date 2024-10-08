@@ -19,7 +19,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          backgroundColor: Palette.topbox,
+          backgroundColor: Palette.box3,
           contentPadding: const EdgeInsets.all(16),
           content: Row(
             children: [

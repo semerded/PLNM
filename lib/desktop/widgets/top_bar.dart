@@ -23,7 +23,7 @@ class TopBarState extends State<TopBar> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-      color: Palette.topbox,
+      color: Palette.box3,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

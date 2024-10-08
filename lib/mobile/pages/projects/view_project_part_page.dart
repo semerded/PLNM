@@ -191,7 +191,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                 itemBuilder: (context, index) {
                   Map task = widget.part["tasks"][index];
                   return Card(
-                    color: Palette.topbox,
+                    color: Palette.box3,
                     child: ListTile(
                       title: AdaptiveText(task["title"]),
                       subtitle: AdaptiveText(task["description"]),

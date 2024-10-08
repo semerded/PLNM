@@ -111,7 +111,7 @@ class _DataOptionCardState extends State<DataOptionCard> {
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
-          color: Palette.box,
+          color: Palette.box1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

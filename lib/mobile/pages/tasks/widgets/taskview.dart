@@ -88,7 +88,7 @@ class _TaskViewState extends State<TaskView> {
                       color: projectPriorities[task["priority"]],
                     ),
                   ),
-                  color: Palette.box,
+                  color: Palette.box1,
                   elevation: 2,
                   child: ListTile(
                     textColor: Palette.text,

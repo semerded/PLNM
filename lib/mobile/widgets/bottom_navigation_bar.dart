@@ -26,7 +26,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-        canvasColor: Palette.topbox,
+        canvasColor: Palette.box3,
         primaryColor: Colors.red,
       ),
       child: BottomNavigationBar(

@@ -94,12 +94,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: Container(
-                      color: Palette.box,
+                      color: Palette.box1,
                       child: DropdownButton<String>(
                         padding: const EdgeInsets.only(left: 7, right: 7),
                         isExpanded: true,
                         elevation: 15,
-                        dropdownColor: Palette.topbox,
+                        dropdownColor: Palette.box3,
                         value: updatedProjectData["category"], // check if exist
                         items: categoryDataContent?.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem(
@@ -175,7 +175,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.topbox,
+                    backgroundColor: Palette.box3,
                   ),
                   label: AdaptiveText("Add Project Part"),
                   icon: const Icon(
@@ -191,7 +191,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                 itemBuilder: (context, index) {
                   Map part = updatedProjectData["part"][index];
                   return Card(
-                    color: Palette.topbox,
+                    color: Palette.box3,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
                       subtitle: Text(
