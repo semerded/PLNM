@@ -1,20 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
-import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
-import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/desktop/pages/projects/widgets/big_project_part_view.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/filter_search_bar.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/small_project_part_view.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 typedef OnUpdated = void Function();
@@ -38,6 +32,7 @@ class BigProjectView extends StatefulWidget {
 class _BigProjectViewState extends State<BigProjectView> {
   late Map currentActiveProject;
   late double projectCompletion;
+  int currentPartIndex = 0;
 
   @override
   void initState() {
@@ -105,6 +100,7 @@ class _BigProjectViewState extends State<BigProjectView> {
                             setState(() {
                               activeProject_BigProjectView = index;
                               currentActiveProject = projectsContent[index];
+                              currentPartIndex = 0;
                             });
                           },
                         ),
@@ -226,7 +222,17 @@ class _BigProjectViewState extends State<BigProjectView> {
                     currentActiveProject["description"],
                     style: TextStyle(color: Palette.subtext),
                   ),
-                  Expanded(child: SmallProjectPartView(projectData: currentActiveProject))
+                  MediaQuery.sizeOf(context).width > bigProjectPartThreshold
+                      ? BigProjectPartView(
+                          projectData: currentActiveProject,
+                          currentPartIndex: currentPartIndex,
+                          onIndexChange: (index) => setState(() {
+                            currentPartIndex = index;
+                          }),
+                        )
+                      : SmallProjectPartView(
+                          projectData: currentActiveProject,
+                        )
                 ],
               ),
             ),
