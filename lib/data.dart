@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'dart:io';
+
+import 'package:universal_platform/universal_platform.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn(
   scopes: [
@@ -12,6 +13,8 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 dynamic currentUser;
 
 const double bigProjectThreshold = 750.0;
+const double bigProjectPartThreshold = 1100;
+// ignore: non_constant_identifier_names
 int activeProject_BigProjectView = 0;
 
 const String projectCategoryUnknown = "Unknown Category";
@@ -42,7 +45,7 @@ const List<String> projectSizeDescription = [
 const List<String> projectSizeDescriptionAlternative = [
   "IDK (not really planned)", // unknown
   "Toilet Business", // very small
-  "Afternooning Doing", // small
+  "Afternoon Doing", // small
   "Sunny Day job", // small medium
   "Weekend Done", // medium
   "Workweek (payed)", // medium big
@@ -53,7 +56,7 @@ const List<String> projectSizeDescriptionAlternative = [
 ];
 const double projectSizeDescriptionSubdivisionNumber = 99 / 8;
 
-int activePage = (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) ? 2 : 0;
+int activePage = (UniversalPlatform.isMobile) ? 2 : 0;
 
 class Palette {
   static const MaterialColor primary = Colors.orange;

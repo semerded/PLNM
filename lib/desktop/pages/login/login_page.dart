@@ -127,11 +127,7 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> with SingleTickerPr
     rotateDriveLogo = RotateDriveLogo(this);
 
     // sign in with google
-    if (Platform.isAndroid || Platform.isIOS) {
-      mobileAuth();
-    } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      desktopAuth();
-    }
+    desktopAuth();
   }
 
   @override

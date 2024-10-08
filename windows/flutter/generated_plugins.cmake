@@ -5,7 +5,9 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   flutter_secure_storage_windows
+  screen_retriever
   url_launcher_windows
+  window_manager
   window_to_front
 )
 

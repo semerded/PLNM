@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/login/login_page.dart';
 import 'package:keeper_of_projects/mobile/pages/login/login_page.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 void main() {
   runApp(const AppWrapper());
@@ -22,9 +21,10 @@ class AppWrapper extends StatelessWidget {
       ),
       home: Scaffold(
         body: () {
-          if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) {
+          if (UniversalPlatform.isMobile) {
             return const MobileLoginPage();
           }
+
           return const DesktopLoginPage();
         }(),
       ),
