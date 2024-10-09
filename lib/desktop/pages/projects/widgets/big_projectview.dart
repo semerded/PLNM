@@ -34,7 +34,13 @@ class _BigProjectViewState extends State<BigProjectView> {
   late double projectCompletion;
   int currentPartIndex = 0;
 
-  Widget slideTransitionCard1 = Column();
+  Widget slideTransitionCard1 = Padding(
+    padding: const EdgeInsets.all(8.0),
+    key: const ValueKey(1),
+    child: Container(
+      color: Palette.box2,
+    ),
+  );
   Widget? slideTransitionCard2;
   bool slideTransitionReversed = false;
 
@@ -46,123 +52,130 @@ class _BigProjectViewState extends State<BigProjectView> {
   }
 
   Widget constructProjectViewCard(int keyNumber) {
-    return Column(
+    return Padding(
       key: ValueKey(keyNumber),
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AdaptiveText(
-                currentActiveProject["title"],
-                fontSize: 32,
-              ),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-                child: CircularPercentIndicator(
-                  radius: 32,
-                  lineWidth: 10,
-                  animation: true,
-                  progressColor: Colors.green,
-                  center: Text(
-                    "${(projectCompletion * 100).toInt()}%",
-                    style: TextStyle(color: Palette.subtext),
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        color: Palette.box2,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AdaptiveText(
+                    currentActiveProject["title"],
+                    fontSize: 32,
                   ),
-                  percent: projectCompletion,
-                  footer: AdaptiveText("Progress"),
-                ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                    child: CircularPercentIndicator(
+                      radius: 32,
+                      lineWidth: 10,
+                      animation: true,
+                      progressColor: Colors.green,
+                      center: Text(
+                        "${(projectCompletion * 100).toInt()}%",
+                        style: TextStyle(color: Palette.subtext),
+                      ),
+                      percent: projectCompletion,
+                      footer: AdaptiveText("Progress"),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                    child: CircularPercentIndicator(
+                      radius: 32,
+                      lineWidth: 10,
+                      animation: true,
+                      progressColor: Colors.green,
+                      percent: () {
+                        int size = currentActiveProject["size"];
+                        return size.toDouble() / 100;
+                      }(),
+                      footer: AdaptiveText("Size"),
+                    ),
+                  ),
+                  TaskPopUpMenu(
+                    icon: AdaptiveIcon(
+                      Icons.more_vert,
+                      size: 32,
+                    ),
+                    enabledTasks: const [TaskOptions.archive, TaskOptions.completeAll, TaskOptions.delete, TaskOptions.edit],
+                    onEdit: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute<Map>(
+                      //     builder: (context) => EditProjectPage(
+                      //       projectData: currentActiveProject,
+                      //     ),
+                      //   ),
+                      // ).then((callback) async {
+                      //   if (callback != null) {
+                      //     setState(() {
+                      //       projectsContent[widget.index] = Map.from(callback);
+                      //       currentActiveProject = Map.from(callback);
+                      //       projectCompletion = calculateCompletion(currentActiveProject["part"]);
+                      //       setStateOnPagePop = true;
+                      //     });
+                      //     await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                      //   }
+                      // });
+                    },
+                    onArchive: () {},
+                    onCompleteAll: () {
+                      // setState(() {
+                      //   bool setValue = projectCompletion != 1.0;
+                      //   for (Map part in currentActiveProject["part"]) {
+                      //     part["completed"] = setValue;
+                      //     for (Map tasks in part["tasks"]) {
+                      //       tasks["completed"] = setValue;
+                      //     }
+                      //   }
+                      //   projectCompletion = calculateCompletion(currentActiveProject["part"]);
+                      // });
+                      // fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                      // setState(() {});
+                    },
+                    onDelete: () {
+                      // showConfirmDialog(context, 'Delete "${currentActiveProject["title"]}" permanently? This can\'t be undone!').then((value) {
+                      //   if (value) {
+                      //     setState(() {
+                      //       projectsContent.removeAt(widget.index);
+                      //     });
+                      //     fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                      //     setStateOnPagePop = true;
+                      //     Navigator.pop(context, setStateOnPagePop);
+                      //   }
+                      // });
+                    },
+                    completeAllState: projectCompletion == 1.0,
+                    archiveState: false,
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-                child: CircularPercentIndicator(
-                  radius: 32,
-                  lineWidth: 10,
-                  animation: true,
-                  progressColor: Colors.green,
-                  percent: () {
-                    int size = currentActiveProject["size"];
-                    return size.toDouble() / 100;
-                  }(),
-                  footer: AdaptiveText("Size"),
-                ),
-              ),
-              TaskPopUpMenu(
-                icon: AdaptiveIcon(
-                  Icons.more_vert,
-                  size: 32,
-                ),
-                enabledTasks: const [TaskOptions.archive, TaskOptions.completeAll, TaskOptions.delete, TaskOptions.edit],
-                onEdit: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute<Map>(
-                  //     builder: (context) => EditProjectPage(
-                  //       projectData: currentActiveProject,
-                  //     ),
-                  //   ),
-                  // ).then((callback) async {
-                  //   if (callback != null) {
-                  //     setState(() {
-                  //       projectsContent[widget.index] = Map.from(callback);
-                  //       currentActiveProject = Map.from(callback);
-                  //       projectCompletion = calculateCompletion(currentActiveProject["part"]);
-                  //       setStateOnPagePop = true;
-                  //     });
-                  //     await fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
-                  //   }
-                  // });
-                },
-                onArchive: () {},
-                onCompleteAll: () {
-                  // setState(() {
-                  //   bool setValue = projectCompletion != 1.0;
-                  //   for (Map part in currentActiveProject["part"]) {
-                  //     part["completed"] = setValue;
-                  //     for (Map tasks in part["tasks"]) {
-                  //       tasks["completed"] = setValue;
-                  //     }
-                  //   }
-                  //   projectCompletion = calculateCompletion(currentActiveProject["part"]);
-                  // });
-                  // fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
-                  // setState(() {});
-                },
-                onDelete: () {
-                  // showConfirmDialog(context, 'Delete "${currentActiveProject["title"]}" permanently? This can\'t be undone!').then((value) {
-                  //   if (value) {
-                  //     setState(() {
-                  //       projectsContent.removeAt(widget.index);
-                  //     });
-                  //     fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
-                  //     setStateOnPagePop = true;
-                  //     Navigator.pop(context, setStateOnPagePop);
-                  //   }
-                  // });
-                },
-                completeAllState: projectCompletion == 1.0,
-                archiveState: false,
-              ),
-            ],
-          ),
+            ),
+            Text(
+              currentActiveProject["description"],
+              style: TextStyle(color: Palette.subtext),
+            ),
+            MediaQuery.sizeOf(context).width > bigProjectPartThreshold
+                ? BigProjectPartView(
+                    projectData: currentActiveProject,
+                    currentPartIndex: currentPartIndex,
+                    onIndexChange: (index) => setState(() {
+                      currentPartIndex = index;
+                      print(currentPartIndex);
+                    }),
+                  )
+                : SmallProjectPartView(
+                    projectData: currentActiveProject,
+                  )
+          ],
         ),
-        Text(
-          currentActiveProject["description"],
-          style: TextStyle(color: Palette.subtext),
-        ),
-        MediaQuery.sizeOf(context).width > bigProjectPartThreshold
-            ? BigProjectPartView(
-                projectData: currentActiveProject,
-                currentPartIndex: currentPartIndex,
-                onIndexChange: (index) => setState(() {
-                  currentPartIndex = index;
-                }),
-              )
-            : SmallProjectPartView(
-                projectData: currentActiveProject,
-              )
-      ],
+      ),
     );
   }
 
