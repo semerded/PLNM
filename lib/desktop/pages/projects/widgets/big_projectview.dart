@@ -136,30 +136,31 @@ class _BigProjectViewState extends State<BigProjectView> {
             ),
           ),
           Expanded(
-              child: Card(
-            color: Palette.box2,
-            elevation: 0,
-            child: ClipRect(
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) {
-                  final slideAnimation = Tween<Offset>(
-                    begin: Offset(1.0, 0.0), // Start position (right of the screen)
-                    end: Offset(0.0, 0.0), // End position (in place)
-                  ).animate(animation);
+            child: Card(
+              color: Palette.box2,
+              elevation: 0,
+              child: ClipRect(
+                child: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    final slideAnimation = Tween<Offset>(
+                      begin: Offset(1.0, 0.0), // Start position (right of the screen)
+                      end: Offset(0.0, 0.0), // End position (in place)
+                    ).animate(animation);
 
-                  return SlideTransition(
-                    position: slideAnimation,
-                    child: child,
-                  );
-                },
-                child: () {
-                  slideTransitionCard2 = ProjectViewCardContent(key: ValueKey(2));
-                  return slideTransitionReversed ? slideTransitionCard1 : slideTransitionCard2!;
-                }(),
+                    return SlideTransition(
+                      position: slideAnimation,
+                      child: child,
+                    );
+                  },
+                  child: () {
+                    slideTransitionCard2 = ProjectViewCardContent(key: ValueKey(2));
+                    return slideTransitionReversed ? slideTransitionCard1 : slideTransitionCard2!;
+                  }(),
+                ),
               ),
             ),
-          ))
+          )
         ],
       ),
     );
@@ -290,7 +291,6 @@ class _ProjectViewCardContentState extends State<ProjectViewCardContent> {
                     currentPartIndex: currentPartIndex,
                     onIndexChange: (index) => setState(() {
                       currentPartIndex = index;
-                      print(currentPartIndex);
                     }),
                   )
                 : SmallProjectPartView(
