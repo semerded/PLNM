@@ -13,6 +13,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 typedef OnUpdated = void Function();
 
+late Map currentActiveProject;
+late double projectCompletion;
+int currentPartIndex = 0;
+
 class BigProjectView extends StatefulWidget {
   final TextEditingController filterController;
   final FocusNode searchBarFocusNode;
@@ -30,10 +34,6 @@ class BigProjectView extends StatefulWidget {
 }
 
 class _BigProjectViewState extends State<BigProjectView> {
-  late Map currentActiveProject;
-  late double projectCompletion;
-  int currentPartIndex = 0;
-
   Widget slideTransitionCard1 = Padding(
     padding: const EdgeInsets.all(8.0),
     key: const ValueKey(1),
@@ -51,9 +51,132 @@ class _BigProjectViewState extends State<BigProjectView> {
     projectCompletion = calculateCompletion(currentActiveProject["part"]);
   }
 
-  Widget constructProjectViewCard(int keyNumber) {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        children: [
+          SizedBox(
+            width: 300,
+            child: Column(
+              children: [
+                FilterSearchBar(
+                  filterController: widget.filterController,
+                  searchBarFocusNode: widget.searchBarFocusNode,
+                  onUpdated: () {
+                    setState(() {});
+                  },
+                ),
+                AnimatedSearchBar(
+                  filterController: widget.filterController,
+                  searchBarActive: searchBarActive,
+                  focusNode: widget.searchBarFocusNode,
+                  onUpdated: (value) => setState(() {
+                    searchBarValue = value;
+                  }),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: projectsContent.length,
+                  itemBuilder: (context, index) {
+                    Map project = projectsContent[index];
+
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      transform: Matrix4.translationValues(activeProject_BigProjectView == index ? 18 : 0, 0, 0),
+                      child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), // Set border radius on Card
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        color: activeProject_BigProjectView == index ? Palette.box2 : Palette.box1,
+                        child: Container(
+                          decoration: activeProject_BigProjectView == index
+                              ? null
+                              : BoxDecoration(
+                                  border: Border(
+                                    left: BorderSide(
+                                      width: 10,
+                                      color: projectPriorities[project["priority"]],
+                                    ),
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    bottomLeft: Radius.circular(8),
+                                  ),
+                                ),
+                          child: ListTile(
+                            title: AdaptiveText(project["title"]),
+                            onTap: () {
+                              setState(() {
+                                activeProject_BigProjectView = index;
+                                currentActiveProject = projectsContent[index];
+                                currentPartIndex = 0;
+
+                                // slide animation for content of project view card
+
+                                slideTransitionReversed = !slideTransitionReversed;
+                                if (slideTransitionReversed) {
+                                  slideTransitionCard2 = slideTransitionCard1;
+                                  slideTransitionCard1 = ProjectViewCardContent(key: ValueKey(1));
+                                } else {
+                                  slideTransitionCard1 = slideTransitionCard2!;
+                                  slideTransitionCard2 = ProjectViewCardContent(key: ValueKey(2));
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
+          ),
+          Expanded(
+              child: Card(
+            color: Palette.box2,
+            elevation: 0,
+            child: ClipRect(
+              child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) {
+                  final slideAnimation = Tween<Offset>(
+                    begin: Offset(1.0, 0.0), // Start position (right of the screen)
+                    end: Offset(0.0, 0.0), // End position (in place)
+                  ).animate(animation);
+
+                  return SlideTransition(
+                    position: slideAnimation,
+                    child: child,
+                  );
+                },
+                child: () {
+                  slideTransitionCard2 = ProjectViewCardContent(key: ValueKey(2));
+                  return slideTransitionReversed ? slideTransitionCard1 : slideTransitionCard2!;
+                }(),
+              ),
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+}
+
+class ProjectViewCardContent extends StatefulWidget {
+  const ProjectViewCardContent({super.key});
+
+  @override
+  State<ProjectViewCardContent> createState() => _ProjectViewCardContentState();
+}
+
+class _ProjectViewCardContentState extends State<ProjectViewCardContent> {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      key: ValueKey(keyNumber),
       padding: const EdgeInsets.all(8.0),
       child: Container(
         color: Palette.box2,
@@ -175,119 +298,6 @@ class _BigProjectViewState extends State<BigProjectView> {
                   )
           ],
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          SizedBox(
-            width: 300,
-            child: Column(
-              children: [
-                FilterSearchBar(
-                  filterController: widget.filterController,
-                  searchBarFocusNode: widget.searchBarFocusNode,
-                  onUpdated: () {
-                    setState(() {});
-                  },
-                ),
-                AnimatedSearchBar(
-                  filterController: widget.filterController,
-                  searchBarActive: searchBarActive,
-                  focusNode: widget.searchBarFocusNode,
-                  onUpdated: (value) => setState(() {
-                    searchBarValue = value;
-                  }),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: projectsContent.length,
-                  itemBuilder: (context, index) {
-                    Map project = projectsContent[index];
-
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      transform: Matrix4.translationValues(activeProject_BigProjectView == index ? 18 : 0, 0, 0),
-                      child: Card(
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8), // Set border radius on Card
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        color: activeProject_BigProjectView == index ? Palette.box2 : Palette.box1,
-                        child: Container(
-                          decoration: activeProject_BigProjectView == index
-                              ? null
-                              : BoxDecoration(
-                                  border: Border(
-                                    left: BorderSide(
-                                      width: 10,
-                                      color: projectPriorities[project["priority"]],
-                                    ),
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(8),
-                                    bottomLeft: Radius.circular(8),
-                                  ),
-                                ),
-                          child: ListTile(
-                            title: AdaptiveText(project["title"]),
-                            onTap: () {
-                              setState(() {
-                                activeProject_BigProjectView = index;
-                                currentActiveProject = projectsContent[index];
-                                currentPartIndex = 0;
-
-                                // slide animation for content of project view card
-
-                                slideTransitionReversed = !slideTransitionReversed;
-                                if (slideTransitionReversed) {
-                                  slideTransitionCard2 = slideTransitionCard1;
-                                  slideTransitionCard1 = constructProjectViewCard(1);
-                                } else {
-                                  slideTransitionCard1 = slideTransitionCard2!;
-                                  slideTransitionCard2 = constructProjectViewCard(2);
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
-          Expanded(
-              child: Card(
-            color: Palette.box2,
-            elevation: 0,
-            child: ClipRect(
-              child: AnimatedSwitcher(
-                  duration: Duration(milliseconds: 300),
-                  transitionBuilder: (child, animation) {
-                    final slideAnimation = Tween<Offset>(
-                      begin: Offset(1.0, 0.0), // Start position (right of the screen)
-                      end: Offset(0.0, 0.0), // End position (in place)
-                    ).animate(animation);
-
-                    return SlideTransition(
-                      position: slideAnimation,
-                      child: child,
-                    );
-                  },
-                  child: () {
-                    slideTransitionCard2 = constructProjectViewCard(2);
-                    return slideTransitionReversed ? slideTransitionCard1 : slideTransitionCard2!;
-                  }()),
-            ),
-          ))
-        ],
       ),
     );
   }
