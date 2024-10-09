@@ -14,6 +14,8 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 typedef OnIndexChange = void Function(int index);
 
+late Map currentActivePart;
+
 class BigProjectPartView extends StatefulWidget {
   final Map projectData;
   final int currentPartIndex;
@@ -30,7 +32,15 @@ class BigProjectPartView extends StatefulWidget {
 }
 
 class _BigProjectPartViewState extends State<BigProjectPartView> {
-  late Map currentActivePart;
+  Widget slideTransitionCard1 = Padding(
+    padding: const EdgeInsets.all(8.0),
+    key: const ValueKey(1),
+    child: Container(
+      color: Palette.box2,
+    ),
+  );
+  Widget? slideTransitionCard2;
+  bool slideTransitionReversed = false;
 
   @override
   void initState() {
@@ -151,6 +161,17 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
                               setState(() {
                                 widget.onIndexChange(index);
                                 currentActivePart = widget.projectData["part"][index];
+
+                                // slide animation for content of project part view card
+
+                                slideTransitionReversed = !slideTransitionReversed;
+                                if (slideTransitionReversed) {
+                                  slideTransitionCard2 = slideTransitionCard1;
+                                  slideTransitionCard1 = ProjectPartViewCardContent(key: ValueKey(1));
+                                } else {
+                                  slideTransitionCard1 = slideTransitionCard2!;
+                                  slideTransitionCard2 = ProjectPartViewCardContent(key: ValueKey(2));
+                                }
                               });
                             },
                           ),
@@ -164,31 +185,73 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
           ),
           Expanded(
             child: Card(
-                elevation: 0,
-                color: Palette.box3,
-                child: ListView(children: [
-                  currentActivePart["tasks"].length == 0
-                      ? AdaptiveText("No tasks")
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: currentActivePart["tasks"].length,
-                          itemBuilder: (context, index) {
-                            Map task = currentActivePart["tasks"][index];
-                            return Card(
-                              color: Palette.box4,
-                              child: ListTile(
-                                title: AdaptiveText(task["title"]),
-                                subtitle: Text(
-                                  task["description"],
-                                  style: TextStyle(color: Palette.subtext),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                ])),
+              elevation: 0,
+              color: Palette.box3,
+              child: ClipRect(
+                child: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    final slideAnimation = Tween<Offset>(
+                      begin: Offset(0.0, 1.0), // Start position (right of the screen)
+                      end: Offset(0.0, 0.0), // End position (in place)
+                    ).animate(animation);
+
+                    return SlideTransition(
+                      position: slideAnimation,
+                      child: child,
+                    );
+                  },
+                  child: () {
+                    slideTransitionCard2 = ProjectPartViewCardContent(key: ValueKey(2));
+                    return slideTransitionReversed ? slideTransitionCard1 : slideTransitionCard2!;
+                  }(),
+                ),
+              ),
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ProjectPartViewCardContent extends StatefulWidget {
+  const ProjectPartViewCardContent({super.key});
+
+  @override
+  State<ProjectPartViewCardContent> createState() => _ProjectPartViewCardContentState();
+}
+
+class _ProjectPartViewCardContentState extends State<ProjectPartViewCardContent> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        color: Palette.box3,
+        child: ListView(
+          children: [
+            currentActivePart["tasks"].length == 0
+                ? AdaptiveText("No tasks")
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: currentActivePart["tasks"].length,
+                    itemBuilder: (context, index) {
+                      Map task = currentActivePart["tasks"][index];
+                      return Card(
+                        color: Palette.box4,
+                        child: ListTile(
+                          title: AdaptiveText(task["title"]),
+                          subtitle: Text(
+                            task["description"],
+                            style: TextStyle(color: Palette.subtext),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+          ],
+        ),
       ),
     );
   }
