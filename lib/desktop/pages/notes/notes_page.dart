@@ -22,7 +22,9 @@ class _NotesPageState extends State<NotesPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: CustomNavigationRail(),
+              child: CustomNavigationRail(
+                onUpdated: () => setState(() {}),
+              ),
             ),
             Expanded(
               child: Column(

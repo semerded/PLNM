@@ -7,10 +7,18 @@ import 'package:keeper_of_projects/desktop/pages/notes/notes_page.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/project_page.dart';
 import 'package:keeper_of_projects/desktop/pages/routines/routines_page.dart';
 import 'package:keeper_of_projects/desktop/pages/tasks/task_page.dart';
+import 'package:keeper_of_projects/desktop/widgets/google_pop_up_menu.dart';
+
+typedef OnUpdated = void Function();
 
 class CustomNavigationRail extends StatefulWidget {
+  final OnUpdated onUpdated;
   final Widget? leading;
-  const CustomNavigationRail({super.key, this.leading});
+  const CustomNavigationRail({
+    super.key,
+    this.leading,
+    required this.onUpdated,
+  });
 
   @override
   State<CustomNavigationRail> createState() => _CustomNavigationRailState();
@@ -73,6 +81,21 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
             label: const AdaptiveText('Projects'),
           ),
         ],
+        trailing: Expanded(
+          child: Column(
+            children: [
+              Spacer(),
+              GooglePopUpMenu(onClose: (value) {
+                if (value) {
+                  if (projectCategoriesNeedRebuild) {
+                    projectCategoriesNeedRebuild = false;
+                  }
+                  widget.onUpdated();
+                }
+              }),
+            ],
+          ),
+        ),
         selectedIndex: activePage,
         leading: widget.leading,
         onDestinationSelected: (int index) {

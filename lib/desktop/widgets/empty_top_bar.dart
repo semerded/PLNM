@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/desktop/widgets/google_pop_up_menu.dart';
 
-typedef OnUpdated = void Function();
-
-class TopBar extends StatefulWidget {
-  final OnUpdated onUpdated;
-  final String text;
-  const TopBar({
+class EmptyTopBar extends StatefulWidget {
+  final Widget? leading;
+  final String? title;
+  final List<Widget>? actions;
+  const EmptyTopBar({
     super.key,
-    required this.text,
-    required this.onUpdated,
+    this.leading,
+    this.title,
+    this.actions,
   });
 
   @override
-  State<TopBar> createState() => TopBarState();
+  State<EmptyTopBar> createState() => _EmptyTopBarState();
 }
 
-class TopBarState extends State<TopBar> {
+class _EmptyTopBarState extends State<EmptyTopBar> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,17 +27,20 @@ class TopBarState extends State<TopBar> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            AdaptiveIcon(Icons.table_chart),
+            if (widget.leading != null) widget.leading!,
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: AdaptiveText(
-                widget.text,
+                widget.title ?? "",
                 fontSize: 24,
               ),
-            )
+            ),
+            const Spacer(),
+            if (widget.actions != null) ...widget.actions!,
           ],
         ),
       ),
     );
+    ;
   }
 }

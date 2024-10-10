@@ -1,0 +1,1 @@
+typedef OnUpdated = void Function();

@@ -22,7 +22,9 @@ class _RoutinesPageState extends State<RoutinesPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: CustomNavigationRail(),
+              child: CustomNavigationRail(
+                onUpdated: () => setState(() {}),
+              ),
             ),
             Expanded(
               child: Column(
