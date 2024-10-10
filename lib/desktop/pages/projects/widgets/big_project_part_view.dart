@@ -133,8 +133,9 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
                       Map part = widget.projectData["part"][index];
                       double partCompletion = calculateCompletion(part["tasks"]);
 
-                      return Transform.translate(
-                        offset: Offset(index == widget.currentPartIndex ? 18 : 0, 0),
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        transform: Matrix4.translationValues(index == widget.currentPartIndex ? 18 : 0, 0, 0),
                         child: Card(
                           elevation: 5,
                           color: index == widget.currentPartIndex ? Palette.box3 : Palette.box1,
