@@ -125,11 +125,11 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> with SingleTickerPr
       backgroundColor: Palette.bg,
       body: () {
         if (loggedIn == loginStatus.loggedInCheckSync) {
-          LoggedInCheckSync(rotateDriveLogo: rotateDriveLogo);
+          return LoggedInCheckSync(rotateDriveLogo: rotateDriveLogo);
         } else if (loggedIn == loginStatus.loggedInSyncing) {
-          LoggedInSyncing(rotateDriveLogo: rotateDriveLogo);
+          return LoggedInSyncing(rotateDriveLogo: rotateDriveLogo);
         } else if (loggedIn == loginStatus.notLoggedIn) {
-          const NotLoggedIn();
+          return const NotLoggedIn();
         } else {
           return const Center(
             child: DriveIcon(),
