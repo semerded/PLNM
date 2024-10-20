@@ -10,6 +10,7 @@ class FileSyncSystem {
   Map _syncList = {};
 
   void startSyncSystem() {
+    saveSyncTime();
     _syncSystemTimer = Timer.periodic(
       const Duration(seconds: 3),
       (timer) => _syncSystem(),
@@ -23,7 +24,7 @@ class FileSyncSystem {
   Future<void> syncFile(drive.File file, dynamic newContent) async {
     await localWrite(file.name!, newContent);
     DateTime now = DateTime.now();
-    await localWrite(syncFileName, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
+    await localWrite(syncFileName, '["${DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString()}", "${deviceId ?? "noDeviceIdYet"}"]');
     _syncList[file] = newContent;
   }
 
@@ -35,8 +36,12 @@ class FileSyncSystem {
 
       _syncList = {};
 
-      DateTime now = DateTime.now();
-      saveFile(syncFileData!.id!, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
+      saveSyncTime();
     }
+  }
+
+  static void saveSyncTime() {
+    DateTime now = DateTime.now();
+    saveFile(syncFileData!.id!, '["${DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString()}", "${deviceId ?? 'noDeviceIdYet'}"]');
   }
 }

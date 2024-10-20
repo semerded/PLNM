@@ -22,9 +22,11 @@ const String categoryFileDefaultContent = defaultContent.categoryData;
 const String parentFolderName = "com.semerded";
 const String folderName = "keeper-of-projects";
 
+String? deviceId;
+
 drive.File? appFolder;
 drive.File? syncFileData;
-String? syncDataContent;
+List<String>? syncDataContent;
 drive.File? projectsFileData;
 Map? projectsDataContent;
 drive.File? taskFileData;
@@ -37,7 +39,7 @@ drive.File? notesFileData;
 List? notesDataContent;
 
 //^ local file data
-String? local_syncFileContent;
+List<String>? local_syncFileContent;
 Map? local_projectsDataContent;
 Map? local_taskDataContent;
 Map? local_settingsDataContent;

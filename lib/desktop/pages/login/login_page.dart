@@ -1,25 +1,24 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:keeper_of_projects/backend/cloud_file_handler.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/file_sync_system.dart';
 import 'package:keeper_of_projects/backend/google_api/desktop_account_link.dart';
 import 'package:keeper_of_projects/backend/google_api/desktop_login.dart';
-import 'package:keeper_of_projects/backend/google_api/google_api.dart';
-import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/backend/local_file_handler.dart';
+import 'package:keeper_of_projects/backend/validate_drive_data.dart';
 import 'package:keeper_of_projects/common/enum/conflict_type.dart';
 import 'package:keeper_of_projects/common/icons/drive_icon.dart';
-import 'package:keeper_of_projects/common/pages/about_page.dart';
 import 'package:keeper_of_projects/common/pages/conflict_page.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/rotate_drive_logo.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
-import 'package:keeper_of_projects/desktop/pages/login/animation/rotate_drive_logo.dart';
 import 'package:keeper_of_projects/desktop/pages/home/home_page.dart';
+import 'package:keeper_of_projects/desktop/pages/login/login_states/logged_in_check_sync.dart';
+import 'package:keeper_of_projects/desktop/pages/login/login_states/logged_in_syncing.dart';
+import 'package:keeper_of_projects/desktop/pages/login/login_states/not_logged_in.dart';
 
 // ignore: camel_case_types
-enum loginStatus { unset, loggedIn, notLoggedIn }
+enum loginStatus { unset, loggedInCheckSync, loggedInSyncing, notLoggedIn }
 
 class DesktopLoginPage extends StatefulWidget {
   const DesktopLoginPage({super.key});
@@ -32,39 +31,59 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> with SingleTickerPr
   loginStatus loggedIn = loginStatus.unset;
   late final RotateDriveLogo rotateDriveLogo;
 
-  void syncSettings() {
-    if (settingsDataContent!["darkmode"]) {
-      Palette.setDarkmode(true);
-    }
+  void desktopAuth() {
+    DesktopOAuthManager().login().then((user) async {
+      setState(() {
+        currentUser = GoogleSignInAccountAdapter(DesktopGoogleSignInAccount.fromJson(user[0], user[1]));
+        if (currentUser != null) {
+          loggedIn = loginStatus.loggedInCheckSync;
+        }
+      });
+      await getData();
+    });
   }
 
   Future<void> getData() async {
-    await backend.init();
-    await backend.checkForConflict().then((conflict) async {
-      if (conflict) {
-        await Navigator.push(
-          context,
-          MaterialPageRoute<ConflictType>(
-            builder: (context) => ConflictPage(
-              localDate: local_syncFileContent!,
-              cloudDate: syncDataContent!,
-            ),
-          ),
-        ).then((conflictSolution) async {
-          if (conflictSolution == ConflictType.local) {
-            await getLocalFileData();
-            backend.syncCloudFileData();
+    await backend.initApi();
+    await backend.isSyncNeeded().then((isSyncNeeded) async {
+      if (!isSyncNeeded) {
+        // sync is not needed because local data is up-to date
+        await getLocalFileData();
+      } else {
+        setState(() {
+          loggedIn = loginStatus.loggedInSyncing;
+        });
+        await backend.checkForConflict().then((isConflict) async {
+          if (isConflict) {
+            await Navigator.push(
+              context,
+              MaterialPageRoute<ConflictType>(
+                builder: (context) => ConflictPage(
+                  localDate: local_syncFileContent![0],
+                  cloudDate: syncDataContent![0],
+                ),
+              ),
+            ).then((conflictSolution) async {
+              if (conflictSolution == ConflictType.local) {
+                await getLocalFileData();
+                getOrRepairDriveFiles(driveApi!);
+
+                syncCloudFileData();
+              } else {
+                await getOrRepairDriveFiles(driveApi!);
+                await getCloudFileData();
+                syncLocalFileData();
+                FileSyncSystem.saveSyncTime();
+              }
+            });
           } else {
-            await backend.getCloudFileData();
+            await getOrRepairDriveFiles(driveApi!);
+
+            await getCloudFileData();
+            await onlyRepairLocalFiles();
             syncLocalFileData();
-            DateTime now = DateTime.now();
-            saveFile(syncFileData!.id!, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
           }
         });
-      } else {
-        await backend.getCloudFileData();
-        await onlyRepairLocalFiles();
-        syncLocalFileData();
       }
     });
     syncSettings();
@@ -83,40 +102,10 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> with SingleTickerPr
     );
   }
 
-  Future<void> mobileAuth() async {
-    googleSignIn.signInSilently();
-
-    googleSignIn.isSignedIn().then(
-          (value) => setState(() {
-            if (!value) {
-              loggedIn = loginStatus.notLoggedIn;
-            }
-          }),
-        );
-
-    googleSignIn.onCurrentUserChanged.listen(
-      (GoogleSignInAccount? account) async {
-        setState(() {
-          currentUser = account;
-          if (currentUser != null) {
-            loggedIn = loginStatus.loggedIn;
-          }
-        });
-      },
-    );
-    await getData();
-  }
-
-  void desktopAuth() {
-    DesktopOAuthManager().login().then((user) async {
-      setState(() {
-        currentUser = GoogleSignInAccountAdapter(DesktopGoogleSignInAccount.fromJson(user[0], user[1]));
-        if (currentUser != null) {
-          loggedIn = loginStatus.loggedIn;
-        }
-      });
-      await getData();
-    });
+  void syncSettings() {
+    if (settingsDataContent!["darkmode"]) {
+      Palette.setDarkmode(true);
+    }
   }
 
   @override
@@ -135,81 +124,12 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> with SingleTickerPr
     return Scaffold(
       backgroundColor: Palette.bg,
       body: () {
-        if (loggedIn == loginStatus.loggedIn) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Hero(
-                    tag: "googleUserCircleAvatar",
-                    child: GoogleUserCircleAvatar(
-                      identity: currentUser!,
-                    ),
-                  ),
-                  Container(
-                    width: 5,
-                  ),
-                  RotationTransition(turns: rotateDriveLogo.animation, child: const DriveIcon()),
-                ],
-              ),
-              AdaptiveText(
-                "Syncing Google Drive",
-                fontWeight: FontWeight.w800,
-                fontSize: 28,
-              ),
-            ],
-          );
+        if (loggedIn == loginStatus.loggedInCheckSync) {
+          LoggedInCheckSync(rotateDriveLogo: rotateDriveLogo);
+        } else if (loggedIn == loginStatus.loggedInSyncing) {
+          LoggedInSyncing(rotateDriveLogo: rotateDriveLogo);
         } else if (loggedIn == loginStatus.notLoggedIn) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Palette.primary,
-                    onPressed: () {
-                      handleSignIn();
-                    },
-                    child: const Icon(Icons.login),
-                  ),
-                  Container(
-                    width: 5,
-                  ),
-                  const DriveIcon(),
-                ],
-              ),
-              AdaptiveText(
-                "Sign In With Google",
-                fontWeight: FontWeight.w800,
-                fontSize: 28,
-              ),
-              ElevatedButton.icon(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<bool>(
-                    builder: (context) => const AboutPage(),
-                  ),
-                ),
-                label: AdaptiveText(
-                  "Why Do I Have To Sign In With Google",
-                  fontSize: 12,
-                ),
-                icon: const Icon(
-                  Icons.info,
-                  size: 24,
-                  color: Palette.primary,
-                ),
-                style: ButtonStyle(
-                  elevation: const WidgetStatePropertyAll(0),
-                  backgroundColor: WidgetStatePropertyAll(Palette.bg),
-                ),
-              ),
-            ],
-          );
+          const NotLoggedIn();
         } else {
           return const Center(
             child: DriveIcon(),

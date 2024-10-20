@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 Future<void> localWrite(String fileName, String content) async {
   final file = await localPath(fileName);
@@ -45,7 +46,7 @@ Future<void> syncLocalFileData() async {
   await localWrite(categoryFileName, jsonEncode(categoryDataContent));
   await localWrite(notesFileName, jsonEncode(notesDataContent));
   DateTime now = DateTime.now();
-  await localWrite(syncFileName, DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString());
+  await localWrite(syncFileName, '["${DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString()}", "${deviceId ?? "noDeviceIdYet"}"]');
 }
 
 Future<void> onlyRepairLocalFiles() async {
@@ -63,4 +64,12 @@ Future<dynamic> readOrRepairLocalFile(String fileName, dynamic defaultContent) a
   } else {
     localWrite(fileName, defaultContent);
   }
+}
+
+Future<void> assignDeviceId() async {
+  Uuid uuid = Uuid();
+  deviceId = uuid.v4();
+  local_syncFileContent![1] = deviceId!;
+  DateTime now = DateTime.now();
+  await localWrite(syncFileName, '["${DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString()}", "${deviceId ?? "noDeviceIdYet"}"]');
 }
