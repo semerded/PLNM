@@ -67,8 +67,36 @@ class _ProjectPageState extends State<ProjectPage> {
                       onUpdated: () {
                         setState(() {});
                       },
+                      actions: [
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundColor: searchBarActive ? Palette.primary : Palette.box1,
+                          child: IconButton(
+                            color: searchBarActive ? Palette.box1 : Palette.primary,
+                            onPressed: () {
+                              setState(() {
+                                searchBarActive = !searchBarActive;
+                                searchBarActive ? FocusScope.of(context).requestFocus(searchBarFocusNode) : FocusManager.instance.primaryFocus?.unfocus();
+                              });
+                            },
+                            icon: const Icon(Icons.search),
+                          ),
+                        ),
+                      ],
                     ),
                   );
+
+                  children.add(
+                    AnimatedSearchBar(
+                      filterController: filterController,
+                      searchBarActive: searchBarActive,
+                      focusNode: searchBarFocusNode,
+                      onUpdated: (value) => setState(() {
+                        searchBarValue = value;
+                      }),
+                    ),
+                  );
+
                   if (MediaQuery.sizeOf(context).width < bigProjectThreshold) {
                     children.addAll([
                       FilterSearchBar(

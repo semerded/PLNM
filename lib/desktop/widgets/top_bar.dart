@@ -9,10 +9,12 @@ typedef OnUpdated = void Function();
 class TopBar extends StatefulWidget {
   final OnUpdated onUpdated;
   final String text;
+  final List<Widget>? actions;
   const TopBar({
     super.key,
     required this.text,
     required this.onUpdated,
+    this.actions,
   });
 
   @override
@@ -36,7 +38,9 @@ class TopBarState extends State<TopBar> {
                 widget.text,
                 fontSize: 24,
               ),
-            )
+            ),
+            const Spacer(),
+            if (widget.actions != null) ...widget.actions!,
           ],
         ),
       ),

@@ -41,6 +41,5 @@ class _EmptyTopBarState extends State<EmptyTopBar> {
         ),
       ),
     );
-    ;
   }
 }

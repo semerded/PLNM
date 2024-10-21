@@ -68,14 +68,6 @@ class _BigProjectViewState extends State<BigProjectView> {
                     setState(() {});
                   },
                 ),
-                AnimatedSearchBar(
-                  filterController: widget.filterController,
-                  searchBarActive: searchBarActive,
-                  focusNode: widget.searchBarFocusNode,
-                  onUpdated: (value) => setState(() {
-                    searchBarValue = value;
-                  }),
-                ),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: projectsContent.length,
