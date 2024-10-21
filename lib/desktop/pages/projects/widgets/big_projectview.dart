@@ -43,6 +43,7 @@ class _BigProjectViewState extends State<BigProjectView> {
   );
   Widget? slideTransitionCard2;
   bool slideTransitionReversed = false;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -109,22 +110,25 @@ class _BigProjectViewState extends State<BigProjectView> {
                           child: ListTile(
                             title: AdaptiveText(project["title"]),
                             onTap: () {
-                              setState(() {
-                                activeProject_BigProjectView = index;
-                                currentActiveProject = projectsContent[index];
-                                currentPartIndex = 0;
+                              if (index != currentIndex) {
+                                setState(() {
+                                  currentIndex = index;
+                                  activeProject_BigProjectView = index;
+                                  currentActiveProject = projectsContent[index];
+                                  currentPartIndex = 0;
 
-                                // slide animation for content of project view card
+                                  // slide animation for content of project view card
 
-                                slideTransitionReversed = !slideTransitionReversed;
-                                if (slideTransitionReversed) {
-                                  slideTransitionCard2 = slideTransitionCard1;
-                                  slideTransitionCard1 = ProjectViewCardContent(key: ValueKey(1));
-                                } else {
-                                  slideTransitionCard1 = slideTransitionCard2!;
-                                  slideTransitionCard2 = ProjectViewCardContent(key: ValueKey(2));
-                                }
-                              });
+                                  slideTransitionReversed = !slideTransitionReversed;
+                                  if (slideTransitionReversed) {
+                                    slideTransitionCard2 = slideTransitionCard1;
+                                    slideTransitionCard1 = ProjectViewCardContent(key: ValueKey(1));
+                                  } else {
+                                    slideTransitionCard1 = slideTransitionCard2!;
+                                    slideTransitionCard2 = ProjectViewCardContent(key: ValueKey(2));
+                                  }
+                                });
+                              }
                             },
                           ),
                         ),

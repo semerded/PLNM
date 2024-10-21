@@ -40,6 +40,7 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
   );
   Widget? slideTransitionCard2;
   bool slideTransitionReversed = false;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -158,21 +159,24 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
                               }(),
                             ),
                             onTap: () {
-                              setState(() {
-                                widget.onIndexChange(index);
-                                currentActivePart = widget.projectData["part"][index];
+                              if (index != currentIndex) {
+                                setState(() {
+                                  currentIndex = index;
+                                  widget.onIndexChange(index);
+                                  currentActivePart = widget.projectData["part"][index];
 
-                                // slide animation for content of project part view card
+                                  // slide animation for content of project part view card
 
-                                slideTransitionReversed = !slideTransitionReversed;
-                                if (slideTransitionReversed) {
-                                  slideTransitionCard2 = slideTransitionCard1;
-                                  slideTransitionCard1 = ProjectPartViewCardContent(key: ValueKey(1));
-                                } else {
-                                  slideTransitionCard1 = slideTransitionCard2!;
-                                  slideTransitionCard2 = ProjectPartViewCardContent(key: ValueKey(2));
-                                }
-                              });
+                                  slideTransitionReversed = !slideTransitionReversed;
+                                  if (slideTransitionReversed) {
+                                    slideTransitionCard2 = slideTransitionCard1;
+                                    slideTransitionCard1 = ProjectPartViewCardContent(key: ValueKey(1));
+                                  } else {
+                                    slideTransitionCard1 = slideTransitionCard2!;
+                                    slideTransitionCard2 = ProjectPartViewCardContent(key: ValueKey(2));
+                                  }
+                                });
+                              }
                             },
                           ),
                         ),
