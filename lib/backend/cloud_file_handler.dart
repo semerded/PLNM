@@ -5,9 +5,11 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/backend/file_sync_system.dart';
 import 'package:keeper_of_projects/backend/google_api/save_file.dart';
 import 'package:keeper_of_projects/backend/json_save_decode.dart';
+import 'package:keeper_of_projects/backend/validate_drive_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 
 Future getCloudFileData() async {
+  await getOrRepairDriveFiles(driveApi!);
   // fetch the content from the projectsFileData file
   drive.Media _media = await driveApi?.files.get(projectsFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
   projectsDataContent = jsonSafeDecode(await utf8.decoder.bind(_media.stream).join());

@@ -21,6 +21,8 @@ Future<bool> isSyncNeeded() async {
   String? checkLocal_syncFileContent = await localRead(syncFileName);
   if (checkLocal_syncFileContent == null) {
     await localWrite(syncFileName, syncFileDefaultContent);
+    local_syncFileContent = List<String>.from(jsonDecode(syncFileDefaultContent));
+    await assignDeviceId();
     return true;
   }
   local_syncFileContent = List<String>.from(jsonDecode(checkLocal_syncFileContent));
@@ -51,6 +53,9 @@ Future<void> _getCloudSyncFileContent() async {
 }
 
 Future<bool> checkForConflict() async {
+  if (local_syncFileContent![0] == 'noSyncYet') {
+    return false;
+  }
   DateTime localTime = DateTime.parse(local_syncFileContent![0]);
   DateTime cloudTime = DateTime.parse(syncDataContent![0]);
 

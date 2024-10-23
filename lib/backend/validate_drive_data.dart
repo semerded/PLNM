@@ -22,6 +22,7 @@ Future<void> getOrRepairDriveSyncDataFile(drive.DriveApi driveApi) async {
   syncFileData = await getFile(syncFileName, driveApi);
   if (syncFileData == null || syncFileData!.name != syncFileName) {
     syncFileData = await createFile(syncFileName, syncFileDefaultContent, driveApi, appFolder!.id);
+    syncFileData = await getFile(syncFileName, driveApi);
   }
 }
 
