@@ -26,6 +26,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   universal_platform: ^1.0.0+1
   window_manager: ^0.4.2
+  intl: ^0.18.0 
 
 
 

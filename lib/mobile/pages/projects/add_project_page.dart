@@ -7,6 +7,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
+import 'package:keeper_of_projects/common/widgets/date_time_picker.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -40,6 +41,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "size": 0.0,
     "part": [],
     "id": Uuid().v4(),
+    "due": null,
   }; // TODO switch "none" to null
 
   final String ddb_catgegoryDefaultText = "Select A Category";
@@ -179,36 +181,37 @@ class _AddProjectPageState extends State<AddProjectPage> {
                     ),
                   ],
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<Map>(
-                        builder: (context) => const AddProjectPartPage(),
-                      ),
-                    ).then(
-                      (value) {
-                        if (value != null) {
-                          print(value);
-                          setState(() {
-                            newProject["part"].add(value);
-                            validate();
-                          });
-                        }
-                      },
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.box3,
-                  ),
-                  label: AdaptiveText("Add Project Part"),
-                  icon: const Icon(
-                    Icons.add,
-                    color: Palette.primary,
-                  ),
-                ),
+                DateTimePicker(),
               ],
             ),
+            // ElevatedButton.icon(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute<Map>(
+            //         builder: (context) => const AddProjectPartPage(),
+            //       ),
+            //     ).then(
+            //       (value) {
+            //         if (value != null) {
+            //           print(value);
+            //           setState(() {
+            //             newProject["part"].add(value);
+            //             validate();
+            //           });
+            //         }
+            //       },
+            //     );
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Palette.box3,
+            //   ),
+            //   label: AdaptiveText("Add Project Part"),
+            //   icon: const Icon(
+            //     Icons.add,
+            //     color: Palette.primary,
+            //   ),
+            // ),
             Expanded(
               child: ListView.builder(
                 itemCount: newProject["part"].length,

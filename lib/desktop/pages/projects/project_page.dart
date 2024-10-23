@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
+import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
 import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/desktop/pages/projects/add_project_page.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/big_projectview.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/filter_search_bar.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/small_projectview.dart';
@@ -54,6 +56,11 @@ class _ProjectPageState extends State<ProjectPage> {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: CustomNavigationRail(
+                leading: AddButtonAnimated(
+                  taskCreated: (value) {},
+                  routTo: AddProjectPage(),
+                  animateWhen: projectsDataContent!["projects"].length == 0,
+                ),
                 onUpdated: () => setState(() {}),
               ),
             ),
@@ -94,6 +101,7 @@ class _ProjectPageState extends State<ProjectPage> {
                       onUpdated: (value) => setState(() {
                         searchBarValue = value;
                       }),
+                      backgroundColor: Palette.box1,
                     ),
                   );
 
