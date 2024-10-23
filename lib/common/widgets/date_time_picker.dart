@@ -18,7 +18,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDateTime ?? DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
 
