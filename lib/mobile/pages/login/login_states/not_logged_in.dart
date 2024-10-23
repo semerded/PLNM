@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
 import 'package:keeper_of_projects/common/icons/drive_icon.dart';
 import 'package:keeper_of_projects/common/pages/about_page.dart';
+import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -18,27 +19,69 @@ class _NotLoggedInState extends State<NotLoggedIn> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const Spacer(
+          flex: 3,
+        ),
+        Image.asset(
+          "assets/images/logo.png",
+          width: 200,
+        ),
+        const SizedBox(
+          height: 100,
+        ),
+        const Spacer(),
+        const AdaptiveText(
+          "Login To Continue",
+          fontWeight: FontWeight.w800,
+          fontSize: 28,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              elevation: 0,
-              backgroundColor: Palette.primary,
-              onPressed: () {
-                handleSignIn();
-              },
-              child: const Icon(Icons.login),
+            AdaptiveIcon(
+              Icons.devices,
+              size: 40,
+              color: Palette.primary,
             ),
-            Container(
-              width: 5,
+            const SizedBox(
+              width: 10,
+            ),
+            AdaptiveIcon(
+              Icons.cloud_sync_sharp,
+              size: 40,
+            ),
+            const SizedBox(
+              width: 10,
             ),
             const DriveIcon(),
           ],
         ),
-        AdaptiveText(
-          "Sign In With Google",
-          fontWeight: FontWeight.w800,
-          fontSize: 28,
+        const SizedBox(
+          height: 50,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 50,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  handleSignIn();
+                },
+                label: AdaptiveText("Login With Google"),
+                icon: Image.asset(
+                  "assets/images/google_logo.png",
+                  width: 28,
+                ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: const BorderSide(color: Palette.primary),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         ElevatedButton.icon(
           onPressed: () => Navigator.push(
@@ -61,6 +104,9 @@ class _NotLoggedInState extends State<NotLoggedIn> {
             backgroundColor: WidgetStatePropertyAll(Palette.bg),
           ),
         ),
+        const SizedBox(
+          height: 50,
+        )
       ],
     );
   }
