@@ -10,6 +10,7 @@ class AnimatedSearchBar extends StatefulWidget {
   final OnUpdated onUpdated;
   final bool searchBarActive;
   int milliseconds;
+  Color? backgroundColor;
   final TextEditingController filterController;
   final FocusNode? focusNode;
 
@@ -18,6 +19,7 @@ class AnimatedSearchBar extends StatefulWidget {
     required this.searchBarActive,
     required this.onUpdated,
     required this.filterController,
+    this.backgroundColor,
     this.milliseconds = 300,
     this.focusNode,
   });
@@ -51,7 +53,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               decoration: InputDecoration(
                 enabledBorder: _border(),
                 focusedBorder: _border(),
-                fillColor: Palette.box3,
+                fillColor: widget.backgroundColor ?? Palette.box3,
                 filled: true,
                 hintText: "Search For Projects",
                 hintStyle: TextStyle(

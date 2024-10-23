@@ -97,7 +97,11 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
           ),
         ),
         selectedIndex: activePage,
-        leading: widget.leading,
+        leading: widget.leading ??
+            FloatingActionButton(
+              child: AdaptiveIcon(Icons.preview_rounded),
+              onPressed: () {},
+            ),
         onDestinationSelected: (int index) {
           if (activePage != index) {
             setState(() {
