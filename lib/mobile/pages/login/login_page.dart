@@ -9,6 +9,7 @@ import 'package:keeper_of_projects/common/icons/drive_icon.dart';
 import 'package:keeper_of_projects/common/pages/conflict_page.dart';
 import 'package:keeper_of_projects/common/widgets/rotate_drive_logo.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/backend/validate_drive_data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
 import 'package:keeper_of_projects/mobile/pages/home/home_page.dart';
 import 'package:keeper_of_projects/mobile/pages/login/login_states/logged_in_check_sync.dart';
@@ -82,14 +83,19 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
             ).then((conflictSolution) async {
               if (conflictSolution == ConflictType.local) {
                 await getLocalFileData();
+                getOrRepairDriveFiles(driveApi!);
+
                 syncCloudFileData();
               } else {
+                await getOrRepairDriveFiles(driveApi!);
                 await getCloudFileData();
                 syncLocalFileData();
                 FileSyncSystem.saveSyncTime();
               }
             });
           } else {
+            await getOrRepairDriveFiles(driveApi!);
+
             await getCloudFileData();
             await onlyRepairLocalFiles();
             syncLocalFileData();
