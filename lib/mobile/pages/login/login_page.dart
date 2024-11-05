@@ -66,6 +66,9 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
       if (!isSyncNeeded) {
         // sync is not needed because local data is up-to date
         await getLocalFileData();
+        getOrRepairDriveFolders(driveApi!).then((value) {
+          getOrRepairDriveFiles(driveApi!);
+        });
       } else {
         setState(() {
           loggedIn = loginStatus.loggedInSyncing;
@@ -83,10 +86,13 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
             ).then((conflictSolution) async {
               if (conflictSolution == ConflictType.local) {
                 await getLocalFileData();
-                getOrRepairDriveFiles(driveApi!);
+                getOrRepairDriveFolders(driveApi!).then((value) {
+                  getOrRepairDriveFiles(driveApi!);
+                });
 
                 syncCloudFileData();
               } else {
+                await getOrRepairDriveFolders(driveApi!);
                 await getOrRepairDriveFiles(driveApi!);
                 await getCloudFileData();
                 syncLocalFileData();
@@ -94,6 +100,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
               }
             });
           } else {
+            await getOrRepairDriveFolders(driveApi!);
             await getOrRepairDriveFiles(driveApi!);
 
             await getCloudFileData();
