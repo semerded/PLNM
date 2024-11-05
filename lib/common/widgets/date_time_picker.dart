@@ -3,8 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
+typedef OnDatePicked = void Function(DateTime? dateTime);
+
 class DateTimePicker extends StatefulWidget {
-  const DateTimePicker({super.key});
+  final OnDatePicked onDatePicked;
+  const DateTimePicker({
+    super.key,
+    required this.onDatePicked,
+  });
 
   @override
   State<DateTimePicker> createState() => _DateTimePickerState();
@@ -39,6 +45,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             pickedTime.hour,
             pickedTime.minute,
           );
+          widget.onDatePicked(_selectedDateTime);
         });
       }
     }
@@ -48,6 +55,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   void _clearDateTime() {
     setState(() {
       _selectedDateTime = null;
+      widget.onDatePicked(_selectedDateTime);
     });
   }
 
