@@ -6,9 +6,11 @@ import 'package:keeper_of_projects/data.dart';
 typedef OnDatePicked = void Function(DateTime? dateTime);
 
 class DateTimePicker extends StatefulWidget {
+  final DateTime? defaultValue;
   final OnDatePicked onDatePicked;
   const DateTimePicker({
     super.key,
+    this.defaultValue,
     required this.onDatePicked,
   });
 
@@ -17,9 +19,13 @@ class DateTimePicker extends StatefulWidget {
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
-  DateTime? _selectedDateTime; // Nullable DateTime to handle "No Due Date"
+  late DateTime? _selectedDateTime; // Nullable DateTime to handle "No Due Date"
 
-  // Function to open DatePicker and select a date
+  void initState() {
+    super.initState();
+    _selectedDateTime = widget.defaultValue;
+  }
+
   Future<void> _pickDateAndTime(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
