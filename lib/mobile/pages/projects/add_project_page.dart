@@ -181,37 +181,41 @@ class _AddProjectPageState extends State<AddProjectPage> {
                     ),
                   ],
                 ),
-                DateTimePicker(),
+                DateTimePicker(
+                  onDatePicked: (dateTime) {
+                    newProject["due"] = dateTime.toString();
+                  },
+                ),
               ],
             ),
-            // ElevatedButton.icon(
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute<Map>(
-            //         builder: (context) => const AddProjectPartPage(),
-            //       ),
-            //     ).then(
-            //       (value) {
-            //         if (value != null) {
-            //           print(value);
-            //           setState(() {
-            //             newProject["part"].add(value);
-            //             validate();
-            //           });
-            //         }
-            //       },
-            //     );
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: Palette.box3,
-            //   ),
-            //   label: AdaptiveText("Add Project Part"),
-            //   icon: const Icon(
-            //     Icons.add,
-            //     color: Palette.primary,
-            //   ),
-            // ),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<Map>(
+                    builder: (context) => const AddProjectPartPage(),
+                  ),
+                ).then(
+                  (value) {
+                    if (value != null) {
+                      print(value);
+                      setState(() {
+                        newProject["part"].add(value);
+                        validate();
+                      });
+                    }
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Palette.box3,
+              ),
+              label: AdaptiveText("Add Project Part"),
+              icon: const Icon(
+                Icons.add,
+                color: Palette.primary,
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: newProject["part"].length,
