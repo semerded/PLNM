@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
+import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
@@ -108,14 +109,19 @@ class _ProjectViewState extends State<ProjectView> {
                       subtitle: RichText(
                         text: TextSpan(
                           children: [
-                            checkCategoryValidity(project["category"])
-                                ? const TextSpan()
-                                : const TextSpan(
-                                    text: "[!category not found!] ",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
+                            if (!checkCategoryValidity(project["category"]))
+                              const TextSpan(
+                                text: "[!category not found!] • ",
+                                style: TextStyle(color: Colors.red),
+                              ),
                             TextSpan(
-                              text: project["description"],
+                              text: deadlineChecker(dueDateFormater.parse(project["due"])),
+                              style: TextStyle(
+                                color: overdue(dueDateFormater.parse(project["due"])) ? Colors.red : Palette.text,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "${project["description"].length == 0 ? '' : ' • '}${project["description"]}",
                               style: TextStyle(
                                 color: Palette.subtext,
                                 fontSize: 13,
