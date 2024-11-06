@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:intl/intl.dart';
 
 import 'package:universal_platform/universal_platform.dart';
 
@@ -11,6 +12,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 );
 
 dynamic currentUser;
+DateFormat dueDateFormater = DateFormat('dd-MM-yy HH:mm');
 
 const double bigProjectThreshold = 750.0;
 const double bigProjectPartThreshold = 1100;

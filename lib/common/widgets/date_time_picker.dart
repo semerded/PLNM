@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
-typedef OnDatePicked = void Function(DateTime? dateTime);
+typedef OnDatePicked = void Function(String? dateTime);
 
 class DateTimePicker extends StatefulWidget {
   final DateTime? defaultValue;
@@ -51,7 +51,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
             pickedTime.hour,
             pickedTime.minute,
           );
-          widget.onDatePicked(_selectedDateTime);
+          print(_selectedDateTime.toString());
+          widget.onDatePicked(dueDateFormater.format(_selectedDateTime!));
         });
       }
     }
@@ -61,21 +62,20 @@ class _DateTimePickerState extends State<DateTimePicker> {
   void _clearDateTime() {
     setState(() {
       _selectedDateTime = null;
-      widget.onDatePicked(_selectedDateTime);
+      widget.onDatePicked(null);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     // Date and time format using intl package
-    final DateFormat formatter = DateFormat('dd-MM-yy HH:mm');
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Display selected date and time or "No Due Date"
         AdaptiveText(
-          _selectedDateTime != null ? '${formatter.format(_selectedDateTime!)}' : 'No Due Date',
+          _selectedDateTime != null ? dueDateFormater.format(_selectedDateTime!) : 'No Due Date',
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -83,14 +83,14 @@ class _DateTimePickerState extends State<DateTimePicker> {
             // Button to open DatePicker and TimePicker
             IconButton(
               onPressed: () => _pickDateAndTime(context),
-              icon: Icon(Icons.date_range_outlined),
+              icon: const Icon(Icons.date_range_outlined),
               style: IconButton.styleFrom(backgroundColor: Palette.secondary),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             // Button to clear selected date and time (set "No Due Date")
             IconButton(
               onPressed: _clearDateTime,
-              icon: Icon(Icons.clear),
+              icon: const Icon(Icons.clear),
               style: IconButton.styleFrom(backgroundColor: Colors.red),
             ),
           ],

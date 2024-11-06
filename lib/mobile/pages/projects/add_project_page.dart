@@ -182,8 +182,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
                   ],
                 ),
                 DateTimePicker(
-                  onDatePicked: (dateTime) {
-                    newProject["due"] = dateTime.toString();
+                  onDatePicked: (String? dateTime) {
+                    newProject["due"] = dateTime;
                   },
                 ),
               ],

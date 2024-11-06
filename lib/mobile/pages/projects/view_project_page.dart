@@ -5,6 +5,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
 import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
+import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
@@ -244,6 +245,16 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                             )
                           ],
                         ),
+                        if (widget.projectData["due"] != null)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Due: ${widget.projectData["due"]} | ${deadlineChecker(dueDateFormater.parse(widget.projectData["due"]))}",
+                              style: TextStyle(
+                                color: overdue(dueDateFormater.parse(widget.projectData["due"])) ? Colors.red : Palette.text,
+                              ),
+                            ),
+                          ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: AdaptiveText(
@@ -255,6 +266,10 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                     )
                   : Container(),
             ),
+
+            ///////////////////////
+            // project part list //
+            ///////////////////////
             Expanded(
               child: ListView.builder(
                 itemCount: widget.projectData["part"].length,
