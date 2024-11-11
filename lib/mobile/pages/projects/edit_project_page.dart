@@ -3,6 +3,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
+import 'package:keeper_of_projects/common/widgets/date_time_picker.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
@@ -155,35 +156,41 @@ class _EditProjectPageState extends State<EditProjectPage> {
                     ),
                   ],
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<Map>(
-                        builder: (context) => const AddProjectPartPage(),
-                      ),
-                    ).then(
-                      (value) {
-                        if (value != null) {
-                          print(value);
-                          setState(() {
-                            updatedProjectData["part"].add(value);
-                          });
-                          validate();
-                        }
-                      },
-                    );
+                DateTimePicker(
+                  defaultValue: widget.projectData["due"] == null ? null : dueDateFormater.parse(widget.projectData["due"]),
+                  onDatePicked: (String? dateTime) {
+                    updatedProjectData["due"] = dateTime;
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.box3,
-                  ),
-                  label: AdaptiveText("Add Project Part"),
-                  icon: const Icon(
-                    Icons.add,
-                    color: Palette.primary,
-                  ),
                 ),
               ],
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<Map>(
+                    builder: (context) => const AddProjectPartPage(),
+                  ),
+                ).then(
+                  (value) {
+                    if (value != null) {
+                      print(value);
+                      setState(() {
+                        updatedProjectData["part"].add(value);
+                      });
+                      validate();
+                    }
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Palette.box3,
+              ),
+              label: AdaptiveText("Add Project Part"),
+              icon: const Icon(
+                Icons.add,
+                color: Palette.primary,
+              ),
             ),
             Expanded(
               child: ListView.builder(

@@ -114,12 +114,13 @@ class _ProjectViewState extends State<ProjectView> {
                                 text: "[!category not found!] • ",
                                 style: TextStyle(color: Colors.red),
                               ),
-                            TextSpan(
-                              text: deadlineChecker(dueDateFormater.parse(project["due"])),
-                              style: TextStyle(
-                                color: overdue(dueDateFormater.parse(project["due"])) ? Colors.red : Palette.text,
+                            if (project["due"] != null)
+                              TextSpan(
+                                text: deadlineChecker(dueDateFormater.parse(project["due"])),
+                                style: TextStyle(
+                                  color: overdue(dueDateFormater.parse(project["due"])) ? Colors.red : Palette.text,
+                                ),
                               ),
-                            ),
                             TextSpan(
                               text: "${project["description"].length == 0 ? '' : ' • '}${project["description"]}",
                               style: TextStyle(
