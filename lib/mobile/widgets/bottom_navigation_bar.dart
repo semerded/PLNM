@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:keeper_of_projects/common/animations/page_swipe_route.dart';
+import 'package:keeper_of_projects/common/enum/direction.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/home/home_page.dart';
 import 'package:keeper_of_projects/mobile/pages/notes/notes_page.dart';
@@ -30,17 +32,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         primaryColor: Colors.red,
       ),
       child: BottomNavigationBar(
-        currentIndex: activePage!,
+        currentIndex: activePage,
         onTap: (int value) {
           if (activePage != value) {
+            final Direction direction = activePage > value ? Direction.right : Direction.left;
             activePage = value;
-            Navigator.push(
-              context,
-              MaterialPageRoute<bool>(
-                builder: (context) => bottomNavigationBarListing[value],
-              ),
-            ).then((callback) {
-              if (callback != null && callback) {}
+            Navigator.of(context).push(pageSwipeRoute(bottomNavigationBarListing[value], direction)).then((callback) {
+              if (callback != null) {}
             });
           }
         },
