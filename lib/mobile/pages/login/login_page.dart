@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keeper_of_projects/backend/cloud_file_handler.dart';
@@ -117,6 +119,12 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
     projectsContent = projectsDataContent!["projects"];
     ideasContent = projectsDataContent!["ideas"];
     taskContent = taskDataContent!["task"];
+
+    // everySecondUpdate = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    //   setState(() {
+    //     dateTimeNow = DateTime.now();
+    //   });
+    // }); //#001
 
     Navigator.push(
       context,

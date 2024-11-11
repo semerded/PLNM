@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/cloud_file_handler.dart';
 import 'package:keeper_of_projects/backend/data.dart';
@@ -100,6 +102,10 @@ class _DesktopLoginPageState extends State<DesktopLoginPage> with SingleTickerPr
     projectsContent = projectsDataContent!["projects"];
     ideasContent = projectsDataContent!["ideas"];
     taskContent = taskDataContent!["task"];
+
+    everySecondUpdate = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {});
+    }); //#001
 
     Navigator.push(
       context,
