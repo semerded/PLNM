@@ -9,7 +9,7 @@ import 'package:keeper_of_projects/backend/local_file_handler.dart';
 import 'package:keeper_of_projects/common/enum/conflict_type.dart';
 import 'package:keeper_of_projects/common/icons/drive_icon.dart';
 import 'package:keeper_of_projects/common/pages/conflict_page.dart';
-import 'package:keeper_of_projects/common/widgets/rotate_drive_logo.dart';
+import 'package:keeper_of_projects/common/animations/rotate_drive_logo.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/backend/validate_drive_data.dart';
 import 'package:keeper_of_projects/backend/backend.dart' as backend;
