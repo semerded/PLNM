@@ -5,7 +5,7 @@ String deadlineChecker(DateTime? deadline) {
   DateTime currentDateTime = DateTime.now();
   Duration diff = deadline.difference(currentDateTime);
 
-  String prefix = diff.isNegative ? "Overdue by" : "In";
+  String prefix = diff.isNegative ? "Overdue:" : "In";
 
   if (diff.inHours.abs() > 24) {
     return "$prefix ${diff.inDays.abs()}d & ${diff.inHours.abs() % 24}h";
