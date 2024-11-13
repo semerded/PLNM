@@ -8,10 +8,10 @@ PLNM (aka Plan em!)
 <ul>
   <li><a href="#li1">Google Drive as database</a></li>
   <li><a href="#li2">Customisable home page</a></li>
-  <li><a href="li3">Tasks</a></li>
-  <li><a href="li4">Projects + ideas</a></li>
-  <li><a href="li5">Notes + note templates</a></li>
-  <li><a href="li6">Routines (comming soon)</a></li>
+  <li><a href="#li3">Tasks</a></li>
+  <li><a href="#li4">Projects + ideas</a></li>
+  <li><a href="#li5">Notes + note templates</a></li>
+  <li><a href="#li6">Routines (comming soon)</a></li>
 </ul>
 <hr>
 <h2 id="li1">Google Drive as database</h2>
