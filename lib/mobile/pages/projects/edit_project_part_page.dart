@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
+import 'package:keeper_of_projects/common/widgets/date_time_picker.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/add_task.dart';
@@ -92,29 +93,35 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
                       }),
                 ),
                 Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      addTask(context).then(
-                        (value) {
-                          if (value != null) {
-                            setState(() {
-                              updatedPart["tasks"].add(value);
-                            });
-                          }
-                        },
-                      );
+                  child: DateTimePicker(
+                    defaultValue: widget.partData["due"] == null ? null : dueDateFormater.parse(widget.partData["due"]),
+                    onDatePicked: (String? dateTime) {
+                      updatedPart["due"] = dateTime;
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Palette.box3,
-                    ),
-                    label: AdaptiveText("Add Task"),
-                    icon: const Icon(
-                      Icons.add,
-                      color: Palette.primary,
-                    ),
                   ),
                 ),
               ],
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                addTask(context).then(
+                  (value) {
+                    if (value != null) {
+                      setState(() {
+                        updatedPart["tasks"].add(value);
+                      });
+                    }
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Palette.box3,
+              ),
+              label: AdaptiveText("Add Task"),
+              icon: const Icon(
+                Icons.add,
+                color: Palette.primary,
+              ),
             ),
             Expanded(
               child: ListView.builder(
