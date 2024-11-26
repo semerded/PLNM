@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
@@ -201,9 +202,27 @@ class _EditProjectPageState extends State<EditProjectPage> {
                     color: Palette.box3,
                     child: ListTile(
                       title: AdaptiveText(part["title"]),
-                      subtitle: Text(
-                        "${part["tasks"].length} • ${part["description"]}",
-                        style: TextStyle(color: Palette.subtext),
+                      subtitle: RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Palette.subtext),
+                          text: "${part["tasks"].length} • ",
+                          children: [
+                            if (part["due"] != null)
+                              TextSpan(
+                                text: "${deadlineChecker(dueDateFormater.parse(part["due"]))} • ",
+                                style: TextStyle(
+                                  color: overdue(dueDateFormater.parse(part["due"])) ? Colors.red : Palette.subtext,
+                                ),
+                              ),
+                            TextSpan(
+                              text: "${part["description"] != "" ? part["description"] : "no description"}",
+                              style: TextStyle(
+                                color: Palette.subtext,
+                                fontStyle: part["description"] != "" ? FontStyle.normal : FontStyle.italic,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,

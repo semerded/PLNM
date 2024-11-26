@@ -285,6 +285,13 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           style: TextStyle(color: Palette.subtext),
                           text: "${part["tasks"].length} • ",
                           children: [
+                            if (part["due"] != null)
+                              TextSpan(
+                                text: "${deadlineChecker(dueDateFormater.parse(part["due"]))} • ",
+                                style: TextStyle(
+                                  color: overdue(dueDateFormater.parse(part["due"])) ? Colors.red : Palette.subtext,
+                                ),
+                              ),
                             TextSpan(
                               text: "${part["description"] != "" ? part["description"] : "no description"}",
                               style: TextStyle(
