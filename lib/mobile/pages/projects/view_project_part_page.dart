@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
+import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/icon.dart';
 import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/view_due_date.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/edit_project_part_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
@@ -178,6 +180,7 @@ class _ProjectPartViewPageState extends State<ProjectPartViewPage> {
                 )
               ],
             ),
+            ViewDueDate(data: widget.part),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: AdaptiveText(
