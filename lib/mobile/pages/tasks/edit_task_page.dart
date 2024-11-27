@@ -4,11 +4,11 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
-import 'package:keeper_of_projects/common/widgets/select_priority.dart';
-import 'package:keeper_of_projects/common/widgets/tasks/add_task.dart';
-import 'package:keeper_of_projects/common/widgets/tasks/edit_task.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/tasks/add_task.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/tasks/edit_task.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:deepcopy/deepcopy.dart';
 

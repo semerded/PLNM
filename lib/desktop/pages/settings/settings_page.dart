@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/settings/widgets/settings_content.dart';
 import 'package:keeper_of_projects/desktop/widgets/empty_top_bar.dart';

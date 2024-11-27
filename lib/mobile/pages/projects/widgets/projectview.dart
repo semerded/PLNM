@@ -5,8 +5,8 @@ import 'package:keeper_of_projects/common/functions/check_category_validity.dart
 import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/view_project_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

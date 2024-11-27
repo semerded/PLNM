@@ -3,8 +3,8 @@ import 'package:keeper_of_projects/common/functions/filter/filter_category_toggl
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/widgets/menu_items_header.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 typedef OnUpdated = void Function();

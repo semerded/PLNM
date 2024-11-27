@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/search_index_from_maplist_with_id.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 

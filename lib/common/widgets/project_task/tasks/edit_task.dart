@@ -1,21 +1,16 @@
+import 'package:deepcopy/deepcopy.dart';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
-import 'package:keeper_of_projects/common/widgets/select_priority.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
-Future addTask(BuildContext context) {
-  Map newTask = {
-    "title": "",
-    "description": "",
-    "priority": "none",
-    "completed": false,
-  };
+Future editTask(BuildContext context, Map initTask) {
+  Map editedTask = Map.from(initTask.deepcopy());
 
+  bool validTitle = initTask.length >= 2;
   String ddb_priority_value = projectPriorities.keys.first;
-
-  bool validTitle = false;
 
   final TextEditingController descriptionController = TextEditingController();
   return showDialog(
@@ -31,11 +26,12 @@ Future addTask(BuildContext context) {
                 child: Column(
                   children: [
                     TitleTextField(
+                      initialValue: editedTask["title"],
                       onChanged: (value) {
                         setState(
                           () {
                             validTitle = value.length >= 2;
-                            newTask["title"] = value;
+                            editedTask["title"] = value;
                           },
                         );
                       },
@@ -43,10 +39,11 @@ Future addTask(BuildContext context) {
                     ),
                     DescriptionTextField(
                       validTitle: validTitle,
+                      initialValue: editedTask["description"],
                       onChanged: (value) {
                         setState(
                           () {
-                            newTask["description"] = value;
+                            editedTask["description"] = value;
                           },
                         );
                       },
@@ -56,31 +53,30 @@ Future addTask(BuildContext context) {
                         value: ddb_priority_value,
                         onUpdated: (value) {
                           setState(() {
-                            newTask["priority"] = value;
+                            editedTask["priority"] = value;
                           });
                         }),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        if (newTask["title"] != "") {
-                          setState(() {
-                            Navigator.pop(context, newTask);
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: newTask["title"] != "" ? Colors.green : Colors.red,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(26),
-                        ),
-                      ),
-                      label: const Text("Add subtask"),
-                      icon: const Icon(Icons.add),
-                    )
                   ],
                 ),
               )
             ],
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
+              child: AdaptiveText("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (validTitle) {
+                  Navigator.pop(context, editedTask);
+                }
+              },
+              child: Text("Save", style: TextStyle(color: validTitle ? Palette.primary : Palette.subtext)),
+            ),
+          ],
         ),
       );
     },

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
-import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
-import 'package:keeper_of_projects/common/widgets/tasks/task_pop_up_menu.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_pop_up_menu.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/big_project_part_view.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/filter_search_bar.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/main_page_pop_scope.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/notes/add_note_page.dart';
 import 'package:keeper_of_projects/mobile/widgets/bottom_navigation_bar.dart';

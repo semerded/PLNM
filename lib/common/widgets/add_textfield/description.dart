@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/common/widgets/textfield_border.dart';
+import 'package:keeper_of_projects/common/widgets/base/textfield_border.dart';
 import 'package:keeper_of_projects/data.dart';
 
 typedef OnChanged = void Function(String value);

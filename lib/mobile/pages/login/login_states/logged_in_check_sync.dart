@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/widgets.dart';
 import 'package:keeper_of_projects/common/icons/drive_icon.dart';
 import 'package:keeper_of_projects/common/animations/rotate_drive_logo.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class LoggedInCheckSync extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/google_api/google_api.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/login/login_page.dart';
 

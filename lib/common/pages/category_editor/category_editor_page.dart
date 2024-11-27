@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/widgets/add_category_dialog.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/widgets/edit_category_dialog.dart';
-import 'package:keeper_of_projects/common/widgets/icon.dart';
-import 'package:keeper_of_projects/common/widgets/text.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class CategoryEditorPage extends StatefulWidget {
