@@ -94,7 +94,7 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
                 ),
                 Expanded(
                   child: DateTimePicker(
-                    defaultValue: widget.partData["due"] == null ? null : dueDateFormater.parse(widget.partData["due"]),
+                    defaultValue: widget.partData["due"] == null ? null : dueDateFormatter.parse(widget.partData["due"]),
                     onDatePicked: (String? dateTime) {
                       updatedPart["due"] = dateTime;
                     },

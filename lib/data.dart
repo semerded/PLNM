@@ -14,7 +14,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
 );
 
 dynamic currentUser;
-DateFormat dueDateFormater = DateFormat('dd-MM-yy HH:mm');
+DateFormat dueDateFormatter = DateFormat('dd-MM-yy HH:mm');
 Timer? everySecondUpdate; //#001
 
 const double bigProjectThreshold = 750.0;

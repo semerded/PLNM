@@ -249,9 +249,9 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Due: ${widget.projectData["due"]} | ${deadlineChecker(dueDateFormater.parse(widget.projectData["due"]))}",
+                              "Due: ${widget.projectData["due"]} | ${deadlineChecker(dueDateFormatter.parse(widget.projectData["due"]))}",
                               style: TextStyle(
-                                color: overdue(dueDateFormater.parse(widget.projectData["due"])) ? Colors.red : Palette.text,
+                                color: overdue(dueDateFormatter.parse(widget.projectData["due"])) ? Colors.red : Palette.text,
                               ),
                             ),
                           ),
@@ -287,9 +287,9 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                           children: [
                             if (part["due"] != null)
                               TextSpan(
-                                text: "${deadlineChecker(dueDateFormater.parse(part["due"]))} • ",
+                                text: "${deadlineChecker(dueDateFormatter.parse(part["due"]))} • ",
                                 style: TextStyle(
-                                  color: overdue(dueDateFormater.parse(part["due"])) ? Colors.red : Palette.subtext,
+                                  color: overdue(dueDateFormatter.parse(part["due"])) ? Colors.red : Palette.subtext,
                                 ),
                               ),
                             TextSpan(

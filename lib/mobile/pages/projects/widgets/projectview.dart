@@ -116,9 +116,9 @@ class _ProjectViewState extends State<ProjectView> {
                               ),
                             if (project["due"] != null)
                               TextSpan(
-                                text: deadlineChecker(dueDateFormater.parse(project["due"])),
+                                text: deadlineChecker(dueDateFormatter.parse(project["due"])),
                                 style: TextStyle(
-                                  color: overdue(dueDateFormater.parse(project["due"])) ? Colors.red : Palette.subtext,
+                                  color: overdue(dueDateFormatter.parse(project["due"])) ? Colors.red : Palette.subtext,
                                 ),
                               ),
                             TextSpan(
