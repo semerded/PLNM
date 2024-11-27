@@ -11,6 +11,7 @@ import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/view_due_date.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/edit_project_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/view_project_part_page.dart';
@@ -245,16 +246,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                             )
                           ],
                         ),
-                        if (widget.projectData["due"] != null)
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Due: ${widget.projectData["due"]} | ${deadlineChecker(dueDateFormatter.parse(widget.projectData["due"]))}",
-                              style: TextStyle(
-                                color: overdue(dueDateFormatter.parse(widget.projectData["due"])) ? Colors.red : Palette.text,
-                              ),
-                            ),
-                          ),
+                        ViewDueDate(data: widget.projectData),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: AdaptiveText(
