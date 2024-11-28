@@ -10,6 +10,9 @@ import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_vis_completion.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/vis_category.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/vis_priority.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
 import 'package:keeper_of_projects/mobile/pages/tasks/edit_task_page.dart';
@@ -105,116 +108,26 @@ class _TaskViewPageState extends State<TaskViewPage> {
                   ? Column(
                       children: [
                         Row(
-                          //^ priority visualization
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    showInfoDialog(
-                                      context,
-                                      "Task Prioirty: tasks have different priorities. A task has a general priority while its project tasks can have different priorities that are not linked to the general priority.",
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.taskData["priority"]]),
-                                  child: Text(
-                                    "priority: ${widget.taskData["priority"]}",
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            //^ category visualization
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                                child: checkCategoryValidity(widget.taskData["category"])
-                                    ? ElevatedButton(
-                                        onPressed: () {
-                                          showInfoDialog(
-                                            context,
-                                            "Project Category: The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
-                                          );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Palette.bg,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0),
-                                            side: BorderSide(color: Palette.text),
-                                          ),
-                                        ),
-                                        child: AdaptiveText("category: ${widget.taskData["category"]}"),
-                                      )
-                                    : ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0),
-                                            side: BorderSide(color: Palette.text),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          if (await showConfirmDialog(context, "Add '${widget.taskData["category"]}' to categories?")) {
-                                            setState(() {
-                                              String category = widget.taskData["category"];
-                                              categoryDataContent!.add(category);
-                                              categoryFilter[category] = true;
-                                              categoryDataNeedSync = true;
-                                              fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
-                                              setStateOnPagePop = true;
-                                            });
-                                          }
-                                        },
-                                        child: AdaptiveText("Unknown Category: ${widget.taskData["category"]}"),
-                                      ),
-                              ),
-                            )
+                            VisPriority(data: widget.taskData),
+                            VisCategory(
+                                data: widget.taskData,
+                                onUpdated: () => setState(() {
+                                      setStateOnPagePop = true;
+                                    })),
                           ],
                         ),
                         Row(
                           children: [
-                            //^ completion visualization
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: widget.taskData["subTask"].length == 0
-                                    ? ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            widget.taskData["completed"] = !widget.taskData["completed"];
-                                            setStateOnPagePop = true;
-                                            fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: widget.taskData["completed"] ? Colors.green : Palette.bg,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0),
-                                            side: BorderSide(color: Palette.text),
-                                          ),
-                                        ),
-                                        child: AdaptiveText("complete${widget.taskData["completed"] ? "d" : ""}"),
-                                      )
-                                    : ProgressElevatedButton(
-                                        onPressed: () {
-                                          showInfoDialog(
-                                            context,
-                                            "Project completion, This shows how much of the project tasks have been completed.",
-                                          );
-                                        },
-                                        progress: taskCompletion,
-                                        progressColor: Colors.green,
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Palette.bg,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0),
-                                            side: BorderSide(color: Palette.text),
-                                          ),
-                                        ),
-                                        child: AdaptiveText("completion: ${(taskCompletion * 100).toInt()}"),
-                                      ),
-                              ),
+                            TaskVisCompletion(
+                              data: widget.taskData,
+                              taskCompletion: taskCompletion,
+                              subTaskLength: widget.taskData["subTask"].length,
+                              onUpdated: () => setState(() {
+                                widget.taskData["completed"] = !widget.taskData["completed"];
+                                fileSyncSystem.syncFile(taskFileData!, jsonEncode(taskDataContent));
+                                setStateOnPagePop = true;
+                              }),
                             )
                           ],
                         ),

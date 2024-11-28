@@ -12,6 +12,10 @@ import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/view_due_date.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/vis_category.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/vis_completion.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/vis_priority.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/vis_project_size.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/edit_project_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/view_project_part_page.dart';
@@ -113,137 +117,19 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                   ? Column(
                       children: [
                         Row(
-                          //^ priority visualization
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    showInfoDialog(
-                                      context,
-                                      "Project Prioirty: projects have different priorities. A project has a general priority while its project parts can have different priorities that are not linked to the general priority.",
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(backgroundColor: projectPriorities[widget.projectData["priority"]]),
-                                  child: Text(
-                                    "priority: ${widget.projectData["priority"]}",
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            //^ category visualisation
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                                child: checkCategoryValidity(widget.projectData["category"])
-                                    ? ElevatedButton(
-                                        onPressed: () {
-                                          showInfoDialog(
-                                            context,
-                                            "Project Category: The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
-                                          );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Palette.bg,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0),
-                                            side: BorderSide(color: Palette.text),
-                                          ),
-                                        ),
-                                        child: AdaptiveText("category: ${widget.projectData["category"]}"),
-                                      )
-                                    : ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18.0),
-                                            side: BorderSide(color: Palette.text),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          if (await showConfirmDialog(context, "Add '${widget.projectData["category"]}' to categories?")) {
-                                            setState(() {
-                                              String category = widget.projectData["category"];
-                                              categoryDataContent!.add(category);
-                                              categoryFilter[category] = true;
-                                              categoryDataNeedSync = true;
-                                              fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
-                                              setStateOnPagePop = true;
-                                            });
-                                          }
-                                        },
-                                        child: AdaptiveText("Unknown Category: ${widget.projectData["category"]}"),
-                                      ),
-                              ),
-                            )
+                            VisPriority(data: widget.projectData),
+                            VisCategory(
+                                data: widget.projectData,
+                                onUpdated: () => setState(() {
+                                      setStateOnPagePop = true;
+                                    }))
                           ],
                         ),
                         Row(
-                          //^ project size visualisation
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8, right: 8),
-                                child: ProgressElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Palette.bg,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: BorderSide(color: Palette.text),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    showInfoDialog(
-                                      context,
-                                      "Project Size: Shows the size of the project, the description converts a percental scale to something more readable. The background shows the percental scale.",
-                                    );
-                                  },
-                                  progress: () {
-                                    int size = widget.projectData["size"];
-                                    return size.toDouble() / 100;
-                                  }(),
-                                  progressColor: Palette.primary,
-                                  child: Text(
-                                    () {
-                                      List<String> currentProjectSizeDescription = settingsDataContent!["funnyProjectSize"] ? projectSizeDescriptionAlternative : projectSizeDescription;
-                                      if (widget.projectData["size"] == 0) {
-                                        return currentProjectSizeDescription[0];
-                                      }
-                                      double value = ((widget.projectData["size"] - 1) / projectSizeDescriptionSubdivisionNumber) + 1;
-                                      return currentProjectSizeDescription[value.toInt()];
-                                    }(),
-                                    style: TextStyle(color: Palette.text),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            //^ completion visualisation
-                            Expanded(
-                              child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: () {
-                                    return ProgressElevatedButton(
-                                      onPressed: () {
-                                        showInfoDialog(
-                                          context,
-                                          "Project completion, This shows how much of the project parts have been completed.",
-                                        );
-                                      },
-                                      progress: projectCompletion,
-                                      progressColor: Colors.green,
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Palette.bg,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(18.0),
-                                          side: BorderSide(color: Palette.text),
-                                        ),
-                                      ),
-                                      child: AdaptiveText("completion: ${(projectCompletion * 100).toInt()}"),
-                                    );
-                                  }()),
-                            )
+                            VisProjectSize(data: widget.projectData),
+                            VisCompletion(projectCompletion: projectCompletion),
                           ],
                         ),
                         ViewDueDate(data: widget.projectData),
@@ -313,12 +199,12 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                         ).then(
                           (callback) {
                             if (callback != null && callback) {
-                              fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                              // fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
                               setStateOnPagePop = true;
                             }
                             setState(() {
                               partCompletion = calculateCompletion(part["tasks"]);
-                              if (!partCompletion.isNaN) {
+                              if (!partCompletion.isNaN && part["tasks"].length > 0) {
                                 part["completed"] = partCompletion == 1.0;
                               }
                               projectCompletion = calculateCompletion(widget.projectData["part"]);
