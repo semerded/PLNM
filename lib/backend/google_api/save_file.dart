@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/google_api/http_client.dart';
 import 'package:keeper_of_projects/data.dart';
 import "package:googleapis/drive/v3.dart" as drive;
@@ -23,5 +24,8 @@ Future<void> saveFile(String fileId, String newContent) async {
     print('File updated: ${response.name} with ID: ${response.id}');
   } catch (e) {
     print('Error updating file: $e');
+    scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(content: Text('Error updating file: $e')),
+    );
   }
 }

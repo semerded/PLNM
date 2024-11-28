@@ -14,6 +14,7 @@ class AppWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Palette.primary,

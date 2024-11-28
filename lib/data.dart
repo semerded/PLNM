@@ -94,3 +94,5 @@ class Palette {
     }
   }
 }
+
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
