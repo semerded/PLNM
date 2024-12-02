@@ -5,6 +5,7 @@ import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/date_time_picker.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/add_task.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/edit_task.dart';
@@ -133,27 +134,41 @@ class _EditTaskPageState extends State<EditTaskPage> {
                 ),
               ],
             ),
-            ElevatedButton.icon(
-              onPressed: () {
-                addTask(context).then(
-                  (newTask) {
-                    if (newTask != null) {
-                      setState(() {
-                        updatedtaskData["subTask"].add(newTask);
-                      });
-                      validate();
-                    }
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Palette.box3,
-              ),
-              label: AdaptiveText("Add A Task"),
-              icon: const Icon(
-                Icons.add,
-                color: Palette.primary,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: DateTimePicker(
+                    defaultValue: widget.taskData["due"] == null ? null : dueDateFormatter.parse(widget.taskData["due"]),
+                    onDatePicked: (String? dateTime) {
+                      updatedtaskData["due"] = dateTime;
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      addTask(context).then(
+                        (newTask) {
+                          if (newTask != null) {
+                            setState(() {
+                              updatedtaskData["subTask"].add(newTask);
+                            });
+                            validate();
+                          }
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Palette.box3,
+                    ),
+                    label: AdaptiveText("Add A Task"),
+                    icon: const Icon(
+                      Icons.add,
+                      color: Palette.primary,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: ListView.builder(

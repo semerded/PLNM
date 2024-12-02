@@ -7,6 +7,7 @@ import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/card_description.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/tasks/task_view_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -97,13 +98,7 @@ class _TaskViewState extends State<TaskView> {
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     ),
-                    subtitle: Text(
-                      task["description"],
-                      style: TextStyle(
-                        color: Palette.subtext,
-                        fontSize: 13,
-                      ),
-                    ),
+                    subtitle: CardDescription(data: task),
                     onTap: () => setState(() {
                       Navigator.push(
                         context,

@@ -2,19 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
-import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_pop_up_menu.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_vis_completion.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/view_due_date.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/vis_category.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/vis_priority.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
 import 'package:keeper_of_projects/mobile/pages/tasks/edit_task_page.dart';
 
 class TaskViewPage extends StatefulWidget {
@@ -131,6 +128,7 @@ class _TaskViewPageState extends State<TaskViewPage> {
                             )
                           ],
                         ),
+                        ViewDueDate(data: widget.taskData),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: AdaptiveText(

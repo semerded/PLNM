@@ -7,6 +7,7 @@ import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/card_description.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/view_project_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -106,31 +107,7 @@ class _ProjectViewState extends State<ProjectView> {
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
                       ),
-                      subtitle: RichText(
-                        text: TextSpan(
-                          children: [
-                            if (!checkCategoryValidity(project["category"]))
-                              const TextSpan(
-                                text: "[!category not found!] • ",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            if (project["due"] != null)
-                              TextSpan(
-                                text: deadlineChecker(dueDateFormatter.parse(project["due"])),
-                                style: TextStyle(
-                                  color: overdue(dueDateFormatter.parse(project["due"])) ? Colors.red : Palette.subtext,
-                                ),
-                              ),
-                            TextSpan(
-                              text: "${project["description"].length == 0 ? '' : ' • '}${project["description"]}",
-                              style: TextStyle(
-                                color: Palette.subtext,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      subtitle: CardDescription(data: project),
                       onTap: () => setState(() {
                         Navigator.push(
                           context,

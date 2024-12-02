@@ -8,6 +8,7 @@ import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/date_time_picker.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/add_task.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
@@ -39,6 +40,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     "size": 0.0,
     "subTask": [],
     "completed": false,
+    "due": null,
     "id": Uuid().v4(),
   };
 
@@ -158,22 +160,35 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
               ],
             ),
-            ElevatedButton.icon(
-              onPressed: () async {
-                Map newTask = await addTask(context);
-                setState(() {
-                  newTask["subTask"].add(newTask);
-                  validate();
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Palette.box3,
-              ),
-              label: AdaptiveText("Add A Sub Task"),
-              icon: const Icon(
-                Icons.add,
-                color: Palette.primary,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: DateTimePicker(
+                    onDatePicked: (String? dateTime) {
+                      newTask["due"] = dateTime;
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () async {
+                      Map newTask = await addTask(context);
+                      setState(() {
+                        newTask["subTask"].add(newTask);
+                        validate();
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Palette.box3,
+                    ),
+                    label: AdaptiveText("Add A Sub Task"),
+                    icon: const Icon(
+                      Icons.add,
+                      color: Palette.primary,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: ListView.builder(
