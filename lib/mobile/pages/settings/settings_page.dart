@@ -3,7 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/category_editor_page.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
+import 'package:keeper_of_projects/mobile/pages/settings/download_from_cloud.dart';
+import 'package:keeper_of_projects/mobile/pages/settings/upload_to_cloud.dart';
+import 'package:keeper_of_projects/mobile/pages/settings/widgets/cloud_actions.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/widgets/switch.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/widgets/switch_w_description.dart';
 
@@ -91,6 +96,22 @@ class _SettingsPageState extends State<SettingsPage> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+            ),
+            Row(
+              children: [
+                CloudActions(
+                  route: DownloadFromCloud(),
+                  label: "from cloud",
+                  icon: Icons.download,
+                  onUpdated: () => setState(() {}),
+                ),
+                CloudActions(
+                  route: UploadToCloud(),
+                  label: "to cloud",
+                  icon: Icons.upload,
+                  onUpdated: () => setState(() {}),
+                )
+              ],
             )
           ],
         ),

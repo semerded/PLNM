@@ -26,7 +26,7 @@ Future getCloudFileData() async {
   categoryDataContent = List<String>.from(jsonSafeDecode(await utf8.decoder.bind(_media.stream).join()));
 
   _media = await driveApi?.files.get(notesFileData!.id!, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media;
-  notesDataContent = List<String>.from(jsonSafeDecode(await utf8.decoder.bind(_media.stream).join()));
+  notesDataContent = List.from(jsonSafeDecode(await utf8.decoder.bind(_media.stream).join()));
 
   for (String category in categoryDataContent!) {
     categoryFilter[category] = true;
