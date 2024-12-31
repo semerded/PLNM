@@ -8,11 +8,13 @@ class TitleTextField extends StatefulWidget {
   final OnChanged onChanged;
   final String hintText;
   final String? initialValue;
+  final bool autoFocus;
   const TitleTextField({
     super.key,
     required this.onChanged,
     this.hintText = "A unique title for your project",
     this.initialValue,
+    this.autoFocus = true,
   });
 
   @override
@@ -28,7 +30,7 @@ class _TitleTextFieldState extends State<TitleTextField> {
       child: Focus(
         onFocusChange: (_) => setState(() {}), // updates the focus colors
         child: TextFormField(
-          autofocus: true,
+          autofocus: widget.autoFocus,
           focusNode: focusNode,
           initialValue: widget.initialValue,
           decoration: InputDecoration(
