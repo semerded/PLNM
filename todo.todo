@@ -22,10 +22,6 @@
 
 >>>> functionality
 
-@critical @today fix multiple heros on home page (add new arg for add button)
-
-@high @today make todo list (page)
-
 @high @today create about page
 
 @high add placeholders for ddb buttons
@@ -34,11 +30,14 @@
 
 @low create archive page
 
-@low @today add a checklist to enable multiple categories (showing Multiple in bar) and add buttons to enable and disable all categories
 
 @optional add more examples for adding a category
 
 >>>> tidying up
+
+@critical @today add edit time and create time to note widget
+
+@low @today update button names (add full reset button) and remove old reset button
 
 >>>> flowchart
 
