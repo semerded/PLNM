@@ -37,10 +37,11 @@ class _LoggedInCheckSyncState extends State<LoggedInCheckSync> {
             RotationTransition(turns: widget.rotateDriveLogo.animation, child: const DriveIcon()),
           ],
         ),
-        AdaptiveText(
+        const AdaptiveText(
           "Checking If Cloud Sync Is Needed...",
           fontWeight: FontWeight.w800,
           fontSize: 28,
+          textAlign: TextAlign.center,
         ),
       ],
     );
