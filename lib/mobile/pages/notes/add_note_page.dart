@@ -28,9 +28,13 @@ class AddNotePage extends StatefulWidget {
 class _AddNotePageState extends State<AddNotePage> {
   Map<String, dynamic> note = {
     "title": getInitialTitle(),
-    "date": () {
+    "created": () {
       DateTime now = DateTime.now();
-      return DateTime(now.year, now.month).toString();
+      return toMinuteFormatter.format(now);
+    }(),
+    "edited": () {
+      DateTime now = DateTime.now();
+      return toMinuteFormatter.format(now);
     }(),
     "content": "",
     "id": Uuid().v4(),

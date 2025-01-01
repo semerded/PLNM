@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/content/default_file_content.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/main_page_pop_scope.dart';
+import 'package:keeper_of_projects/common/functions/short_datetime.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/notes/add_note_page.dart';
@@ -82,7 +84,26 @@ class _NotesPageState extends State<NotesPage> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
-                              AdaptiveText(note["date"])
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: AdaptiveIcon(
+                                        Icons.add_box_outlined,
+                                        size: 14,
+                                      ),
+                                    ),
+                                    TextSpan(text: " ${shortDateTime(toMinuteFormatter.parse(note["created"]))} | "),
+                                    WidgetSpan(
+                                        child: AdaptiveIcon(
+                                      Icons.edit_outlined,
+                                      size: 14,
+                                    )),
+                                    TextSpan(text: " ${shortDateTime(toMinuteFormatter.parse(note["edited"]))}"),
+                                  ],
+                                  style: TextStyle(fontSize: 12, color: Palette.subtext),
+                                ),
+                              )
                             ],
                           ),
                         );

@@ -6,8 +6,6 @@
 
 >>>> google drive
 
-@critical make a background upload service that uploads the project file data everytime there is a change; when a change happens when an old file is already uploading there will be made a queue (a boolean that tells that a sync need happening)
-
 @low update readme on google drive
 
 >>>> app
@@ -34,8 +32,6 @@
 @optional add more examples for adding a category
 
 >>>> tidying up
-
-@critical @today add edit time and create time to note widget
 
 @low @today update button names (add full reset button) and remove old reset button
 
