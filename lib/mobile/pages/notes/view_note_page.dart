@@ -39,7 +39,6 @@ class ViewNotePageState extends State<ViewNotePage> {
     return Scaffold(
       backgroundColor: Palette.bg,
       appBar: AppBar(
-        title: const Text("Add a note"),
         backgroundColor: Palette.primary,
         actions: [
           IconButton(
@@ -79,6 +78,8 @@ class ViewNotePageState extends State<ViewNotePage> {
                     autofocus: true,
                     style: TextStyle(color: Palette.text),
                     onChanged: (value) {
+                      DateTime now = DateTime.now();
+                      updatedNote["edited"] = toMinuteFormatter.format(now);
                       updatedNote["content"] = value;
                       debounce = Timer(const Duration(seconds: 1), () {
                         notesDataContent![widget.index] = updatedNote;
@@ -96,22 +97,6 @@ class ViewNotePageState extends State<ViewNotePage> {
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     if (updatedNote["title"] != "") {
-      //       setState(() {
-      //         notesDataContent!.add(); //! add deepcopy if duplication happens
-      //         LoadingScreen.show(context, "Saving Task");
-      //         fileSyncSystem.syncFile(notesFileData!, jsonEncode(notesDataContent)).then((value) {
-      //           LoadingScreen.hide(context);
-      //           Navigator.of(context).pop(true);
-      //         });
-      //       });
-      //     }
-      //   },
-      //   backgroundColor: note["title"] != "" ? Colors.green : Colors.red,
-      //   child: const Icon(Icons.check),
-      // ),
     );
   }
 }
