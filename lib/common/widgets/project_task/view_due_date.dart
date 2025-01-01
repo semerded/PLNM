@@ -20,9 +20,9 @@ class _ViewDueDateState extends State<ViewDueDate> {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
-          "Due: ${widget.data["due"]} | ${deadlineChecker(dueDateFormatter.parse(widget.data["due"]))}",
+          "Due: ${widget.data["due"]} | ${deadlineChecker(toMinuteFormatter.parse(widget.data["due"]))}",
           style: TextStyle(
-            color: overdue(dueDateFormatter.parse(widget.data["due"])) ? Colors.red : Palette.text,
+            color: overdue(toMinuteFormatter.parse(widget.data["due"])) ? Colors.red : Palette.text,
           ),
         ),
       );

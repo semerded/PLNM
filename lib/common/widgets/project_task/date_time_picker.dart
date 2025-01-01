@@ -52,7 +52,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             pickedTime.minute,
           );
           print(_selectedDateTime.toString());
-          widget.onDatePicked(dueDateFormatter.format(_selectedDateTime!));
+          widget.onDatePicked(toMinuteFormatter.format(_selectedDateTime!));
         });
       }
     }
@@ -75,7 +75,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
       children: [
         // Display selected date and time or "No Due Date"
         AdaptiveText(
-          _selectedDateTime != null ? dueDateFormatter.format(_selectedDateTime!) : 'No Due Date',
+          _selectedDateTime != null ? toMinuteFormatter.format(_selectedDateTime!) : 'No Due Date',
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

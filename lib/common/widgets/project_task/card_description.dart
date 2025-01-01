@@ -22,9 +22,9 @@ class CardDescription extends StatelessWidget {
             ),
           if (data["due"] != null)
             TextSpan(
-              text: deadlineChecker(dueDateFormatter.parse(data["due"])),
+              text: deadlineChecker(toMinuteFormatter.parse(data["due"])),
               style: TextStyle(
-                color: overdue(dueDateFormatter.parse(data["due"])) ? Colors.red : Palette.subtext,
+                color: overdue(toMinuteFormatter.parse(data["due"])) ? Colors.red : Palette.subtext,
               ),
             ),
           TextSpan(

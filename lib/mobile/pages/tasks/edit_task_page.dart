@@ -138,7 +138,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
               children: [
                 Expanded(
                   child: DateTimePicker(
-                    defaultValue: widget.taskData["due"] == null ? null : dueDateFormatter.parse(widget.taskData["due"]),
+                    defaultValue: widget.taskData["due"] == null ? null : toMinuteFormatter.parse(widget.taskData["due"]),
                     onDatePicked: (String? dateTime) {
                       updatedtaskData["due"] = dateTime;
                     },

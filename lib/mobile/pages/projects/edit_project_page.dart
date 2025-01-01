@@ -158,7 +158,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                   ],
                 ),
                 DateTimePicker(
-                  defaultValue: widget.projectData["due"] == null ? null : dueDateFormatter.parse(widget.projectData["due"]),
+                  defaultValue: widget.projectData["due"] == null ? null : toMinuteFormatter.parse(widget.projectData["due"]),
                   onDatePicked: (String? dateTime) {
                     updatedProjectData["due"] = dateTime;
                   },
@@ -209,9 +209,9 @@ class _EditProjectPageState extends State<EditProjectPage> {
                           children: [
                             if (part["due"] != null)
                               TextSpan(
-                                text: "${deadlineChecker(dueDateFormatter.parse(part["due"]))} • ",
+                                text: "${deadlineChecker(toMinuteFormatter.parse(part["due"]))} • ",
                                 style: TextStyle(
-                                  color: overdue(dueDateFormatter.parse(part["due"])) ? Colors.red : Palette.subtext,
+                                  color: overdue(toMinuteFormatter.parse(part["due"])) ? Colors.red : Palette.subtext,
                                 ),
                               ),
                             TextSpan(
