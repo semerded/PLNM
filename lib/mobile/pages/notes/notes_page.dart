@@ -71,10 +71,13 @@ class _NotesPageState extends State<NotesPage> {
                                   color: Palette.box1,
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.all(8),
-                                    title: AdaptiveText(
-                                      note["content"],
-                                      maxLines: 7,
-                                      overflow: TextOverflow.fade,
+                                    title: Padding(
+                                      padding: const EdgeInsets.only(bottom: 2),
+                                      child: AdaptiveText(
+                                        note["content"],
+                                        maxLines: 7,
+                                        overflow: TextOverflow.fade,
+                                      ),
                                     ),
                                   ),
                                 ),
