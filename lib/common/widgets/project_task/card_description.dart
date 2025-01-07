@@ -18,7 +18,7 @@ class CardDescription extends StatelessWidget {
           if (!checkCategoryValidity(data["category"]))
             const TextSpan(
               text: "[!category not found!] • ",
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.orange),
             ),
           if (data["due"] != null)
             TextSpan(
@@ -28,7 +28,7 @@ class CardDescription extends StatelessWidget {
               ),
             ),
           TextSpan(
-            text: "${data["description"].length == 0 ? '' : ' • '}${data["description"]}",
+            text: "${data["description"].length == 0 || data["due"] == null ? '' : ' • '}${data["description"]}",
             style: TextStyle(
               color: Palette.subtext,
               fontSize: 13,
