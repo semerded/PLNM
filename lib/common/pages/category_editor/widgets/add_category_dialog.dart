@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -21,11 +22,33 @@ Future<void> addCategoryDialog(BuildContext context) async {
     return hints[random.nextInt(hints.length)];
   }
 
+  String targetHintText = getRandomHint();
+
+  String hintText = "";
+  int typingIndex = 0;
+  Timer? timer;
+
+  void startTypingAnimation(Function setState) {
+    timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
+      if (typingIndex < targetHintText.length) {
+        setState(() {
+          hintText += targetHintText[typingIndex];
+          typingIndex++;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
   await showDialog(
     context: context,
     builder: (context) {
-      return StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
+      return StatefulBuilder(builder: (context, setState) {
+        if (timer == null) {
+          startTypingAnimation(setState);
+        }
+        return AlertDialog(
           backgroundColor: Palette.box3,
           contentPadding: const EdgeInsets.all(16),
           content: Row(
@@ -45,7 +68,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
                       color: Palette.primary,
                     ),
                     labelText: "Add Category",
-                    hintText: getRandomHint(),
+                    hintText: hintText,
                     hintStyle: TextStyle(
                       fontStyle: FontStyle.italic,
                       color: Palette.subtext,
@@ -63,6 +86,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
           actions: [
             TextButton(
               onPressed: () {
+                timer?.cancel();
                 Navigator.pop(context);
               },
               child: AdaptiveText("Cancel"),
@@ -82,8 +106,10 @@ Future<void> addCategoryDialog(BuildContext context) async {
               ),
             )
           ],
-        ),
-      );
+        );
+      });
     },
-  );
+  ).then((_) {
+    timer?.cancel();
+  });
 }
