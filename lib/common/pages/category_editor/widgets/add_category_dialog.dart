@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/category.dart';
@@ -5,10 +7,18 @@ import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
+Random random = Random();
+
 Future<void> addCategoryDialog(BuildContext context) async {
   TextEditingController textEditingController = TextEditingController();
   bool minimumRequirements() {
     return textEditingController.text.length >= 2 && !categoryDataContent!.contains(textEditingController.text);
+  }
+
+  const List<String> hints = ["Garage Projects...", "Work...", "School...", "Personal Projects...", "Garden...", "Cleaning...", "Cooking...", "Shopping...", "Hobbies..."];
+
+  String getRandomHint() {
+    return hints[random.nextInt(hints.length)];
   }
 
   await showDialog(
@@ -22,7 +32,9 @@ Future<void> addCategoryDialog(BuildContext context) async {
             children: [
               Expanded(
                 child: TextField(
-                  style: TextStyle(color: Palette.text),
+                  style: TextStyle(
+                    color: Palette.text,
+                  ),
                   controller: textEditingController,
                   onChanged: (value) => setState(
                     () {},
@@ -30,7 +42,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Add Category",
-                    hintText: "Garage Projects",
+                    hintText: getRandomHint(),
                     hintStyle: TextStyle(
                       fontStyle: FontStyle.italic,
                       color: Palette.subtext,
