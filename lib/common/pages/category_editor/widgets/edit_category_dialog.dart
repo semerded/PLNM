@@ -36,6 +36,14 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
                   autofocus: true,
                   decoration: const InputDecoration(
                     labelText: "Edit Category",
+                    labelStyle: const TextStyle(
+                      color: Palette.primary,
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Palette.primary,
+                      ),
+                    ),
                   ),
                 ),
               )
@@ -60,7 +68,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
               child: Text(
                 "Accept",
                 style: TextStyle(
-                  color: minimumRequirements() ? Palette.text : Colors.red,
+                  color: minimumRequirements() ? Colors.green : Colors.red,
                 ),
               ),
             )

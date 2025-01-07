@@ -41,11 +41,19 @@ Future<void> addCategoryDialog(BuildContext context) async {
                   ),
                   autofocus: true,
                   decoration: InputDecoration(
+                    labelStyle: const TextStyle(
+                      color: Palette.primary,
+                    ),
                     labelText: "Add Category",
                     hintText: getRandomHint(),
                     hintStyle: TextStyle(
                       fontStyle: FontStyle.italic,
                       color: Palette.subtext,
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Palette.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -69,7 +77,7 @@ Future<void> addCategoryDialog(BuildContext context) async {
               child: Text(
                 "Accept",
                 style: TextStyle(
-                  color: minimumRequirements() ? Palette.text : Colors.red,
+                  color: minimumRequirements() ? Colors.green : Colors.red,
                 ),
               ),
             )
