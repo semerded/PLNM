@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
+import 'package:keeper_of_projects/common/functions/category.dart';
 import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/data.dart';
 

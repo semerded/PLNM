@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
+import 'package:keeper_of_projects/common/functions/category.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';

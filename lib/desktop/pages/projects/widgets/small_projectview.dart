@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
-import 'package:keeper_of_projects/common/functions/check_category_validity.dart';
+import 'package:keeper_of_projects/common/functions/category.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';

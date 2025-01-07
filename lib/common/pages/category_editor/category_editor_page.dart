@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/category.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/widgets/add_category_dialog.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/widgets/edit_category_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
@@ -38,10 +39,6 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                     onPressed: () async {
                       await editCategoryDialog(context, categoryDataContent![index]).then(
                         (value) {
-                          if (value != null) {
-                            categoryDataContent![index] = value;
-                            projectCategoriesNeedRebuild = true;
-                          }
                           setState(() {});
                         },
                       );
@@ -51,7 +48,7 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        categoryDataContent!.removeAt(index);
+                        removeCategory(categoryDataContent![index]);
                       });
                     },
                     icon: const Icon(
@@ -69,8 +66,6 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
         onPressed: () async {
           await addCategoryDialog(context).then(
             (value) {
-              categoryDataContent = categoryDataContent!.toList();
-              projectCategoriesNeedRebuild = true;
               setState(() {});
             },
           );
