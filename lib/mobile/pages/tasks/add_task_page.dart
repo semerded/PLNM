@@ -29,7 +29,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   bool validTitle = false;
   bool validCategory = false;
   final TextEditingController descriptionController = TextEditingController();
-  late String ddb_priority_value;
   late String ddb_category_value;
 
   Map newTask = {
@@ -54,7 +53,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   @override
   void initState() {
     super.initState();
-    ddb_priority_value = projectPriorities.keys.first;
     ddb_category_value = ddb_catgegoryDefaultText;
 
     ddb_category.add(ddb_catgegoryDefaultText);
@@ -149,7 +147,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                      initValue: ddb_priority_value,
+                      initValue: projectPriorities.keys.first,
                       onUpdated: (value) {
                         setState(() {
                           print(value);

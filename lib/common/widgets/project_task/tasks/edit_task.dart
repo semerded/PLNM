@@ -10,7 +10,6 @@ Future editTask(BuildContext context, Map initTask) {
   Map editedTask = Map.from(initTask.deepcopy());
 
   bool validTitle = initTask.length >= 2;
-  String ddb_priority_value = projectPriorities.keys.first;
 
   final TextEditingController descriptionController = TextEditingController();
   return showDialog(
@@ -50,7 +49,7 @@ Future editTask(BuildContext context, Map initTask) {
                       hintText: "Add a description for your task",
                     ),
                     SelectPriority(
-                        initValue: ddb_priority_value,
+                        initValue: projectPriorities.keys.first,
                         onUpdated: (value) {
                           setState(() {
                             editedTask["priority"] = value;

@@ -21,7 +21,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
   bool taskValidated = false;
   bool validTitle = false;
   final TextEditingController descriptionController = TextEditingController();
-  late String ddb_priority_value;
 
   Map newPart = {
     "title": null,
@@ -31,12 +30,6 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
     "completed": false,
     "due": null,
   };
-
-  @override
-  void initState() {
-    super.initState();
-    ddb_priority_value = projectPriorities.keys.first;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +72,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
               children: [
                 Expanded(
                   child: SelectPriority(
-                      initValue: ddb_priority_value,
+                      initValue: projectPriorities.keys.first,
                       onUpdated: (value) {
                         setState(() {
                           newPart["priority"] = value;

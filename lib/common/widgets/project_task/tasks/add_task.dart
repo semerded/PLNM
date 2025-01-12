@@ -13,8 +13,6 @@ Future addTask(BuildContext context) {
     "completed": false,
   };
 
-  String ddb_priority_value = projectPriorities.keys.first;
-
   bool validTitle = false;
 
   return showDialog(
@@ -52,7 +50,7 @@ Future addTask(BuildContext context) {
                       hintText: "Add a description for your task",
                     ),
                     SelectPriority(
-                        initValue: ddb_priority_value,
+                        initValue: projectPriorities.keys.first,
                         onUpdated: (value) {
                           setState(() {
                             newTask["priority"] = value;
