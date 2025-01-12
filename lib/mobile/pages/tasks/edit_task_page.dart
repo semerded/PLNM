@@ -125,7 +125,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                      value: updatedtaskData["priority"],
+                      initValue: updatedtaskData["priority"],
                       onUpdated: (value) {
                         setState(() {
                           updatedtaskData["priority"] = value;

@@ -5,11 +5,11 @@ import 'package:keeper_of_projects/data.dart';
 typedef OnUpdated = void Function(String value);
 
 class SelectPriority extends StatefulWidget {
-  final String value;
+  final String initValue;
   final OnUpdated onUpdated;
   const SelectPriority({
     super.key,
-    required this.value,
+    required this.initValue,
     required this.onUpdated,
   });
 
@@ -22,7 +22,7 @@ class _SelectPriorityState extends State<SelectPriority> {
 
   @override
   void initState() {
-    value = widget.value;
+    value = widget.initValue;
     super.initState();
   }
 

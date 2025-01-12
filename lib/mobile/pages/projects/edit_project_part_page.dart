@@ -85,7 +85,7 @@ class _EditProjectPartPageState extends State<EditProjectPartPage> {
               children: [
                 Expanded(
                   child: SelectPriority(
-                      value: updatedPart["priority"],
+                      initValue: updatedPart["priority"],
                       onUpdated: (value) {
                         setState(() {
                           updatedPart["priority"] = value;

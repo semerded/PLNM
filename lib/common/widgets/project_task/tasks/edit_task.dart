@@ -50,7 +50,7 @@ Future editTask(BuildContext context, Map initTask) {
                       hintText: "Add a description for your task",
                     ),
                     SelectPriority(
-                        value: ddb_priority_value,
+                        initValue: ddb_priority_value,
                         onUpdated: (value) {
                           setState(() {
                             editedTask["priority"] = value;

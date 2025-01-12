@@ -31,8 +31,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
   bool validTitle = false;
   bool validCategory = false;
   final TextEditingController descriptionController = TextEditingController();
-  late String ddb_priority_value;
-  late String ddb_category_value;
 
   Map newProject = {
     "title": null,
@@ -43,20 +41,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "part": [],
     "id": Uuid().v4(),
     "due": null,
-  }; // TODO switch "none" to null
-
-  List<String> ddb_category = [];
+  };
 
   void validate() {
     taskValidated = validTitle && validCategory && newProject["part"].length >= 1;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    ddb_priority_value = projectPriorities.keys.first;
-
-    ddb_category.addAll(categoryDataContent!);
   }
 
   @override
@@ -124,7 +112,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                      value: ddb_priority_value,
+                      initValue: projectPriorities.keys.first,
                       onUpdated: (value) {
                         setState(() {
                           print(value);

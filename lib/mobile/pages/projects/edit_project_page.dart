@@ -126,7 +126,7 @@ class _EditProjectPageState extends State<EditProjectPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                      value: updatedProjectData["priority"],
+                      initValue: updatedProjectData["priority"],
                       onUpdated: (value) {
                         setState(() {
                           updatedProjectData["priority"] = value;

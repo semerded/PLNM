@@ -52,7 +52,7 @@ Future addTask(BuildContext context) {
                       hintText: "Add a description for your task",
                     ),
                     SelectPriority(
-                        value: ddb_priority_value,
+                        initValue: ddb_priority_value,
                         onUpdated: (value) {
                           setState(() {
                             newTask["priority"] = value;

@@ -79,7 +79,7 @@ class _AddProjectPartPageState extends State<AddProjectPartPage> {
               children: [
                 Expanded(
                   child: SelectPriority(
-                      value: ddb_priority_value,
+                      initValue: ddb_priority_value,
                       onUpdated: (value) {
                         setState(() {
                           newPart["priority"] = value;

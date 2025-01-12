@@ -149,7 +149,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
                 Expanded(
                   child: SelectPriority(
-                      value: ddb_priority_value,
+                      initValue: ddb_priority_value,
                       onUpdated: (value) {
                         setState(() {
                           print(value);

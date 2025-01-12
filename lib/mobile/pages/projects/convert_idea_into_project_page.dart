@@ -136,7 +136,7 @@ class _ConvertIdeaIntoProjectPageState extends State<ConvertIdeaIntoProjectPage>
                 ),
                 Expanded(
                   child: SelectPriority(
-                      value: projectDataFromIdea["priority"],
+                      initValue: projectDataFromIdea["priority"],
                       onUpdated: (value) {
                         setState(() {
                           projectDataFromIdea["priority"] = value;
