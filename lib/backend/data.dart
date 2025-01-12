@@ -54,4 +54,3 @@ const String readmeName = "README.txt";
 const String readmeContent = defaultContent.readme;
 
 bool settingsDataNeedsSync = false;
-bool categoryDataNeedSync = false;
