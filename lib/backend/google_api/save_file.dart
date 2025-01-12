@@ -5,8 +5,17 @@ import 'package:keeper_of_projects/backend/google_api/http_client.dart';
 import 'package:keeper_of_projects/data.dart';
 import "package:googleapis/drive/v3.dart" as drive;
 
-Future<void> saveFile(String fileId, String newContent) async {
-  final authHeaders = await currentUser!.authHeaders;
+Future<bool> saveFile(String fileId, String newContent) async {
+  dynamic authHeaders;
+  try {
+    authHeaders = await currentUser!.authHeaders;
+  } catch (e) {
+    print('Error getting auth headers: $e');
+    scaffoldMessengerKey.currentState?.showSnackBar(
+      const SnackBar(content: Text('Error: failed to connect to server')),
+    );
+    return false;
+  }
   final authenticateClient = GoogleHttpClient(authHeaders);
   final driveApi = drive.DriveApi(authenticateClient);
 
@@ -27,5 +36,7 @@ Future<void> saveFile(String fileId, String newContent) async {
     scaffoldMessengerKey.currentState?.showSnackBar(
       SnackBar(content: Text('Error updating file: $e')),
     );
+    return false;
   }
+  return true;
 }
