@@ -1,23 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/switch_dark_mode_icon_button.dart';
 import 'package:keeper_of_projects/data.dart';
 
-class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
+class AboutPage extends StatefulWidget {
+  final VoidCallback callback;
+  final bool loggedIn;
+  AboutPage({
+    super.key,
+    this.callback = _defaultCallback,
+    this.loggedIn = true,
+  }) {
+    if (!loggedIn) {
+      assert(
+        callback != _defaultCallback,
+        "Custom callback must be provided when not logged in to provide a callback for the switch darkmode function",
+      );
+    }
+  }
 
+  static void _defaultCallback() {
+    // do nothing with default callback
+  }
+
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.bg,
       appBar: AppBar(
         backgroundColor: Palette.primary,
-        title: Text("About ..."), // TODO change to app name
+        title: const Text("About PLNM"),
+        actions: [
+          if (!widget.loggedIn)
+            SwitchDarkModeIconButton(
+                onSwitch: () => setState(() {
+                      widget.callback();
+                    }))
+        ],
       ),
-      body: const Padding(
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            AdaptiveTitleText("... name"),
+            AdaptiveTitleText("PLNM"),
             AdaptiveText("Developed by Sem Van Broekhoven, 2023 - 2024"),
             AdaptiveDivider(),
             AdaptiveText(
@@ -27,8 +57,27 @@ class AboutPage extends StatelessWidget {
               from then on it will only work within this folder.""",
             ),
             AdaptiveDivider(),
-            AdaptiveText("The code is opensource and available at: "),
-            AdaptiveText(""""""),
+            AdaptiveText("The code is open-source and available on GitHub"),
+            ElevatedButton.icon(
+              onPressed: () {},
+              label: const Text(
+                "Github",
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: const Icon(
+                Icons.open_in_new_outlined,
+                color: Colors.white,
+              ),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF171515),
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Palette.text,
+                      ),
+                      borderRadius: BorderRadius.circular(8))),
+              iconAlignment: IconAlignment.end,
+            ),
+            AdaptiveText("""any bugs and issues can be mentioned on GitHub"""),
           ],
         ),
       ),

@@ -77,7 +77,7 @@ class _GooglePopUpMenuState extends State<GooglePopUpMenu> {
         } else if (item == _googleMenu.about) {
           Navigator.push(
             context,
-            MaterialPageRoute<bool>(builder: (context) => const AboutPage()),
+            MaterialPageRoute<bool>(builder: (context) => AboutPage()),
           );
         } else if (item == _googleMenu.archive && widget.showArchive) {
           Navigator.push(

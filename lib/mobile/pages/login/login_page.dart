@@ -152,7 +152,9 @@ class _MobileLoginPageState extends State<MobileLoginPage> with SingleTickerProv
         } else if (loggedIn == loginStatus.loggedInSyncing) {
           return LoggedInSyncing(rotateDriveLogo: rotateDriveLogo);
         } else if (loggedIn == loginStatus.notLoggedIn) {
-          return const NotLoggedIn();
+          return NotLoggedIn(
+            callback: () => setState(() {}),
+          );
         } else {
           return const Center(
             child: DriveIcon(),

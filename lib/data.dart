@@ -95,4 +95,6 @@ class Palette {
   }
 }
 
+bool darkMode = false;
+
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();

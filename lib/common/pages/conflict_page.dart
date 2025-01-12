@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/enum/conflict_type.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/switch_dark_mode_icon_button.dart';
 import 'package:keeper_of_projects/data.dart';
 
 ///
@@ -24,8 +25,6 @@ class ConflictPage extends StatefulWidget {
 }
 
 class _ConflictPageState extends State<ConflictPage> {
-  bool tempDarkmodeStatus = false;
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -34,14 +33,7 @@ class _ConflictPageState extends State<ConflictPage> {
         backgroundColor: Palette.bg,
         appBar: AppBar(
           backgroundColor: Colors.red,
-          actions: [
-            IconButton(
-                onPressed: () => setState(() {
-                      tempDarkmodeStatus = !tempDarkmodeStatus;
-                      Palette.setDarkmode(tempDarkmodeStatus);
-                    }),
-                icon: Icon(tempDarkmodeStatus ? Icons.light_mode : Icons.dark_mode))
-          ],
+          actions: [SwitchDarkModeIconButton(onSwitch: () => setState(() {}))],
           title: const Text("Sync Conflict"),
         ),
         body: AnimatedContainer(

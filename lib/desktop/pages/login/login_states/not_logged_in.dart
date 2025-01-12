@@ -44,7 +44,7 @@ class _NotLoggedInState extends State<NotLoggedIn> {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute<bool>(
-              builder: (context) => const AboutPage(),
+              builder: (context) => AboutPage(),
             ),
           ),
           label: AdaptiveText(
