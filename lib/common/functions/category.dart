@@ -12,7 +12,6 @@ bool checkCategoryValidity(String category) {
 void addCategory(String category) {
   categoryDataContent!.add(category);
   categoryFilter[category] = true;
-  categoryDataNeedSync = true;
   projectCategoriesNeedRebuild = true;
   fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
 }
@@ -20,7 +19,6 @@ void addCategory(String category) {
 void removeCategory(String category) {
   categoryDataContent!.remove(category);
   categoryFilter.remove(category);
-  categoryDataNeedSync = true;
   projectCategoriesNeedRebuild = true;
   fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
 }
@@ -28,7 +26,6 @@ void removeCategory(String category) {
 void editCategory(String category, String oldCategory) {
   categoryDataContent![categoryDataContent!.indexOf(oldCategory)] = category;
   categoryFilter[category] = categoryFilter.remove(oldCategory)!;
-  categoryDataNeedSync = true;
   projectCategoriesNeedRebuild = true;
   fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
 }

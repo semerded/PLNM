@@ -60,7 +60,6 @@ class _VisCategoryState extends State<VisCategory> {
                       String category = widget.data["category"];
                       categoryDataContent!.add(category);
                       categoryFilter[category] = true;
-                      categoryDataNeedSync = true;
                       fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
                       widget.onUpdated();
                     });

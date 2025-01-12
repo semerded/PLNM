@@ -64,11 +64,7 @@ class _SettingsContentState extends State<SettingsContent> {
             Navigator.push(
               context,
               MaterialPageRoute<bool>(builder: (context) => const CategoryEditorPage()),
-            ).then((value) async {
-              if (categoryDataNeedSync) {
-                await fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
-              }
-            });
+            );
           },
           child: const Text(
             "Edit Categories",
