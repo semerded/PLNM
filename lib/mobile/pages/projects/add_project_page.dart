@@ -27,13 +27,10 @@ class AddProjectPage extends StatefulWidget {
 }
 
 class _AddProjectPageState extends State<AddProjectPage> {
-  bool taskValidated = false;
-  bool validTitle = false;
-  bool validCategory = false;
   final TextEditingController descriptionController = TextEditingController();
 
   Map newProject = {
-    "title": null,
+    "title": "",
     "description": "",
     "category": [],
     "priority": "none",
@@ -43,8 +40,8 @@ class _AddProjectPageState extends State<AddProjectPage> {
     "due": null,
   };
 
-  void validate() {
-    taskValidated = validTitle && validCategory && newProject["part"].length >= 1;
+  bool isValid() {
+    return newProject["title"].length >= 2 && newProject["part"].length >= 1;
   }
 
   @override
@@ -77,21 +74,18 @@ class _AddProjectPageState extends State<AddProjectPage> {
               hintText: "A unique title for your project",
               onChanged: (value) {
                 setState(() {
-                  validTitle = value.length >= 2;
                   newProject["title"] = value;
-                  validate();
                 });
               },
             ),
 
             // add a description
             DescriptionTextField(
-              validTitle: validTitle,
+              validTitle: newProject["title"].length >= 2,
               hintText: "Describe your project here",
               onChanged: (value) {
                 setState(() {
                   newProject["description"] = value;
-                  validate();
                 });
               },
             ),
@@ -104,8 +98,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
                     onChosen: (value) {
                       setState(() {
                         newProject["category"] = value;
-                        validCategory = value.isNotEmpty;
-                        validate();
                       });
                     },
                   ),
@@ -117,7 +109,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         setState(() {
                           print(value);
                           newProject["priority"] = value;
-                          validate();
                         });
                       }),
                 ),
@@ -164,7 +155,6 @@ class _AddProjectPageState extends State<AddProjectPage> {
                       print(value);
                       setState(() {
                         newProject["part"].add(value);
-                        validate();
                       });
                     }
                   },
@@ -245,7 +235,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (taskValidated) {
+            if (isValid()) {
               DateTime now = DateTime.now();
               newProject["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
               newProject["size"] = newProject["size"].toInt();
@@ -260,7 +250,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
               });
             }
           },
-          backgroundColor: taskValidated ? Colors.green : Colors.red,
+          backgroundColor: isValid() ? Colors.green : Colors.red,
           child: const Icon(Icons.check),
         ),
       ),
