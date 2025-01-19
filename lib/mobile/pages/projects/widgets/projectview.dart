@@ -77,7 +77,7 @@ class _ProjectViewState extends State<ProjectView> {
               );
             }
             return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 400, childAspectRatio: 4),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 500, childAspectRatio: 4),
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 Map project = filteredList[index];
