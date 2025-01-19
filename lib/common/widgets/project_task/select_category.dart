@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/widgets/menu_items_header.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/category_editor_page.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/typedef.dart';
@@ -125,7 +126,25 @@ class _SelectCategoryState extends State<SelectCategory> {
                 controller.open();
               }
             },
-            child: AdaptiveText('Categories'),
+            iconAlignment: IconAlignment.end,
+            child: Row(
+              children: [
+                const Spacer(),
+                AdaptiveText('Categories'),
+                const Spacer(
+                  flex: 2,
+                ),
+                chosenCategories.isEmpty
+                    ? const Icon(
+                        Icons.category_outlined,
+                        color: Colors.yellow,
+                      )
+                    : AdaptiveIcon(Icons.category),
+                const SizedBox(width: 4),
+                AdaptiveText(chosenCategories.length.toString()),
+                const Spacer()
+              ],
+            ),
           );
         },
       ),
