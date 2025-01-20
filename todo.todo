@@ -20,6 +20,12 @@
 
 >>>> functionality
 
+@critical @today finish adding multiple categories to a task
+
+@high @today add extra button to unknown category dialog with "remove category from task/project"
+
+@high update filter system
+
 @high @today create about page
 
 @high add placeholders for ddb buttons
