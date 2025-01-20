@@ -3,8 +3,6 @@ import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/settings/widgets/settings_content.dart';
 import 'package:keeper_of_projects/desktop/widgets/empty_top_bar.dart';
-import 'package:keeper_of_projects/desktop/widgets/navigation_rail.dart';
-import 'package:keeper_of_projects/desktop/widgets/top_bar.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

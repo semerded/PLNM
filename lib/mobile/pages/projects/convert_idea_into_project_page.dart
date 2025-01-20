@@ -7,8 +7,8 @@ import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/add_project_part_page.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/edit_project_part_page.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/part/add_project_part_page.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/part/edit_project_part_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_size_slider.dart';
 
 class ConvertIdeaIntoProjectPage extends StatefulWidget {

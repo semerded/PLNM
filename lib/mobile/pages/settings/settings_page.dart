@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/category_editor_page.dart';
-import 'package:keeper_of_projects/common/widgets/base/icon.dart';
-import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/download_from_cloud.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/upload_to_cloud.dart';

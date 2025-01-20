@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/desktop/widgets/google_pop_up_menu.dart';
 
 typedef OnUpdated = void Function();
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/info_dialog.dart';
 
 class VisPriority extends StatelessWidget {
   final Map data;

@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
-import 'package:keeper_of_projects/common/custom/progress_elevated_button.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
-import 'package:keeper_of_projects/common/functions/category.dart';
 import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_pop_up_menu.dart';
@@ -18,8 +15,7 @@ import 'package:keeper_of_projects/common/widgets/project_task/vis_priority.dart
 import 'package:keeper_of_projects/common/widgets/project_task/vis_project_size.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/edit_project_page.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/view_project_part_page.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/part/view_project_part_page.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 // ignore: must_be_immutable

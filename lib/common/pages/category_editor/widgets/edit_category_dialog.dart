@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/category.dart';
-import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
@@ -25,9 +24,7 @@ Future<String?> editCategoryDialog(BuildContext context, String uneditedText) as
             children: [
               Expanded(
                 child: TextField(
-                  onChanged: (value) => setState(() {
-                    String editedText = value;
-                  }),
+                  onChanged: (value) => setState(() {}),
                   style: TextStyle(
                     color: textEditingController.text == uneditedText ? Palette.subtext : Palette.text,
                     fontStyle: textEditingController.text == uneditedText ? FontStyle.italic : FontStyle.normal,

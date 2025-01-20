@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/calculate_completion.dart';
-import 'package:keeper_of_projects/common/functions/category.dart';
-import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter.dart';
 import 'package:keeper_of_projects/common/functions/filter/reset_filter.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
@@ -77,7 +75,7 @@ class _ProjectViewState extends State<ProjectView> {
               );
             }
             return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 500, childAspectRatio: 4),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 500, childAspectRatio: 4),
               itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 Map project = filteredList[index];

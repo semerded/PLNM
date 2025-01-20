@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/backend/content/default_file_content.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/main_page_pop_scope.dart';
 import 'package:keeper_of_projects/common/functions/short_datetime.dart';

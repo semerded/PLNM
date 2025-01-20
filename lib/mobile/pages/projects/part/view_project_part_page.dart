@@ -11,7 +11,7 @@ import 'package:keeper_of_projects/common/widgets/project_task/tasks/task_vis_co
 import 'package:keeper_of_projects/common/widgets/project_task/view_due_date.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/vis_priority.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/edit_project_part_page.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/part/edit_project_part_page.dart';
 
 // ignore: must_be_immutable
 class ProjectPartViewPage extends StatefulWidget {

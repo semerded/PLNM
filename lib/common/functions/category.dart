@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:uuid/uuid.dart';
 
 int countMissingCategories(List<String> category) {
   return category.where((cat) => !categoryDataContent!.contains(cat)).length;

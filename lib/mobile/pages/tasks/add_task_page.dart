@@ -14,7 +14,7 @@ import 'package:keeper_of_projects/common/widgets/project_task/tasks/add_task.da
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/edit_project_part_page.dart';
+import 'package:keeper_of_projects/mobile/pages/projects/part/edit_project_part_page.dart';
 import 'package:uuid/uuid.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -150,7 +150,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       initValue: projectPriorities.keys.first,
                       onUpdated: (value) {
                         setState(() {
-                          print(value);
                           newTask["priority"] = value;
                           validate();
                         });
@@ -221,7 +220,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute<Map>(
-                                    builder: (context) => EditProjectPartPage(partData: newTask["subTask"][index]),
+                                    builder: (context) => EditProjectPartPage(partData: newTask["subTask"][index]), // TODO check this
                                   ),
                                 ).then((value) {
                                   if (value != null) {

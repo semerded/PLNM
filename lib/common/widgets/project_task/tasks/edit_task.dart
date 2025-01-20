@@ -11,7 +11,6 @@ Future editTask(BuildContext context, Map initTask) {
 
   bool validTitle = initTask.length >= 2;
 
-  final TextEditingController descriptionController = TextEditingController();
   return showDialog(
     context: context,
     builder: (context) {
