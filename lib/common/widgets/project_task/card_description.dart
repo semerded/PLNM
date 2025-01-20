@@ -16,9 +16,9 @@ class CardDescription extends StatelessWidget {
       text: TextSpan(
         children: [
           if (countMissingCategories(data["category"]) > 0)
-            const TextSpan(
-              text: "[!category not found!] • ",
-              style: TextStyle(color: Colors.orange),
+            TextSpan(
+              text: "[!category not found!] ${data["due"] == null ? '' : ' • '} ",
+              style: const TextStyle(color: Colors.orange),
             ),
           if (data["due"] != null)
             TextSpan(

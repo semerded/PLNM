@@ -7,7 +7,7 @@ import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:keeper_of_projects/mobile/pages/projects/widgets/project_button_info_dialog.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/info_dialog.dart';
 import 'package:keeper_of_projects/typedef.dart';
 
 class VisCategory extends StatefulWidget {

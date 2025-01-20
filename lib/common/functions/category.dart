@@ -4,7 +4,7 @@ import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/data.dart';
 
-int countMissingCategories(List<String> category) {
+int countMissingCategories(List<dynamic> category) {
   return category.where((cat) => !categoryDataContent!.contains(cat)).length;
 }
 
