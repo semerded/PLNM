@@ -117,8 +117,15 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
                             VisPriority(data: widget.projectData),
                             VisCategory(
                                 data: widget.projectData,
-                                onUpdated: () => setState(() {
+                                taskOrProject: "project",
+                                onUpdated: (resolve) => setState(() {
                                       setStateOnPagePop = true;
+                                      if (resolve != null) {
+                                        for (String cat in resolve) {
+                                          projectsContent[widget.index]["category"].removeWhere((item) => item == cat);
+                                        }
+                                        fileSyncSystem.syncFile(projectsFileData!, jsonEncode(projectsDataContent));
+                                      }
                                     }))
                           ],
                         ),

@@ -109,7 +109,8 @@ class _TaskViewPageState extends State<TaskViewPage> {
                             VisPriority(data: widget.taskData),
                             VisCategory(
                                 data: widget.taskData,
-                                onUpdated: () => setState(() {
+                                taskOrProject: "task",
+                                onUpdated: (resolve) => setState(() {
                                       setStateOnPagePop = true;
                                     })),
                           ],

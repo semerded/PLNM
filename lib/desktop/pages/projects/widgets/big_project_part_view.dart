@@ -55,7 +55,7 @@ class _BigProjectPartViewState extends State<BigProjectPartView> {
                 Row(
                   children: [
                     VisPriority(data: widget.projectData),
-                    VisCategory(data: widget.projectData, onUpdated: () => setState(() {})),
+                    VisCategory(data: widget.projectData, taskOrProject: "project", onUpdated: (resolve) => setState(() {})),
                   ],
                 ),
                 Expanded(
