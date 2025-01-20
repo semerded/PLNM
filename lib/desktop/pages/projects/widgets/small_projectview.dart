@@ -109,7 +109,7 @@ class _SmallProjectViewState extends State<SmallProjectView> {
                       subtitle: RichText(
                         text: TextSpan(
                           children: [
-                            checkCategoryValidity(project["category"])
+                            countMissingCategories(project["category"]) > 0
                                 ? const TextSpan()
                                 : const TextSpan(
                                     text: "[!category not found!] ",

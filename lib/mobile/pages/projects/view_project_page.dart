@@ -112,7 +112,7 @@ class _ProjectViewPageState extends State<ProjectViewPage> {
         body: Column(
           children: [
             AnimatedSize(
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               child: projectDetailsVisible
                   ? Column(
                       children: [

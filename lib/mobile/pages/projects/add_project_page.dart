@@ -239,6 +239,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
               DateTime now = DateTime.now();
               newProject["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
               newProject["size"] = newProject["size"].toInt();
+              newProject["category"] = List<String>.from(newProject["category"]);
 
               setState(() {
                 projectsDataContent!["projects"].add(newProject); //! add deepcopy if duplication happens

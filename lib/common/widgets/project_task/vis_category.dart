@@ -29,12 +29,20 @@ class _VisCategoryState extends State<VisCategory> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-        child: checkCategoryValidity(widget.data["category"])
+        child: countMissingCategories(widget.data["category"]) == 0
             ? ElevatedButton(
                 onPressed: () {
                   showInfoDialog(
                     context,
-                    "Project Category: The set category for this project. Categories are filterable in the project menu and tell more about a specific project.",
+                    () {
+                      if (widget.data["category"].length > 1) {
+                        return "categories: ${widget.data["category"].join(", ")}";
+                      } else if (widget.data["category"].length == 1) {
+                        return "category: ${widget.data["category"]}";
+                      } else {
+                        return "No category";
+                      }
+                    }(),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -44,7 +52,19 @@ class _VisCategoryState extends State<VisCategory> {
                     side: BorderSide(color: Palette.text),
                   ),
                 ),
-                child: AdaptiveText("category: ${widget.data["category"]}"),
+                child: AdaptiveText(
+                  () {
+                    if (widget.data["category"].length > 1) {
+                      return "categories: ${widget.data["category"].join(", ")}";
+                    } else if (widget.data["category"].length == 1) {
+                      return "category: ${widget.data["category"]}";
+                    } else {
+                      return "No category";
+                    }
+                  }(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               )
             : ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -55,17 +75,22 @@ class _VisCategoryState extends State<VisCategory> {
                   ),
                 ),
                 onPressed: () async {
-                  if (await showConfirmDialog(context, "Add '${widget.data["category"]}' to categories?")) {
-                    setState(() {
-                      String category = widget.data["category"];
-                      categoryDataContent!.add(category);
-                      categoryFilter[category] = true;
-                      fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
-                      widget.onUpdated();
-                    });
+                  for (String category in widget.data["category"]) {
+                    if (!categoryDataContent!.contains(category)) {
+                      if (await showConfirmDialog(context, "Add '$category' to categories?")) {
+                        setState(() {
+                          categoryDataContent!.add(category);
+                          categoryFilter[category] = true;
+                          fileSyncSystem.syncFile(categoryFileData!, jsonEncode(categoryDataContent));
+                          widget.onUpdated();
+                        });
+                      }
+                    }
                   }
                 },
-                child: AdaptiveText("Unknown Category: ${widget.data["category"]}"),
+                child: AdaptiveText(
+                  countMissingCategories(widget.data["category"]) > 1 ? "Multiple unknown categories" : "Unknown Category: ${widget.data["category"][getIndexesOfMissingCategories(widget.data["category"]).first]}",
+                ),
               ),
       ),
     );

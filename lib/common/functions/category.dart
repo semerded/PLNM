@@ -5,8 +5,12 @@ import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:uuid/uuid.dart';
 
-bool checkCategoryValidity(String category) {
-  return categoryDataContent!.contains(category);
+int countMissingCategories(List<String> category) {
+  return category.where((cat) => !categoryDataContent!.contains(cat)).length;
+}
+
+List<int> getIndexesOfMissingCategories(List<String> category) {
+  return category.asMap().entries.where((entry) => entry.key >= categoryDataContent!.length || entry.value != categoryDataContent![entry.key]).map((entry) => entry.key).toList();
 }
 
 void addCategory(String category) {

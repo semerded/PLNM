@@ -15,7 +15,7 @@ class CardDescription extends StatelessWidget {
     return RichText(
       text: TextSpan(
         children: [
-          if (!checkCategoryValidity(data["category"]))
+          if (countMissingCategories(data["category"]) > 0)
             const TextSpan(
               text: "[!category not found!] • ",
               style: TextStyle(color: Colors.orange),
