@@ -61,7 +61,7 @@ class _VisCategoryState extends State<VisCategory> {
                     if (widget.data["category"].length > 1) {
                       return "categories: ${widget.data["category"].join(", ")}";
                     } else if (widget.data["category"].length == 1) {
-                      return "category: ${widget.data["category"]}";
+                      return "category: ${widget.data["category"].first}";
                     } else {
                       return "No category";
                     }

@@ -6,6 +6,7 @@ import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/date_time_picker.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/select_category.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/add_task.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/edit_task.dart';
@@ -26,21 +27,15 @@ class EditTaskPage extends StatefulWidget {
 
 class _EditTaskPageState extends State<EditTaskPage> {
   Map updatedtaskData = {};
-  late bool taskValidated;
-  bool validTitle = false;
   final TextEditingController descriptionController = TextEditingController();
 
-  @override
   void initState() {
     super.initState();
-
     updatedtaskData = Map.from(widget.taskData.deepcopy());
-    validTitle = updatedtaskData["title"].length >= 2;
-    validate();
   }
 
-  void validate() {
-    taskValidated = validTitle && updatedtaskData["subTask"].length >= 1;
+  bool isValid() {
+    return updatedtaskData["title"].length >= 2;
   }
 
   @override
@@ -73,14 +68,12 @@ class _EditTaskPageState extends State<EditTaskPage> {
               onChanged: (value) {
                 setState(() {
                   updatedtaskData["title"] = value;
-                  validTitle = value.length >= 2;
-                  validate();
                 });
               },
               initialValue: updatedtaskData["title"],
             ),
             DescriptionTextField(
-              validTitle: validTitle,
+              validTitle: isValid(),
               onChanged: (value) {
                 setState(() {
                   updatedtaskData["description"] = value;
@@ -92,36 +85,13 @@ class _EditTaskPageState extends State<EditTaskPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Container(
-                      color: Palette.box1,
-                      child: DropdownButton<String>(
-                        padding: const EdgeInsets.only(left: 7, right: 7),
-                        isExpanded: true,
-                        elevation: 15,
-                        dropdownColor: Palette.box3,
-                        value: updatedtaskData["category"], // check if exist
-                        items: categoryDataContent?.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: AdaptiveText(
-                                value,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            updatedtaskData["category"] = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
+                  child: SelectCategory(
+                      initChosenCategories: updatedtaskData["category"],
+                      onChosen: (value) {
+                        setState(() {
+                          updatedtaskData["category"] = value;
+                        });
+                      }),
                 ),
                 Expanded(
                   child: SelectPriority(
@@ -153,7 +123,6 @@ class _EditTaskPageState extends State<EditTaskPage> {
                             setState(() {
                               updatedtaskData["subTask"].add(newTask);
                             });
-                            validate();
                           }
                         },
                       );
@@ -204,7 +173,6 @@ class _EditTaskPageState extends State<EditTaskPage> {
                                 setState(() {
                                   if (value) {
                                     updatedtaskData["subTask"].removeAt(index);
-                                    validate();
                                   }
                                 });
                               });
@@ -224,9 +192,9 @@ class _EditTaskPageState extends State<EditTaskPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: taskValidated ? Colors.green : Colors.red,
+          backgroundColor: isValid() ? Colors.green : Colors.red,
           onPressed: () {
-            if (taskValidated) {
+            if (isValid()) {
               updatedtaskData["size"] = updatedtaskData["size"].toInt();
               Navigator.pop(context, updatedtaskData);
             }

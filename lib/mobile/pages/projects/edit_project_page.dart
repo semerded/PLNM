@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/deadline_checker.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/date_time_picker.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/select_category.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -27,8 +27,6 @@ class EditProjectPage extends StatefulWidget {
 
 class _EditProjectPageState extends State<EditProjectPage> {
   Map updatedProjectData = {};
-  late bool taskValidated;
-  bool validTitle = false;
   final TextEditingController descriptionController = TextEditingController();
 
   @override
@@ -36,12 +34,10 @@ class _EditProjectPageState extends State<EditProjectPage> {
     super.initState();
 
     updatedProjectData = Map.from(widget.projectData.deepcopy());
-    validTitle = updatedProjectData["title"].length >= 2;
-    validate();
   }
 
-  void validate() {
-    taskValidated = validTitle && updatedProjectData["part"].length >= 1;
+  bool isValid() {
+    return updatedProjectData["title"].length >= 2 && updatedProjectData["part"].length >= 1;
   }
 
   @override
@@ -74,14 +70,12 @@ class _EditProjectPageState extends State<EditProjectPage> {
               onChanged: (value) {
                 setState(() {
                   updatedProjectData["title"] = value;
-                  validTitle = value.length >= 2;
-                  validate();
                 });
               },
               initialValue: updatedProjectData["title"],
             ),
             DescriptionTextField(
-              validTitle: validTitle,
+              validTitle: updatedProjectData["title"].length >= 2,
               onChanged: (value) {
                 setState(() {
                   updatedProjectData["description"] = value;
@@ -93,35 +87,13 @@ class _EditProjectPageState extends State<EditProjectPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Container(
-                      color: Palette.box1,
-                      child: DropdownButton<String>(
-                        padding: const EdgeInsets.only(left: 7, right: 7),
-                        isExpanded: true,
-                        elevation: 15,
-                        dropdownColor: Palette.box3,
-                        value: updatedProjectData["category"], // check if exist
-                        items: categoryDataContent?.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: AdaptiveText(
-                                value,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            updatedProjectData["category"] = value;
-                          });
-                        },
-                      ),
-                    ),
+                  child: SelectCategory(
+                    initChosenCategories: updatedProjectData["category"],
+                    onChosen: (value) {
+                      setState(() {
+                        updatedProjectData["category"] = value;
+                      });
+                    },
                   ),
                 ),
                 Expanded(
@@ -179,7 +151,6 @@ class _EditProjectPageState extends State<EditProjectPage> {
                       setState(() {
                         updatedProjectData["part"].add(value);
                       });
-                      validate();
                     }
                   },
                 );
@@ -252,7 +223,6 @@ class _EditProjectPageState extends State<EditProjectPage> {
                                 setState(() {
                                   if (value) {
                                     updatedProjectData["part"].removeAt(index);
-                                    validate();
                                   }
                                 });
                               });
@@ -272,9 +242,9 @@ class _EditProjectPageState extends State<EditProjectPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: taskValidated ? Colors.green : Colors.red,
+          backgroundColor: isValid() ? Colors.green : Colors.red,
           onPressed: () {
-            if (taskValidated) {
+            if (isValid()) {
               updatedProjectData["size"] = updatedProjectData["size"].toInt();
               Navigator.pop(context, updatedProjectData);
             }

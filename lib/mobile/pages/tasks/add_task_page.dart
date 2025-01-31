@@ -9,6 +9,7 @@ import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/date_time_picker.dart';
+import 'package:keeper_of_projects/common/widgets/project_task/select_category.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/select_priority.dart';
 import 'package:keeper_of_projects/common/widgets/project_task/tasks/add_task.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
@@ -25,16 +26,13 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
-  bool taskValidated = false;
-  bool validTitle = false;
-  bool validCategory = false;
   final TextEditingController descriptionController = TextEditingController();
   late String ddb_category_value;
 
   Map newTask = {
-    "title": null,
+    "title": "",
     "description": "",
-    "category": null,
+    "category": [],
     "priority": "none",
     "size": 0.0,
     "subTask": [],
@@ -43,20 +41,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
     "id": Uuid().v4(),
   };
 
-  final String ddb_catgegoryDefaultText = "Select A Category";
-  List<String> ddb_category = [];
-
-  void validate() {
-    taskValidated = validTitle && validCategory;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    ddb_category_value = ddb_catgegoryDefaultText;
-
-    ddb_category.add(ddb_catgegoryDefaultText);
-    ddb_category.addAll(categoryDataContent!);
+  bool isValid() {
+    return newTask["title"].length >= 2;
   }
 
   @override
@@ -89,21 +75,18 @@ class _AddTaskPageState extends State<AddTaskPage> {
               hintText: "What are you going to do?",
               onChanged: (value) {
                 setState(() {
-                  validTitle = value.length >= 2;
                   newTask["title"] = value;
-                  validate();
                 });
               },
             ),
 
             // add a description
             DescriptionTextField(
-              validTitle: validTitle,
+              validTitle: newTask["title"].length >= 2,
               hintText: "Describe the fine details",
               onChanged: (value) {
                 setState(() {
                   newTask["description"] = value;
-                  validate();
                 });
               },
             ),
@@ -111,38 +94,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Container(
-                      color: Palette.box1,
-                      child: DropdownButton<String>(
-                        padding: const EdgeInsets.only(left: 7, right: 7),
-                        isExpanded: true,
-                        elevation: 15,
-                        dropdownColor: Palette.box3,
-                        value: ddb_category_value,
-                        items: ddb_category.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: AdaptiveText(
-                                value,
-                                overflow: TextOverflow.fade,
-                                fontStyle: value == ddb_catgegoryDefaultText ? FontStyle.italic : FontStyle.normal,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            newTask["category"] = ddb_category_value = value!;
-                            validCategory = value != ddb_catgegoryDefaultText;
-                            validate();
-                          });
-                        },
-                      ),
-                    ),
+                  child: SelectCategory(
+                    initChosenCategories: newTask["category"],
+                    onChosen: (value) {
+                      setState(() {
+                        newTask["category"] = value;
+                      });
+                    },
                   ),
                 ),
                 Expanded(
@@ -151,7 +109,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       onUpdated: (value) {
                         setState(() {
                           newTask["priority"] = value;
-                          validate();
                         });
                       }),
                 ),
@@ -172,7 +129,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Map newTask = await addTask(context);
                       setState(() {
                         newTask["subTask"].add(newTask);
-                        validate();
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -253,7 +209,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (taskValidated) {
+            if (isValid()) {
               DateTime now = DateTime.now();
               newTask["timeCreated"] = DateTime(now.year, now.month, now.day, now.hour, now.minute, now.second).toString();
               newTask["size"] = newTask["size"].toInt();
@@ -268,7 +224,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               });
             }
           },
-          backgroundColor: taskValidated ? Colors.green : Colors.red,
+          backgroundColor: isValid() ? Colors.green : Colors.red,
           child: const Icon(Icons.check),
         ),
       ),
