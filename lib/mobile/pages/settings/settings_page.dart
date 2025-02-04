@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/category_editor_page.dart';
+import 'package:keeper_of_projects/common/widgets/card_group.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/download_from_cloud.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/upload_to_cloud.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/widgets/cloud_actions.dart';
-import 'package:keeper_of_projects/mobile/pages/settings/widgets/switch.dart';
-import 'package:keeper_of_projects/mobile/pages/settings/widgets/switch_w_description.dart';
+import 'package:keeper_of_projects/mobile/pages/settings/widgets/setting_switch.dart';
+import 'package:keeper_of_projects/mobile/pages/settings/widgets/settings_icon_button.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -38,40 +39,67 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         backgroundColor: Palette.bg,
-        body: Column(
+        body: ListView(
           children: [
-            SettingsSwitch(
-              title: "DarkMode",
-              initValue: settingsDataContent!["darkmode"],
-              onChanged: (value) {
-                setState(() {
-                  settingsDataContent!["darkmode"] = value;
-                  settingsDataNeedsSync = true;
-                  Palette.setDarkmode(value);
-                });
-              },
+            CardGroup(title: "Appearance", children: [
+              SettingsSwitch(
+                title: "DarkMode",
+                initValue: settingsDataContent!["darkmode"],
+                onChanged: (value) {
+                  setState(() {
+                    settingsDataContent!["darkmode"] = value;
+                    settingsDataNeedsSync = true;
+                    Palette.setDarkmode(value);
+                  });
+                },
+              ),
+            ]),
+            CardGroup(
+              title: "idk",
+              children: [
+                SettingsSwitch(
+                  title: "Show Project Size",
+                  description: "Shows the size of a project as a progress bar on the bottom of the project card.",
+                  initValue: settingsDataContent!["showProjectSize"],
+                  onChanged: (value) {
+                    setState(() {
+                      settingsDataContent!["showProjectSize"] = value;
+                      settingsDataNeedsSync = true;
+                    });
+                  },
+                ),
+              ],
             ),
-            SettingsSwitchWithDescription(
-              title: "Show Project Size",
-              description: "Shows the size of a project as a progress bar on the bottom of the project card.",
-              initValue: settingsDataContent!["showProjectSize"],
-              onChanged: (value) {
-                setState(() {
-                  settingsDataContent!["showProjectSize"] = value;
-                  settingsDataNeedsSync = true;
-                });
-              },
+            CardGroup(
+              title: "Search and filter",
+              children: [
+                SettingsSwitch(
+                  title: "Alt Project Size Description",
+                  description: "Add some funny project size descriptions into the mix, this changes the default {small, medium, big, ...} into something more... funny ;). (this doesn't show when you create a new project)",
+                  initValue: settingsDataContent!["funnyProjectSize"],
+                  onChanged: (value) {
+                    setState(() {
+                      settingsDataContent!["funnyProjectSize"] = value;
+                      settingsDataNeedsSync = true;
+                    });
+                  },
+                ),
+              ],
             ),
-            SettingsSwitchWithDescription(
-              title: "Alt Project Size Description",
-              description: "Add some funny project size descriptions into the mix, this changes the default {small, medium, big, ...} into something more... funny ;). (this doesn't show when you create a new project)",
-              initValue: settingsDataContent!["funnyProjectSize"],
-              onChanged: (value) {
-                setState(() {
-                  settingsDataContent!["funnyProjectSize"] = value;
-                  settingsDataNeedsSync = true;
-                });
-              },
+            CardGroup(
+              title: "Cloud/local storage",
+              children: [
+                SettingsIconButton(
+                  title: "Download from cloud",
+                  onClicked: () {},
+                  icon: Icons.download,
+                ),
+                SettingsIconButton(
+                  title: "Upload to cloud",
+                  onClicked: () {},
+                  icon: Icons.upload,
+                ),
+              ],
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Palette.primary),

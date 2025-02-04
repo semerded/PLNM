@@ -7,11 +7,13 @@ typedef OnChanged = void Function(bool value);
 class SettingsSwitch extends StatefulWidget {
   final bool initValue;
   final String title;
+  final String? description;
   final OnChanged? onChanged;
 
   const SettingsSwitch({
     super.key,
     required this.title,
+    this.description,
     required this.initValue,
     this.onChanged,
   });
@@ -26,13 +28,10 @@ class SettingsSwitchState extends State<SettingsSwitch> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
-      child: Card(
-        elevation: 4,
-        color: Palette.box1,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Row(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Column(
+        children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AdaptiveText(
@@ -51,7 +50,15 @@ class SettingsSwitchState extends State<SettingsSwitch> {
               ),
             ],
           ),
-        ),
+          if (widget.description != null)
+            Text(
+              widget.description!,
+              style: TextStyle(
+                color: Palette.subtext,
+                fontSize: 13,
+              ),
+            ),
+        ],
       ),
     );
   }

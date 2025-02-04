@@ -2,8 +2,6 @@
 
 @critical fix being stuck on google drive logo
 
-@critical show message when there is no internet connection
-
 >>>> google drive
 
 @low update readme on google drive
@@ -20,15 +18,11 @@
 
 >>>> functionality
 
-@critical @today finish adding multiple categories to a task
-
-@high @today add extra button to unknown category dialog with "remove category from task/project"
+@critical @today add gesture control to settings button/switch
 
 @high update filter system
 
 @high @today create about page
-
-@high add placeholders for ddb buttons
 
 @high update functionality of [create category page] -> add confirm dialog when deleting and prevent duplicates
 
