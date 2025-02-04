@@ -5,6 +5,7 @@ import 'package:keeper_of_projects/common/pages/category_editor/widgets/add_cate
 import 'package:keeper_of_projects/common/pages/category_editor/widgets/edit_category_dialog.dart';
 import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class CategoryEditorPage extends StatefulWidget {
@@ -47,9 +48,18 @@ class _CategoryEditorPageState extends State<CategoryEditorPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        removeCategory(categoryDataContent![index]);
-                      });
+                      showConfirmDialog(
+                        context,
+                        "delete category \"${categoryDataContent![index]}\"?",
+                      ).then(
+                        (value) {
+                          if (value) {
+                            setState(() {
+                              removeCategory(categoryDataContent![index]);
+                            });
+                          }
+                        },
+                      );
                     },
                     icon: const Icon(
                       Icons.delete,
