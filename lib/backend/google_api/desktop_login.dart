@@ -9,7 +9,7 @@ import 'package:keeper_of_projects/backend/google_api/desktop_client_creds.dart'
 import 'package:keeper_of_projects/backend/google_api/desktop_token_storage.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:window_to_front/window_to_front.dart';
+// import 'package:window_to_front/window_to_front.dart';
 
 List<String> scopes = [drive.DriveApi.driveFileScope, 'https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'];
 
@@ -35,7 +35,7 @@ class DesktopLoginPageManager {
   Future<Map<String, String>> listen() async {
     var request = await redirectServer!.first;
     var params = request.uri.queryParameters;
-    await WindowToFront.activate(); // Using window_to_front package to bring the window to the front after successful login.
+    // await WindowToFront.activate(); // Using window_to_front package to bring the window to the front after successful login.
     request.response.statusCode = 200;
     request.response.headers.set('content-type', 'text/plain');
     request.response.writeln('Authenticated! You can close this tab.');

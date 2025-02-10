@@ -1,7 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/backend/local_file_handler.dart';
 import 'package:keeper_of_projects/common/pages/category_editor/category_editor_page.dart';
+import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/card_group.dart';
+import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/download_from_cloud.dart';
 import 'package:keeper_of_projects/mobile/pages/settings/upload_to_cloud.dart';
@@ -43,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             CardGroup(title: "Appearance", children: [
               SettingsSwitch(
-                title: "DarkMode",
+                title: "Enable Dark Mode",
                 initValue: settingsDataContent!["darkmode"],
                 onChanged: (value) {
                   setState(() {
@@ -92,12 +96,30 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsIconButton(
                   title: "Download from cloud",
                   onClicked: () {},
-                  icon: Icons.download,
+                  icon: AdaptiveIcon(Icons.download),
                 ),
                 SettingsIconButton(
                   title: "Upload to cloud",
                   onClicked: () {},
-                  icon: Icons.upload,
+                  icon: AdaptiveIcon(Icons.upload),
+                ),
+                SettingsIconButton(
+                  title: "Delete local data",
+                  onClicked: () {
+                    showConfirmDialog(context, "Are you sure you want to delete all local data?").then((confirm) async {
+                      if (confirm) {
+                        await deleteLocalFiles();
+                        await onlyRepairLocalFiles();
+                        if (kDebugMode) {
+                          debugPrint("Deleted all local data");
+                        }
+                      }
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
                 ),
               ],
             ),

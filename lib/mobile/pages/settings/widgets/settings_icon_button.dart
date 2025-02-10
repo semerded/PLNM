@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/common/widgets/base/icon.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
 
 class SettingsIconButton extends StatefulWidget {
   final String title;
   final String? description;
-  final IconData icon;
+  final Widget icon;
   final VoidCallback onClicked;
 
   const SettingsIconButton({
@@ -38,7 +37,7 @@ class SettingsIconButtonState extends State<SettingsIconButton> {
               ),
               IconButton(
                 onPressed: () => widget.onClicked(),
-                icon: AdaptiveIcon(widget.icon),
+                icon: widget.icon,
               )
             ],
           ),

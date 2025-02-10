@@ -24,8 +24,6 @@
 
 @high @today create about page
 
-@high update functionality of [create category page] -> add confirm dialog when deleting and prevent duplicates
-
 @low create archive page
 
 

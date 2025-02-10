@@ -28,6 +28,12 @@ Future<String?> localRead(String fileName) async {
   }
 }
 
+Future<void> localDelete(String fileName) async {
+  final file = await localPath(fileName);
+  await file.delete();
+  print("$fileName localy deleted");
+}
+
 Future<void> getLocalFileData() async {
   projectsDataContent = await readOrRepairLocalFile(projectsFileName, projectsFileDefaultContent);
   taskDataContent = await readOrRepairLocalFile(taskFileName, taskFileDefaultContent);
@@ -55,6 +61,15 @@ Future<void> onlyRepairLocalFiles() async {
   await readOrRepairLocalFile(settingsFileName, settingsFileDefaultContent);
   await readOrRepairLocalFile(categoryFileName, categoryFileDefaultContent);
   await readOrRepairLocalFile(notesFileName, notesFileDefaultContent);
+}
+
+Future<void> deleteLocalFiles() async {
+  await localDelete(projectsFileName);
+  await localDelete(taskFileName);
+  await localDelete(settingsFileName);
+  await localDelete(categoryFileName);
+  await localDelete(notesFileName);
+  await localDelete(syncFileName);
 }
 
 Future<dynamic> readOrRepairLocalFile(String fileName, dynamic defaultContent) async {
