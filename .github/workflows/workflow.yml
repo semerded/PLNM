@@ -1,8 +1,6 @@
-name: Build Flutter App on Release
+name: Test Build Flutter App on Push
 
-on:
-  release:
-    types: [created]
+on: push
 
 jobs:
   build-android:
