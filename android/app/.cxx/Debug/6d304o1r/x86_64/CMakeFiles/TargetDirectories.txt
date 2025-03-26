@@ -1,0 +1,2 @@
+C:/Users/semva/OneDrive - Thomas More/.vscode/flutter/keeper-of-projects/android/app/.cxx/Debug/6d304o1r/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/semva/OneDrive - Thomas More/.vscode/flutter/keeper-of-projects/android/app/.cxx/Debug/6d304o1r/x86_64/CMakeFiles/rebuild_cache.dir

@@ -26,7 +26,10 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   universal_platform: ^1.0.0+1
   window_manager: ^0.4.2
-  intl: ^0.18.0 
+  intl: 
+  extended_text_field: ^16.0.2
+  tuple: 
+  flutter_quill: ^11.0.0
 
 
 
