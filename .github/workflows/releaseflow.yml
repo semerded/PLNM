@@ -1,107 +1,107 @@
-name: Build Flutter App on Release
+# name: Build Flutter App on Release
 
-on:
-  release:
-    types: [created]
+# on:
+#   release:
+#     types: [created]
 
-jobs:
-  build-android:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# jobs:
+#   build-android:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: stable
+#       - name: Set up Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: stable
 
-      - name: Install dependencies
-        run: flutter pub get
+#       - name: Install dependencies
+#         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+#       - name: Build APK
+#         run: flutter build apk --release
 
-      - name: Build AppBundle
-        run: flutter build appbundle --release
+#       - name: Build AppBundle
+#         run: flutter build appbundle --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+#       - name: Upload APK
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: android-apk
+#           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-aab
-          path: build/app/outputs/bundle/release/app-release.aab
+#       - name: Upload AAB
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: android-aab
+#           path: build/app/outputs/bundle/release/app-release.aab
 
-  build-ios:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#   build-ios:
+#     runs-on: macos-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: stable
+#       - name: Set up Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: stable
 
-      - name: Install dependencies
-        run: flutter pub get
+#       - name: Install dependencies
+#         run: flutter pub get
 
-      - name: Build iOS
-        run: flutter build ios --no-codesign
+#       - name: Build iOS
+#         run: flutter build ios --no-codesign
 
-      - name: Upload iOS build
-        uses: actions/upload-artifact@v4
-        with:
-          name: ios-build
-          path: build/ios/iphoneos
+#       - name: Upload iOS build
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: ios-build
+#           path: build/ios/iphoneos
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#   build-windows:
+#     runs-on: windows-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: stable
+#       - name: Set up Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: stable
 
-      - name: Install dependencies
-        run: flutter pub get
+#       - name: Install dependencies
+#         run: flutter pub get
 
-      - name: Build Windows
-        run: flutter build windows
+#       - name: Build Windows
+#         run: flutter build windows
 
-      - name: Upload Windows build
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build
-          path: build/windows/runner/Release/
+#       - name: Upload Windows build
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: windows-build
+#           path: build/windows/runner/Release/
 
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#   build-linux:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: stable
+#       - name: Set up Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: stable
 
-      - name: Install dependencies
-        run: flutter pub get
+#       - name: Install dependencies
+#         run: flutter pub get
 
-      - name: Build Linux
-        run: flutter build linux
+#       - name: Build Linux
+#         run: flutter build linux
 
-      - name: Upload Linux build
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-build
-          path: build/linux/x64/release/bundle
+#       - name: Upload Linux build
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: linux-build
+#           path: build/linux/x64/release/bundle
