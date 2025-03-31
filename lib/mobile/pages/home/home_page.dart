@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/widgets.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/base/text.dart';
 import 'package:keeper_of_projects/data.dart';
@@ -40,26 +39,8 @@ class _HomePageState extends State<HomePage> {
       canPop: false,
       child: Scaffold(
           backgroundColor: Palette.bg,
-          appBar: AppBar(
-            backgroundColor: Palette.primary,
-            title: Text("Home"),
-            automaticallyImplyLeading: false,
-            actions: [
-              GooglePopUpMenu(
-                onClose: (value) {
-                  if (value) {
-                    if (projectCategoriesNeedRebuild) {
-                      projectCategoriesNeedRebuild = false;
-                    }
-                    setState(() {});
-                  }
-                },
-                showArchive: false,
-              )
-            ],
-          ),
           body: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8, right: 8, top: 24),
             child: Column(
               children: [
                 Card(
@@ -69,11 +50,16 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Hero(
-                          tag: "",
-                          child: GoogleUserCircleAvatar(
-                            identity: currentUser!,
-                          ),
+                        GooglePopUpMenu(
+                          onClose: (value) {
+                            if (value) {
+                              if (projectCategoriesNeedRebuild) {
+                                projectCategoriesNeedRebuild = false;
+                              }
+                              setState(() {});
+                            }
+                          },
+                          showArchive: false,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 16),

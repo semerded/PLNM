@@ -116,7 +116,7 @@ class _SelectCategoryState extends State<SelectCategory> {
         }(),
         builder: (BuildContext context, MenuController controller, Widget? child) {
           return ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Palette.box1),
+            style: ElevatedButton.styleFrom(backgroundColor: Palette.box1, iconAlignment: IconAlignment.end),
             focusNode: _buttonFocusNode,
             onPressed: () {
               if (controller.isOpen) {
@@ -125,7 +125,6 @@ class _SelectCategoryState extends State<SelectCategory> {
                 controller.open();
               }
             },
-            iconAlignment: IconAlignment.end,
             child: Row(
               children: [
                 const Spacer(),

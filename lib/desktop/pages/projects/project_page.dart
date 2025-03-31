@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/functions/filter/filter_data.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
-import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
+import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/add_project_page.dart';
 import 'package:keeper_of_projects/desktop/pages/projects/widgets/big_projectview.dart';

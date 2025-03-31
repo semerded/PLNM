@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';
+import 'package:keeper_of_projects/common/widgets/notes/note_text_handler.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:keeper_of_projects/typedef.dart';
 
@@ -69,30 +70,19 @@ class ViewNotePageState extends State<ViewNotePage> {
             },
           ),
           Expanded(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: TextEditingController(text: widget.note["content"]),
-                    autofocus: true,
-                    style: TextStyle(color: Palette.text),
-                    onChanged: (value) {
-                      DateTime now = DateTime.now();
-                      updatedNote["edited"] = toMinuteFormatter.format(now);
-                      updatedNote["content"] = value;
-                      debounce = Timer(const Duration(seconds: 1), () {
-                        notesDataContent![widget.index] = updatedNote;
-                        fileSyncSystem.syncFile(notesFileData!, jsonEncode(notesDataContent));
-                        widget.onUpdated();
-                      });
-                    },
-                    minLines: 50,
-                    decoration: null,
-                    maxLines: null,
-                  ),
-                ),
-              ],
+            child: NoteTextHandler(
+              content: List<Map<String, dynamic>>.from(widget.note["content"]),
+              onTextChanged: (value) {
+                DateTime now = DateTime.now();
+                updatedNote["edited"] = toMinuteFormatter.format(now);
+                updatedNote["content"] = value;
+                if (debounce != null) debounce!.cancel();
+                debounce = Timer(const Duration(seconds: 1), () {
+                  notesDataContent![widget.index] = updatedNote;
+                  fileSyncSystem.syncFile(notesFileData!, jsonEncode(notesDataContent));
+                  widget.onUpdated();
+                });
+              },
             ),
           )
         ],

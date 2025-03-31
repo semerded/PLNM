@@ -14,7 +14,6 @@ class ProgressElevatedButton extends StatefulWidget {
   final WidgetStatesController? statesController;
   final Widget child;
   final double progress;
-  final IconAlignment iconAlignment;
   final Color progressColor;
 
   ProgressElevatedButton({
@@ -31,7 +30,6 @@ class ProgressElevatedButton extends StatefulWidget {
     required this.child,
     required this.progress,
     required this.progressColor,
-    this.iconAlignment = IconAlignment.start,
   });
 
   @override
@@ -47,7 +45,6 @@ class _ProgressElevatedButtonState extends State<ProgressElevatedButton> {
       autofocus: widget.autofocus,
       clipBehavior: widget.clipBehavior,
       focusNode: widget.focusNode,
-      iconAlignment: widget.iconAlignment,
       onFocusChange: widget.onFocusChange,
       onHover: widget.onHover,
       onLongPress: widget.onLongPress,

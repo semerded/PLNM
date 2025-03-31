@@ -26,48 +26,51 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        canvasColor: Palette.box3,
-        primaryColor: Colors.red,
-      ),
-      child: BottomNavigationBar(
-        currentIndex: activePage,
-        onTap: (int value) {
-          if (activePage != value) {
-            final Direction direction = activePage > value ? Direction.right : Direction.left;
-            activePage = value;
-            Navigator.of(context).push(pageSwipeRoute(bottomNavigationBarListing[value], direction)).then((callback) {
-              if (callback != null) {}
-            });
-          }
-        },
-        showUnselectedLabels: true,
-        unselectedItemColor: Palette.text,
-        selectedItemColor: Palette.primary,
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book_rounded),
-            label: 'Notes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.alarm_add_rounded),
-            label: 'Routines',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.task),
-            label: 'Tasks',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_chart),
-            label: 'Projects',
-          ),
-        ],
+    return Hero(
+      tag: "bottomNavigationBar",
+      child: Theme(
+        data: ThemeData(
+          canvasColor: Palette.box3,
+          primaryColor: Colors.red,
+        ),
+        child: BottomNavigationBar(
+          currentIndex: activePage,
+          onTap: (int value) {
+            if (activePage != value) {
+              final Direction direction = activePage > value ? Direction.right : Direction.left;
+              activePage = value;
+              Navigator.of(context).push(pageSwipeRoute(bottomNavigationBarListing[value], direction)).then((callback) {
+                if (callback != null) {}
+              });
+            }
+          },
+          showUnselectedLabels: true,
+          unselectedItemColor: Palette.text,
+          selectedItemColor: Palette.primary,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book_rounded),
+              label: 'Notes',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.alarm_add_rounded),
+              label: 'Routines',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.task),
+              label: 'Tasks',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_chart),
+              label: 'Projects',
+            ),
+          ],
+        ),
       ),
     );
   }

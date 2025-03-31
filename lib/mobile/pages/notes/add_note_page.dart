@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
+import 'package:keeper_of_projects/common/widgets/notes/note_text_handler.dart';
 import 'package:keeper_of_projects/data.dart';
 import 'package:uuid/uuid.dart';
 
@@ -59,22 +60,13 @@ class _AddNotePageState extends State<AddNotePage> {
             },
           ),
           Expanded(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    autofocus: true,
-                    style: TextStyle(color: Palette.text),
-                    onChanged: (value) {
-                      note["content"] = value;
-                    },
-                    minLines: 50,
-                    decoration: null,
-                    maxLines: null,
-                  ),
-                ),
+            child: NoteTextHandler(
+              content: [
+                {"insert": "\n"},
               ],
+              onTextChanged: (value) {
+                note["content"] = value;
+              },
             ),
           )
         ],

@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:keeper_of_projects/backend/data.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/description.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/confirm_dialog.dart';

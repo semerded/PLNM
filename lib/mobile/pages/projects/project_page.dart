@@ -15,7 +15,7 @@ import 'package:keeper_of_projects/mobile/pages/projects/ideas_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/project_archive_page.dart';
 import 'package:keeper_of_projects/mobile/pages/projects/widgets/projectview.dart';
 import 'package:keeper_of_projects/common/widgets/add_button_animated.dart';
-import 'package:keeper_of_projects/common/widgets/animated_searchBar.dart';
+import 'package:keeper_of_projects/common/widgets/animated_searchbar.dart';
 import 'package:keeper_of_projects/mobile/widgets/bottom_navigation_bar.dart';
 import 'package:keeper_of_projects/mobile/widgets/google_pop_up_menu.dart';
 
