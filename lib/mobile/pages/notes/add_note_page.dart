@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:keeper_of_projects/backend/data.dart';
+import 'package:keeper_of_projects/common/functions/quill_controller.dart';
 import 'package:keeper_of_projects/common/widgets/add_textfield/title.dart';
 import 'package:keeper_of_projects/common/widgets/loading_screen.dart';
 import 'package:keeper_of_projects/common/widgets/notes/note_text_handler.dart';
@@ -27,6 +28,7 @@ class AddNotePage extends StatefulWidget {
 }
 
 class _AddNotePageState extends State<AddNotePage> {
+  final FocusNode focusNode = FocusNode();
   Map<String, dynamic> note = {
     "title": getInitialTitle(),
     "created": () {
@@ -61,6 +63,9 @@ class _AddNotePageState extends State<AddNotePage> {
           ),
           Expanded(
             child: NoteTextHandler(
+              onTap: () {},
+              quillController: quillController,
+              focusNode: focusNode,
               content: [
                 {"insert": "\n"},
               ],

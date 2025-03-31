@@ -1,19 +1,27 @@
 import 'dart:convert';
-import 'dart:io' as io show Directory, File;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:keeper_of_projects/data.dart';
-import 'package:path/path.dart' as path;
 
 typedef OnTextChanged = void Function(List<Map<String, dynamic>> value);
 
 class NoteTextHandler extends StatefulWidget {
   final List<Map<String, dynamic>> content;
+  final VoidCallback onTap;
   final OnTextChanged onTextChanged;
-  const NoteTextHandler({super.key, required this.content, required this.onTextChanged});
+  final FocusNode focusNode;
+  final QuillController quillController;
+  const NoteTextHandler({
+    super.key,
+    required this.content,
+    required this.onTextChanged,
+    required this.focusNode,
+    required this.quillController,
+    required this.onTap,
+  });
 
   @override
   State<NoteTextHandler> createState() => _NoteTextHandlerState();
@@ -23,45 +31,23 @@ class _NoteTextHandlerState extends State<NoteTextHandler> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_onTextChanged);
+    widget.quillController.addListener(_onTextChanged);
 
-    _controller.document = Document.fromJson(widget.content);
+    widget.quillController.document = Document.fromJson(widget.content);
   }
+
+  final ScrollController _editorScrollController = ScrollController();
 
   void _onTextChanged() {
+    if (!widget.focusNode.hasFocus) {
+      widget.onTap();
+      return;
+    }
     // skip first (unnecessary) update when document is opened
-    if (const DeepCollectionEquality().equals(_controller.document.toDelta().toJson(), widget.content)) return;
+    if (const DeepCollectionEquality().equals(widget.quillController.document.toDelta().toJson(), widget.content)) return;
 
-    widget.onTextChanged(_controller.document.toDelta().toJson());
+    widget.onTextChanged(widget.quillController.document.toDelta().toJson());
   }
-
-  final QuillController _controller = () {
-    return QuillController.basic(
-        config: QuillControllerConfig(
-      clipboardConfig: QuillClipboardConfig(
-        enableExternalRichPaste: true,
-        onImagePaste: (imageBytes) async {
-          if (kIsWeb) {
-            // Dart IO is unsupported on the web.
-            return null;
-          }
-          // Save the image somewhere and return the image URL that will be
-          // stored in the Quill Delta JSON (the document).
-          final newFileName = 'image-file-${DateTime.now().toIso8601String()}.png';
-          final newPath = path.join(
-            io.Directory.systemTemp.path,
-            newFileName,
-          );
-          final file = await io.File(
-            newPath,
-          ).writeAsBytes(imageBytes, flush: true);
-          return file.path;
-        },
-      ),
-    ));
-  }();
-  final FocusNode _editorFocusNode = FocusNode();
-  final ScrollController _editorScrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +57,7 @@ class _NoteTextHandlerState extends State<NoteTextHandler> {
         child: Column(
           children: [
             QuillSimpleToolbar(
-              controller: _controller,
+              controller: widget.quillController,
               config: QuillSimpleToolbarConfig(
                 showClipboardPaste: false,
                 showFontFamily: false,
@@ -96,16 +82,16 @@ class _NoteTextHandlerState extends State<NoteTextHandler> {
                   QuillToolbarCustomButtonOptions(
                     icon: const Icon(Icons.add_alarm_rounded),
                     onPressed: () {
-                      _controller.document.insert(
-                        _controller.selection.extentOffset,
+                      widget.quillController.document.insert(
+                        widget.quillController.selection.extentOffset,
                         TimeStampEmbed(
                           DateTime.now().toString(),
                         ),
                       );
 
-                      _controller.updateSelection(
+                      widget.quillController.updateSelection(
                         TextSelection.collapsed(
-                          offset: _controller.selection.extentOffset + 1,
+                          offset: widget.quillController.selection.extentOffset + 1,
                         ),
                         ChangeSource.local,
                       );
@@ -117,7 +103,7 @@ class _NoteTextHandlerState extends State<NoteTextHandler> {
                     afterButtonPressed: () {
                       final isDesktop = {TargetPlatform.linux, TargetPlatform.windows, TargetPlatform.macOS}.contains(defaultTargetPlatform);
                       if (isDesktop) {
-                        _editorFocusNode.requestFocus();
+                        widget.focusNode.requestFocus();
                       }
                     },
                   ),
@@ -126,21 +112,22 @@ class _NoteTextHandlerState extends State<NoteTextHandler> {
             ),
             Expanded(
               child: QuillEditor(
-                focusNode: _editorFocusNode,
+                focusNode: widget.focusNode,
                 scrollController: _editorScrollController,
-                controller: _controller,
+                controller: widget.quillController,
                 config: QuillEditorConfig(
                   customStyleBuilder: (Attribute attribute) {
                     return TextStyle(color: Palette.text, fontSize: 16);
                   },
                   customStyles: DefaultStyles(
-                      paragraph: DefaultTextBlockStyle(
-                    TextStyle(color: Palette.text, fontSize: 16),
-                    const HorizontalSpacing(0, 0),
-                    const VerticalSpacing(8, 8),
-                    const VerticalSpacing(0, 0),
-                    null,
-                  )),
+                    paragraph: DefaultTextBlockStyle(
+                      TextStyle(color: Palette.text, fontSize: 16),
+                      const HorizontalSpacing(0, 0),
+                      const VerticalSpacing(8, 8),
+                      const VerticalSpacing(0, 0),
+                      null,
+                    ),
+                  ),
                   placeholder: 'Start writing your notes...',
                   padding: const EdgeInsets.all(16),
                   embedBuilders: [
@@ -157,10 +144,7 @@ class _NoteTextHandlerState extends State<NoteTextHandler> {
 
   @override
   void dispose() {
-    _controller.removeListener(_onTextChanged);
-    _controller.dispose();
-    _editorScrollController.dispose();
-    _editorFocusNode.dispose();
+    widget.quillController.removeListener(_onTextChanged);
     super.dispose();
   }
 }
