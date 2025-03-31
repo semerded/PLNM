@@ -60,8 +60,22 @@ class _NotesGridState extends State<NotesGrid> {
                               child: ListTile(
                                 contentPadding: const EdgeInsets.all(0),
                                 title: Padding(
-                                  padding: const EdgeInsets.only(bottom: 2),
-                                  child: ReadonlyQuillField(note: note),
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.transparent,
+                                            Colors.black, // Fade effect at the bottom
+                                          ],
+                                          stops: [0.0, 0.9, 1.0], // Define fading bounds
+                                        ).createShader(bounds);
+                                      },
+                                      blendMode: BlendMode.dstOut,
+                                      child: ReadonlyQuillField(note: note)),
                                 ),
                               ),
                             ),
